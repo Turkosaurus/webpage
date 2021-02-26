@@ -16,24 +16,21 @@
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
           <div class="navbar-header">
-            <a class="navbar-brand" href="#">Travis Turk</a>
+            <a class="navbar-brand" href="/">Travis Turk</a>
           </div>
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">Projects</a></li>
-            <li><a href="#">Resume</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="/projects">Projects</a></li>
+            <li><a href="/resume">Resume</a></li>
+            <li><a href="/contact">Contact</a></li>
           </ul>
         </div>
     </nav>
     <body>
-        this before main block
         {% block body %}
         {% endblock %}
-        this after main block
     </body>
     <footer class="small text-center text-muted">
-        Site developed by <a href="/about">Turkosaurus</a>. Submit feedback and report bugs <a href="/feedback">here</a>.
+        Website built with <a href="https://flask.palletsprojects.com/">Flask</a>, served on <a href="https://www.heroku.com/">Heroku</a>, and styled by <a href="https://getbootstrap.com/">Bootstrap</a>.
     </footer>
 </body>
 </html>
