@@ -1,4 +1,9 @@
-p, h1, h2, h3, h4, h5, h6, ul {
+h1, h2, h3, h4, h5, h6, ul {
     margin-left: 10%;
     margin-right: 10%;
+}
+
+p {
+    margin-left: 10%;
+    width: 400px;
 }
