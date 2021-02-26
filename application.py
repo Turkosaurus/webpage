@@ -1,9 +1,10 @@
-from flask import Flask, render_template, send_file
+from flask import Flask, render_template, send_file, url_for
 
 app = Flask(__name__)
 
-# # Ensure templates are auto-reloaded
-# app.config["TEMPLATES_AUTO_RELOAD"] = True
+# Ensure templates are auto-reloaded
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 @app.route("/")
 def home():
