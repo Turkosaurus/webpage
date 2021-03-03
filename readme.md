@@ -16,3 +16,6 @@
 - ~~rewrite copy~~
 - ~~change to dark mode~~
 - ~~implement responsive web framwork for resume image~~
+
+## TODO
+- fix streeeetchy image on chrome iOS
