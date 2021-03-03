@@ -1,28 +1,31 @@
 {% extends "layout.html" %}
 {% block title %} - Projects{% endblock %}
 {% block body %}
-<h1>Projects</h1>
-<h2>InCanon</h2>
-<div style="margin-left: 10%;">
-    <a href="https://incanon.herokuapp.com" class="btn btn-primary btn-lg">Go to the App</a>
-    <a href="https://www.github.com/turkosaurus/incanon" class="btn btn-primary btn-lg">See on GitHub</a>
+<div class="container">
+    <h1>Projects</h1>
+    <br>
+    <h2>InCanon</h2>
+    <div>
+        <a href="https://incanon.herokuapp.com" class="btn btn-primary btn-lg">Go to the App</a>
+        <a href="https://www.github.com/turkosaurus/incanon" class="btn btn-primary btn-lg">See on GitHub</a>
+    </div>
+    <h3>Summary</h3>
+    <p>The web app uses a relational database to allow users to collaboratively build a compendium of all the people, places, and things that animate a role-playing campaign setting.</p>
+    <p>Players and Game Masters can join their own shared campaign in which everyone views the index of notable entries as their home page, and anyone can add new information.</p>
+    <p>Originally, this app was a project submission to CS50x, but through continued development it has been released as a standalone web app.</p>
+    <h3>Technologies Used</h3>
+    <ul>
+        <li>Flask</li>
+        <li>SQLite3</li>
+        <li>PostgereSQL</li>
+        <li>Python</li>
+        <li>Heroku</li>
+    </ul>    
+    <!-- <br>
+    <h2>Maker Coffee</h2>
+        <p></p>
+        <p></p>
+        <p></p>
+    <br> -->
 </div>
-<h3>Summary</h3>
-<p>The web app uses a relational database to allow users to collaboratively build a compendium of all the people, places, and things that animate a role-playing campaign setting.</p>
-<p>Players and Game Masters can join their own shared campaign in which everyone views the index of notable entries as their home page, and anyone can add new information.</p>
-<p>Originally, this app was a project submission to CS50x, but through continued development it has been released as a standalone web app.</p>
-<h3>Technologies Used</h3>
-<ul>
-    <li>Flask</li>
-    <li>SQLite3</li>
-    <li>PostgereSQL</li>
-    <li>Python</li>
-    <li>Heroku</li>
-</ul>
-<!-- <br>
-<h2>Maker Coffee</h2>
-<p></p>
-<p></p>
-<p></p> -->
-<br>
 {% endblock %}

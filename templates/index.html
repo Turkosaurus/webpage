@@ -1,20 +1,31 @@
 {% extends "layout.html" %}
 {% block title %} - About{% endblock %}
 {% block body %}
-
-<img src="static/headshot.jpg" alt="headshot" style="width:300px; margin-left: 10%;">
-<br>
-<br>
-<div style="margin-left: 10%;">
-    <a href="https://www.github.com/turkosaurus" class="btn btn-primary btn-lg">GitHub</a>
-    <a href="https://www.twitter.com/turkosaurus" class="btn btn-primary btn-lg">Twitter</a>
-    <a href="mailto:travisturk@gmail.com" class="btn btn-primary btn-lg" target="_blank">Email</a>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-sm-6">
+            <div class="row justify-content-center">
+                <img src="static/headshot.jpg" alt="headshot" style="width:100%; height:auto; padding:1rem;">
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-4">
+                    <a href="https://www.github.com/turkosaurus" class="btn btn-primary btn-lg">GitHub</a>
+                </div>
+                <div class="col-4">
+                    <a href="https://www.twitter.com/turkosaurus" class="btn btn-primary btn-lg">Twitter</a>
+                </div>
+                <div class="col-4">
+                    <a href="mailto:travisturk@gmail.com" class="btn btn-primary btn-lg" target="_blank">Email</a>                    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-sm-6">
+            <br>
+            <h3>About</h3>
+            <p>I am Travis Turk, a seasoned hospitality management professional and junior developer seeking employment.</p>
+            <p>I have over a decade of experience in restaurant operations, encompassing every facet of the Front of House, including team managment, financial reporting and analysis, and development of training systems.</p>
+            <p>My favorite work entails systems design and human factors, and building tools and systems that people enjoy using.</p>    
+        </div>
+    </div>
 </div>
-<br>
-<h3>About</h3>
-<p>I am Travis Turk, a seasoned hospitality professional and junior developer seeking employment.</p>
-<p>I have over a decade of experience in restaurant operations, encompassing every facet of the Front of House, including team managment, financial reporting and analysis, and development of training systems.</p>
-<p>My favorite work entails systems design and human factors, and building tools and systems that people enjoy using.</p>
-<br>
-<br>
 {% endblock %}
