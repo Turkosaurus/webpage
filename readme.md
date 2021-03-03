@@ -14,5 +14,5 @@
 
 ## Refine
 - ~~rewrite copy~~
-- change to dark mode
-- implement responsive web framwork for resume image
+- ~~change to dark mode~~
+- ~~implement responsive web framwork for resume image~~
