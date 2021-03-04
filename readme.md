@@ -18,4 +18,5 @@
 - ~~implement responsive web framwork for resume image~~
 
 ## TODO
-- fix streeeetchy image on chrome iOS
+- ~~fix streeeetchy image on chrome iOS~~
+- integrate API(s)
