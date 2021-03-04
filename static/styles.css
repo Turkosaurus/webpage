@@ -2,6 +2,10 @@ body {
     background: lightgray;
 }
 
+.headshot {
+    padding:10px;
+}
+
 .travisturk {
     color: lightgray;
 }
