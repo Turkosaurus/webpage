@@ -22,9 +22,9 @@ def resume():
 def pdf():
     return send_file('static/resume_TravisTurk_web.pdf', attachment_filename='resume.TravisTurk.pdf')
 
-@app.route("/contact")
-def contact():
-    return render_template("contact.html")
+@app.route("/wx")
+def wx():
+    return render_template("wx.html")
 
 # # if __name__ == '__main__':
 # #     app.run()
