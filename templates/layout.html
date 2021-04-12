@@ -3,7 +3,7 @@
 
 <head>
   {% block head %}
-    <title>Travis Turk {% block title %}{% endblock %}</title>
+    <title>Turkosaur.us{% block title %}{% endblock %}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -33,8 +33,18 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-item nav-link" href="/projects">Projects</a>
-        <a class="nav-item nav-link" href="/resume">Resume</a>
+        <a class="nav-item nav-link" href="/bio">Bio</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Projects
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/projects">Projects</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/projects#incanon">InCanon</a>
+            <a class="dropdown-item" href="/projects#nailivic">Nailivic Studios</a>
+          </div>
+        </li>
         <!-- <a class="nav-item nav-link disabled" href="#">Disabled</a> -->
       </div>
     </div>
@@ -44,7 +54,7 @@
   {% endblock %}
   <footer class="small text-center text-muted">
     <br>
-      Website built with <a href="https://flask.palletsprojects.com/">Flask</a>, served on <a href="https://www.heroku.com/">Heroku</a>, and styled by <a href="https://getbootstrap.com/">Bootstrap</a>.
+      Follow me <a href="https://twitter.com/turkosaurus">@turkosaurus</a>
     <br>
   </footer>
 </body>

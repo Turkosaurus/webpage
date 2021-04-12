@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block title %} | Bio{% endblock %}
+{% block body %}
+<div class="container">
+    <div class="row align-items-center">
+        <div class="col-md-4 col-sm-6">
+            <div>
+                <img src="static/headshot.jpg" class="img-fluid rounded" alt="headshot">
+            </div>    
+            <div style="padding:5%;">
+                <div class="row justify-content-center">
+                    <a class="btn btn-medium btn-dark btn-block" href="https://www.github.com/turkosaurus">
+                        <i class="fa fa-github" aria-hidden="true">&nbsp GitHub</i>
+                    </a>
+                <!-- <div class="col-4" style="padding:2px">
+                    <a class="btn btn-medium btn-dark btn-block" href="https://www.twitter.com/turkosaurus">
+                        <i class="fa fa-twitter" aria-hidden="true">&nbsp Twitter</i>
+                    </a>
+                </div> -->
+                    <a class="btn btn-medium btn-dark btn-block" href="mailto:travisturk@gmail.com" target="_blank">
+                        <i class="fa fa-envelope" aria-hidden="true">&nbsp Email</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-sm-6 align-self-end">
+            <div style="padding:5%">
+                <h3>About Me</h3>
+                <hr>
+                <p>
+                    I am Travis Turk, a seasoned hospitality professional and junior developer.
+                </p>
+                <p>
+                    I have over a decade of experience in restaurant operations, encompassing every facet of the Front of House, including team management, administration, financial reporting and analysis, accounting, and payroll.
+                </p>
+                <p>
+                    More recently, I have studied database and website development, and worked in payroll software technical support.
+                </p>
+                <p>
+                    Checkout my <a href="/projects">projects</a> or view <a href="/resume">resume</a>.    
+                </p>
+            </div>
+    </div>
+</div>
+{% endblock %}
