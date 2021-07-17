@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block title %} - About{% endblock %}
+{% block body %}
+<div class="container">
+    <div class="row align-items-center">
+        <div class="col-md-2 col-sm-6">
+            <div style="padding:5%">
+                <img src="static/dinosaur.png" alt="simple black and white dinosaur logo" width="150px" height="150px" class="img-fluid rounded">
+            </div>
+        </div>
+        <div class="col-md-10 col-sm-6">
+            <div style="padding:5%">
+                <br>
+                <h3>Hello!</h3>
+                <hr>
+                <p>
+                    I'm working on web <a href="/projects">projects</a> using Flask and Postgres:
+                    <ul>
+                        <li>An <a href="/projects#incanon">RPG notebook</a> and NPC compendium</li>
+                        <li>Inventory management <a href="/projects#nailivic">web application</a> for <a href="https://nailivic.com">Nailivic Studios</a></li>
+                        <!-- <li><a href="#"></a>, </li> -->
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

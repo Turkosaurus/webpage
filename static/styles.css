@@ -1,5 +1,6 @@
 body {
-    background: lightgray;
+    /* background-image: url(/static/images/coffee.jpg); */
+    background: #d2e8f750;
 }
 
 .headshot {
@@ -9,3 +10,74 @@ body {
 .travisturk {
     color: lightgray;
 }
+
+.topic {
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 200px;
+    background-size: cover;
+    padding: 1rem;
+}
+
+#coffee {
+    background-image:
+    linear-gradient(to bottom, #ffffff95, #856a6295),
+    url(/static/images/coffee.jpg);
+}
+
+#key {
+    background-image: 
+    linear-gradient(to bottom, #ffffff95, #856a6295),    
+    url(/static/images/101key.jpg);
+}
+
+#dice {
+    background-image: 
+    linear-gradient(to bottom, #ffffff95, #856a6295),
+    url(/static/images/dice.jpg);
+}
+
+#e6b {
+    background-image: 
+    linear-gradient(to bottom, #ffffff95, #856a6295),
+    url(/static/images/e6b.jpg);
+}
+
+#elevenspeed {
+    background-image: 
+    linear-gradient(to bottom, #ffffff95, #856a6295),
+    url(/static/images/elevenspeed.jpg);
+}
+
+#sectional {
+    background-image: 
+    linear-gradient(to bottom, #ffffff95, #856a6295),
+    url(/static/images/sectional.jpg);
+}
+
+#tele {
+    background-image: 
+    linear-gradient(to bottom, #ffffff95, #856a6295),
+    url(/static/images/tele.jpg);
+}
+
+#tolex {
+    background-image: 
+    linear-gradient(to bottom, #ffffff95, #856a6295),
+    url(/static/images/tolex.jpg);
+}
+
+
+
+
+
+
+
+/* 
+    width: 100%;
+    height: 200px; */
+    /* -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover; */
+}
+
