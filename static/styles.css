@@ -1,6 +1,11 @@
+:root {
+    --fade-color-1: #ffffffd9; 
+    --fade-color-2: #000000d9;
+}
+
 body {
     /* background-image: url(/static/images/coffee.jpg); */
-    background: #d2e8f750;
+    background: lightgray;
 }
 
 .headshot {
@@ -17,54 +22,55 @@ body {
     height: 200px;
     background-size: cover;
     padding: 1rem;
+    color
 }
 
 #coffee {
     background-image:
-    linear-gradient(to bottom, #ffffff95, #856a6295),
+    linear-gradient(to right, var(--fade-color-1), var(--fade-color-2)),
     url(/static/images/coffee.jpg);
 }
 
 #key {
     background-image: 
-    linear-gradient(to bottom, #ffffff95, #856a6295),    
-    url(/static/images/101key.jpg);
+        linear-gradient(to right, var(--fade-color-1), var(--fade-color-2)),
+        url(/static/images/keyboard.jpg);
 }
 
 #dice {
     background-image: 
-    linear-gradient(to bottom, #ffffff95, #856a6295),
-    url(/static/images/dice.jpg);
+        linear-gradient(to right, var(--fade-color-1), var(--fade-color-2)),
+        url(/static/images/dice.jpg);
 }
 
 #e6b {
     background-image: 
-    linear-gradient(to bottom, #ffffff95, #856a6295),
-    url(/static/images/e6b.jpg);
+        linear-gradient(to right, var(--fade-color-1), var(--fade-color-2)),
+        url(/static/images/e6b.jpg);
 }
 
 #elevenspeed {
     background-image: 
-    linear-gradient(to bottom, #ffffff95, #856a6295),
-    url(/static/images/elevenspeed.jpg);
+        linear-gradient(to right, var(--fade-color-1), var(--fade-color-2)),
+        url(/static/images/elevenspeed.jpg);
 }
 
 #sectional {
     background-image: 
-    linear-gradient(to bottom, #ffffff95, #856a6295),
-    url(/static/images/sectional.jpg);
+        linear-gradient(to right, var(--fade-color-1), var(--fade-color-2)),
+        url(/static/images/sectional.jpg);
 }
 
 #tele {
     background-image: 
-    linear-gradient(to bottom, #ffffff95, #856a6295),
-    url(/static/images/tele.jpg);
+        linear-gradient(to right, var(--fade-color-1), var(--fade-color-2)),
+        url(/static/images/tele.jpg);
 }
 
 #tolex {
     background-image: 
-    linear-gradient(to bottom, #ffffff95, #856a6295),
-    url(/static/images/tolex.jpg);
+        linear-gradient(to right, var(--fade-color-1), var(--fade-color-2)),
+        url(/static/images/tolex.jpg);
 }
 
 
