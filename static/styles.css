@@ -18,8 +18,10 @@ body {
 
 .icons img,
 .icons svg {
-    width: 3.9em;
+    width: 4em;
     color: var(--beard-orange);
+    /* padding: .2em; */
+    margin: 1em;
 }
 
 /* .icons img:hover,
@@ -42,15 +44,13 @@ a:hover {
     padding:2em;
 }
 
-.headshot {
-    padding:2rem;
-    /* display: block; */
-    /* margin-left: auto; */
-    /* margin-right: auto; */
+#headshot {
+    padding:2em;
 }
 
-.icons {
-    margin:.5em
+
+.footer {
+    margin: 1em;
 }
 
 .topic {
