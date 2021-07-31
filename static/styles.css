@@ -1,19 +1,56 @@
 :root {
-    --fade-color-1: #ffffffec; 
-    --fade-color-2: #000000aa;
+    --fade-color-1: #d0d1d7ec; 
+    --fade-color-2: #d0d1d78a;
+    --beard-orange: #c94025;
+
+    --dark-warm: #432a29;
+    --light-warm: #f57954;
+    --light-cool: #d0d1d7;
 }
 
 body {
     /* background-image: url(/static/images/coffee.jpg); */
-    background: lightgray;
+    background: var(--light-cool);
+    line-height: 1.6;
+    color: var(--dark-warm);
+}
+
+
+.icons img,
+.icons svg {
+    width: 3.9em;
+    color: var(--beard-orange);
+}
+
+/* .icons img:hover,
+.icons svg:hover {
+    width: 3.8em;
+    color: var(--beard-orange);
+} */
+
+a {
+    color: var(--beard-orange);
+}
+
+a:hover {
+    color: var(--beard-orange);
+    opacity: .7;
+}
+
+
+.about-me {
+    padding:2em;
 }
 
 .headshot {
-    padding:10px;
+    padding:2rem;
+    /* display: block; */
+    /* margin-left: auto; */
+    /* margin-right: auto; */
 }
 
-.travisturk {
-    color: lightgray;
+.icons {
+    margin:.5em
 }
 
 .topic {
@@ -21,7 +58,7 @@ body {
     background-repeat: no-repeat;
     height: 200px;
     background-size: cover;
-    padding: 1rem;
+    padding: 2rem;
     color
 }
 
