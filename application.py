@@ -6,7 +6,6 @@ import discord
 from dotenv import load_dotenv
 
 
-
 # Flask App
 app = Flask(__name__)
 

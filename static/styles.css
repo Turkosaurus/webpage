@@ -4,24 +4,188 @@
     --beard-orange: #c94025;
 
     --dark-warm: #432a29;
+    --med-warm: #8c5b5a41;
     --light-warm: #f57954;
     --light-cool: #d0d1d7;
 }
+
+
+html {
+    scroll-behavior: smooth;
+  }
+  
+
+.navbar {
+    background-color: var(--dark-warm);
+  }
+
+/* Courtesy */
+/* https://work.smarchal.com/twbscolor/css/e74c3cc0392becf0f1ffbbbc0 */
+  .navbar .navbar-brand {
+color: var(--light-cool);
+}
+
+.navbar .navbar-brand:hover,
+.navbar .navbar-brand:focus {
+color: var(--light-warm);
+}
+
+.navbar .navbar-text {
+color: var(--light-cool);
+}
+
+.navbar .navbar-text a {
+color: var(--light-warm);
+}
+
+.navbar .navbar-text a:hover,
+.navbar .navbar-text a:focus {
+color: var(--light-warm); 
+}
+
+.navbar .navbar-nav .nav-link {
+color: var(--light-cool);
+border-radius: .25rem;
+margin: 0 0.25em;
+}
+
+.navbar .navbar-nav .nav-link:not(.disabled):hover,
+.navbar .navbar-nav .nav-link:not(.disabled):focus {
+color: var(--light-warm);
+}
+
+.navbar .navbar-nav .nav-item.active .nav-link,
+.navbar .navbar-nav .nav-item.active .nav-link:hover,
+.navbar .navbar-nav .nav-item.active .nav-link:focus,
+.navbar .navbar-nav .nav-item.show .nav-link,
+.navbar .navbar-nav .nav-item.show .nav-link:hover,
+.navbar .navbar-nav .nav-item.show .nav-link:focus {
+color: var(--light-warm);
+background-color: var(--med-warm);
+}
+
+.navbar .navbar-toggler {
+border-color: var(--med-warm);
+}
+
+.navbar .navbar-toggler:hover,
+.navbar .navbar-toggler:focus {
+background-color: var(--beard-orange);
+}
+
+.navbar .navbar-toggler .navbar-toggler-icon {
+    color: var(--light-cool);
+}
+
+.navbar .navbar-collapse,
+.navbar .navbar-form {
+border-color: var(--light-cool);
+}
+
+.navbar .navbar-link {
+color: var(--light-cool);
+}
+
+.navbar .navbar-link:hover {
+color: var(--light-warm);
+}
+  
+@media (max-width: 575px) {
+.navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item {
+    color: var(--light-cool);
+}
+.navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+.navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+    color: var(--light-warm);
+}
+.navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item.active {
+    color: var(--light-warm);
+    background-color: var(--beard-orange);
+}
+}
+
+@media (max-width: 767px) {
+.navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item {
+    color: var(--light-cool);
+}
+.navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+.navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+    color: var(--light-warm);
+}
+.navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item.active {
+    color: var(--light-warm);
+    background-color: var(--beard-orange);
+}
+}
+
+@media (max-width: 991px) {
+.navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item {
+    color: var(--light-cool);
+}
+.navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+.navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+    color: var(--light-warm);
+}
+.navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item.active {
+    color: var(--light-warm);
+    background-color: var(--beard-orange);
+}
+}
+
+@media (max-width: 1199px) {
+.navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item {
+    color: var(--light-cool);
+}
+.navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+.navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+    color: var(--light-warm);
+}
+.navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item.active {
+    color: var(--light-warm);
+    background-color: var(--beard-orange);
+}
+}
+
+.navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item {
+color: var(--light-cool);
+}
+.navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+.navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+color: var(--light-warm);
+}
+.navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item.active {
+color: var(--light-warm);
+background-color: var(--beard-orange);
+}
+
 
 body {
     /* background-image: url(/static/images/coffee.jpg); */
     background: var(--light-cool);
     line-height: 1.6;
     color: var(--dark-warm);
+    font-size: 1.05em;
+    font-weight: 300;
 }
-
 
 .icons img,
 .icons svg {
-    width: 4em;
+    width: 3em;
     color: var(--beard-orange);
     /* padding: .2em; */
-    margin: 1em;
+    margin: .5em;
+}
+
+.icon-med {
+    width: 15em;
+    padding: 1.2em;
+}
+
+.icon-main {
+    fill: var(--light-cool);
+    margin: 0 auto;
+    width: 50vw;
+    padding: 1.2em; 
 }
 
 /* .icons img:hover,
@@ -42,10 +206,15 @@ a:hover {
 
 .about-me {
     padding:2em;
+    max-width: 40em;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #headshot {
     padding:2em;
+    max-width: 25em;
+    margin-top:1em;
 }
 
 
@@ -59,7 +228,7 @@ a:hover {
     height: 200px;
     background-size: cover;
     padding: 2rem;
-    color
+    /* color */
 }
 
 #coffee {
@@ -122,5 +291,5 @@ a:hover {
     /* -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover; */
-}
+
 
