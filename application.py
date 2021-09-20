@@ -1,6 +1,10 @@
-from flask import Flask, render_template, send_file, url_for, redirect, flash
-
+from flask import Flask, render_template, send_file, url_for, redirect, flash, request
+from flask_session import Session
+import requests
+from twilio.rest import Client
 import os
+
+
 import threading
 import discord
 from dotenv import load_dotenv
@@ -8,6 +12,14 @@ from dotenv import load_dotenv
 
 # Flask App
 app = Flask(__name__)
+app.secret_key = os.getenv('SECRET_KEY')
+
+# Twilio
+account_sid = os.getenv('TWILIO_ACCOUNT_SID')
+auth_token = os.getenv('TWILIO_AUTH_TOKEN')
+messaging_service_sid='MGd24392f1df2b12a99eb4b85d2bdd4aec'
+number_turk = os.getenv('NUMBER_TURK')
+client = Client(account_sid, auth_token)
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -15,16 +27,45 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 @app.route("/")
 def home():
-    # return redirect("/bio")
     return render_template("index.html")
 
 @app.route("/portfolio")
 def portfolio():
+    flash("flashy message")
     return render_template("projects.html")
 
 @app.route("/bio")
 def bio():
     return render_template("bio.html")
+
+@app.route("/message", methods=['POST'])
+def message():
+
+    recipient = number_turk
+    name = request.form.get("name")
+    contact = request.form.get("email")
+    message = request.form.get("message")
+    print(f"{name} {contact} {message}")
+
+    message = f"turkosaur.us message from: {name} ({contact}) | {message}"
+
+    message = client.messages \
+        .create(
+            body=message,
+            messaging_service_sid=messaging_service_sid,
+            to=recipient
+        )
+
+    print(message.sid)
+
+    return redirect('/')
+
+@app.route("/message/status")
+def message_status():
+
+    # https://www.twilio.com/docs/sms/tutorials/how-to-confirm-delivery-python
+    return redirect('/')
+
 
 @app.route("/resume")
 def resume():

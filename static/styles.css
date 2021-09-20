@@ -236,6 +236,12 @@ a {
     background-color: var(--accent);
 }
 
+.btn-secondary:hover {
+    color: var(--dark-warm);
+    background-color: var(--accent2);
+    /* text-decoration: none; */
+}
+
 
 i svg {
     color: var(--med-warm)

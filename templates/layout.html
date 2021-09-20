@@ -63,24 +63,32 @@
     </div>
   </nav>
 
-  {% block body %}
-  {% endblock %}
-  <br>
+    {% if get_flashed_messages() %}
+        <header>
+            <div class="alert alert-primary border text-center" role="alert">
+                {{ get_flashed_messages() | join(" ") }}
+            </div>
+        </header>
+    {% endif %}
 
-  <footer class="small text-center text-muted">
-    site by Travis Turk with
-  </footer>
+    {% block body %}
+    {% endblock %}
+    <br>
 
-  <footer class="small text-center text-muted">
-      <a href="https://fontawesome.com/license">Font Awesome </a>
-      &
-      <a href="https://getbootstrap.com/"> Bootstrap</a>
-  </footer>
+    <footer class="small text-center text-muted">
+        site by Travis Turk with
+    </footer>
 
-  <!-- <footer class="small text-center text-muted">
-      Follow me <a href="https://twitter.com/turkosaurus">@turkosaurus</a>
-  </footer> -->
+    <footer class="small text-center text-muted">
+        <a href="https://fontawesome.com/license">Font Awesome </a> |
+        <a href="https://getbootstrap.com/"> Bootstrap </a> |
+        <a href="https://www.twilio.com/"> Twilio </a>
+    </footer>
 
-  <br>
+    <!-- <footer class="small text-center text-muted">
+        Follow me <a href="https://twitter.com/turkosaurus">@turkosaurus</a>
+    </footer> -->
+
+    <br>
 </body>
 </html>
