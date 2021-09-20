@@ -16,8 +16,16 @@
 
 html {
     scroll-behavior: smooth;
-  }
-  
+}
+
+
+.project-section:before {
+    height: 54px;
+    content: "";
+    display:block;
+}  
+
+
 .card {
     margin: 0 auto;
     margin-top: 2em;
