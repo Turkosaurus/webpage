@@ -47,7 +47,7 @@ def message():
     message = request.form.get("message")
     print(f"{name} {contact} {message}")
 
-    message = f"turkosaur.us message from: {name} ({contact}) | {message}"
+    message = f"turkosaurus message\nfrom: {name}\n{contact}\n---\n{message}"
 
     message = client.messages \
         .create(
