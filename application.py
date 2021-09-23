@@ -68,7 +68,7 @@ def message_status():
     return redirect('/')
 
 
-@app.route("/sms" methods=['GET', 'POST'])
+@app.route("/sms", methods=['GET', 'POST'])
 def sms():
 
     """Send a dynamic reply to an incoming text message"""
