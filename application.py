@@ -1,5 +1,6 @@
 from flask import Flask, render_template, send_file, url_for, redirect, flash, request
 from flask_session import Session
+from twilio.twiml.messaging_response import MessagingResponse
 import requests
 from twilio.rest import Client
 import os
@@ -67,18 +68,79 @@ def message_status():
     return redirect('/')
 
 
+@app.route("/sms")
+def sms():
+
+    """Send a dynamic reply to an incoming text message"""
+    # Get the message the user sent our Twilio number
+    body = request.values.get('Body', None)
+
+    # Start our TwiML response
+    resp = MessagingResponse()
+
+    # Determine the right reply for this message
+    if body == 'hello':
+        resp.message("Hi!")
+    elif body == 'bye':
+        resp.message("Goodbye")
+
+    resp.append(f"\n---\n{body}")
+
+    return str(resp)
+
+
 @app.route("/resume")
 def resume():
     return render_template("resume.html")
+
 
 @app.route("/pdf")
 def pdf():
     return send_file('static/resume_TravisTurk_web.pdf', attachment_filename='resume.TravisTurk.pdf')
 
 
-# @app.route("/wx")
-# def wx():
-#     return render_template("wx.html")
+@app.route("/wx")
+def wx():
+
+
+
+    wxkey = {
+   
+    "wind" : {
+        "N" : "⬇",
+        "NE" : "↙",
+        "E" : "⬅",
+        "SE" : "↖",
+        "S" : "⬆",
+        "SW" : "↗",
+        "W" : "➡",
+        "NW" : "↘"
+    },
+
+    "cloud" : {
+        "CLR" : "☀",
+        "FEW" : "🌤",
+        "BKN" : "⛅",
+        "OVC" : "☁"
+    },
+
+    "weather" : {
+        "snow" : "🌨️",
+        "rain" : "🌧️",
+        "lightning" : "🌩️",
+        "tornado" : "🌪️"
+    },
+
+    "temp" : "🌡️",
+    "vis" : "👀",
+    "altemiter" : "🅰️",
+    "time" : "⏳",
+    "warning" : "⚠️"
+    }
+
+    print (wxkey)
+
+    return render_template("wx.html")
 
 # # if __name__ == '__main__':
 # #     app.run()
