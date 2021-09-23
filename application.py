@@ -71,12 +71,19 @@ def message_status():
 @app.route("/sms", methods=['GET', 'POST'])
 def sms():
 
+    print('-' * 80)
+    print("/sms")
+    print('-' * 80)
+
+
     """Send a dynamic reply to an incoming text message"""
     # Get the message the user sent our Twilio number
     body = request.values.get('Body', None)
+    print(body)
 
     # Start our TwiML response
     resp = MessagingResponse()
+    print(resp)
 
     # Determine the right reply for this message
     if body == 'hello':
