@@ -42,6 +42,9 @@ def bio():
 @app.route("/message", methods=['POST'])
 def message():
 
+@app.route("/ping", methods=['POST'])
+def message():
+
     recipient = number_turk
     name = request.form.get("name")
     contact = request.form.get("email")
