@@ -39,11 +39,9 @@ def portfolio():
 def bio():
     return render_template("bio.html")
 
-@app.route("/message", methods=['POST'])
-def message():
 
 @app.route("/ping", methods=['POST'])
-def message():
+def ping():
 
     recipient = number_turk
     name = request.form.get("name")
@@ -64,15 +62,9 @@ def message():
 
     return redirect('/')
 
-@app.route("/message/status")
-def message_status():
 
-    # https://www.twilio.com/docs/sms/tutorials/how-to-confirm-delivery-python
-    return redirect('/')
-
-
-@app.route("/sms", methods=['GET', 'POST'])
-def sms():
+@app.route("/message", methods=['POST'])
+def message():
 
     print('-' * 80)
     print("/sms")
@@ -97,6 +89,14 @@ def sms():
     resp.append(f"\n---\n{body}")
 
     return str(resp)
+
+
+@app.route("/message/status")
+def message_status():
+
+    # https://www.twilio.com/docs/sms/tutorials/how-to-confirm-delivery-python
+    return redirect('/')
+
 
 
 @app.route("/resume")
