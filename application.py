@@ -57,7 +57,7 @@ def fetch_metar(airport):
                     headers = row
 
                 else:
-                    if row[1] == 'KAUS':
+                    if row[1] == airport:
                         result = row[0]
 
     wxkey = {
