@@ -167,7 +167,7 @@ def message():
         print(f"Found airports: {airports}")
 
         metar = fetch_metar(airports[0])
-        resp.message(f"METAR {airports[0]}")        
+        resp.message(f"METAR {airports[0]}\n{metar}")        
 
 
     return str(resp)
