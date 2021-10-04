@@ -4,7 +4,8 @@ from twilio.twiml.messaging_response import MessagingResponse
 import requests
 from twilio.rest import Client
 import os
-
+import csv
+import re
 
 import threading
 import discord
@@ -25,6 +26,79 @@ client = Client(account_sid, auth_token)
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+
+
+
+def fetch_metar(airport):
+
+    metars = requests.get('https://www.aviationweather.gov/adds/dataserver_current/current/metars.cache.csv')
+    url_content = metars.content
+
+    result = url_content
+
+    csv_file = open('static/metars.csv', 'wb')
+    csv_file.write(url_content)
+    csv_file.close()
+
+    with open('static/metars.csv', 'r') as csvfile:
+
+        csv_reader = csv.reader(csvfile)
+
+        header_found = False
+        for row in csv_reader:
+
+            if len(row) == 1:
+                next(csv_reader)
+
+            else:
+                # Capture header if first time encoutering it
+                if header_found == False:
+                    header_found = True
+                    headers = row
+
+                else:
+                    if row[1] == 'KAUS':
+                        result = row[0]
+
+    wxkey = {
+   
+    "wind" : {
+        "N" : "⬇",
+        "NE" : "↙",
+        "E" : "⬅",
+        "SE" : "↖",
+        "S" : "⬆",
+        "SW" : "↗",
+        "W" : "➡",
+        "NW" : "↘"
+    },
+
+    "cloud" : {
+        "CLR" : "☀",
+        "FEW" : "🌤",
+        "BKN" : "⛅",
+        "OVC" : "☁"
+    },
+
+    "weather" : {
+        "snow" : "🌨️",
+        "rain" : "🌧️",
+        "lightning" : "🌩️",
+        "tornado" : "🌪️"
+    },
+
+    "temp" : "🌡️",
+    "vis" : "👀",
+    "altemiter" : "🅰️",
+    "time" : "⏳",
+    "warning" : "⚠️"
+    }
+
+    print (wxkey)
+
+    return (result)
+
+
 
 @app.route("/")
 def home():
@@ -66,10 +140,6 @@ def ping():
 @app.route("/message", methods=['POST'])
 def message():
 
-    print('-' * 80)
-    print("/sms")
-    print('-' * 80)
-
 
     """Send a dynamic reply to an incoming text message"""
     # Get the message the user sent our Twilio number
@@ -78,15 +148,27 @@ def message():
 
     # Start our TwiML response
     resp = MessagingResponse()
-    print(resp)
 
-    # Determine the right reply for this message
-    if body == 'hello':
-        resp.message("Hi!")
-    elif body == 'bye':
-        resp.message("Goodbye")
 
-    resp.append(f"\n---\n{body}")
+    # TODO add STOP and SETTINGS
+    keywords = ['HELP', 'METAR']
+
+
+
+    if 'HELP' in body:
+        resp.message(f'''
+        OPTIONS\n
+        {keywords}
+
+        ''')
+
+    if 'METAR' in body:
+        airports = re.findall("K...", body)
+        print(f"Found airports: {airports}")
+
+        metar = fetch_metar(airports[0])
+        resp.message(f"METAR {airports[0]}")        
+
 
     return str(resp)
 
@@ -108,49 +190,6 @@ def resume():
 def pdf():
     return send_file('static/resume_TravisTurk_web.pdf', attachment_filename='resume.TravisTurk.pdf')
 
-
-@app.route("/wx")
-def wx():
-
-
-
-    wxkey = {
-   
-    "wind" : {
-        "N" : "⬇",
-        "NE" : "↙",
-        "E" : "⬅",
-        "SE" : "↖",
-        "S" : "⬆",
-        "SW" : "↗",
-        "W" : "➡",
-        "NW" : "↘"
-    },
-
-    "cloud" : {
-        "CLR" : "☀",
-        "FEW" : "🌤",
-        "BKN" : "⛅",
-        "OVC" : "☁"
-    },
-
-    "weather" : {
-        "snow" : "🌨️",
-        "rain" : "🌧️",
-        "lightning" : "🌩️",
-        "tornado" : "🌪️"
-    },
-
-    "temp" : "🌡️",
-    "vis" : "👀",
-    "altemiter" : "🅰️",
-    "time" : "⏳",
-    "warning" : "⚠️"
-    }
-
-    print (wxkey)
-
-    return render_template("wx.html")
 
 # # if __name__ == '__main__':
 # #     app.run()
