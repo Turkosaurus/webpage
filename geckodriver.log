@@ -1,0 +1,389 @@
+1633392058610	geckodriver	INFO	Listening on 127.0.0.1:46137
+1633392059646	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "-no-remote" "-profile" "/tmp/rust_mozprofileOk2g9y"
+*** You are running in headless mode.
+[GFX1-]: glxtest: Unable to open a connection to the X server
+[GFX1-]: glxtest: libEGL missing
+[GFX1-]: No GPUs detected via PCI
+1633392060036	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileOk2g9y/search.json.mozlz4", (void 0)))
+1633392061682	Marionette	INFO	Listening on port 38711
+1633392061788	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633392092432	geckodriver	INFO	Listening on 127.0.0.1:57035
+1633392093436	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "-no-remote" "-profile" "/tmp/rust_mozprofileZLtlKz"
+*** You are running in headless mode.
+[GFX1-]: glxtest: Unable to open a connection to the X server
+[GFX1-]: glxtest: libEGL missing
+[GFX1-]: No GPUs detected via PCI
+1633392093822	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileZLtlKz/search.json.mozlz4", (void 0)))
+1633392095928	Marionette	INFO	Listening on port 35935
+1633392095982	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633392112758	geckodriver	INFO	Listening on 127.0.0.1:57487
+1633392112763	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "-no-remote" "-profile" "/tmp/rust_mozprofileefkK2K"
+*** You are running in headless mode.
+[GFX1-]: glxtest: Unable to open a connection to the X server
+[GFX1-]: glxtest: libEGL missing
+[GFX1-]: No GPUs detected via PCI
+1633392113147	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileefkK2K/search.json.mozlz4", (void 0)))
+1633392114847	Marionette	INFO	Listening on port 38699
+1633392114891	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633392157326	geckodriver	INFO	Listening on 127.0.0.1:48053
+1633392158331	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "-no-remote" "-profile" "/tmp/rust_mozprofileeWIViN"
+*** You are running in headless mode.
+[GFX1-]: glxtest: Unable to open a connection to the X server
+[GFX1-]: glxtest: libEGL missing
+[GFX1-]: No GPUs detected via PCI
+1633392158609	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileeWIViN/search.json.mozlz4", (void 0)))
+1633392160384	Marionette	INFO	Listening on port 35563
+1633392160463	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633392162575	geckodriver	INFO	Listening on 127.0.0.1:48935
+1633392162592	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "-no-remote" "-profile" "/tmp/rust_mozprofileaeVfCI"
+*** You are running in headless mode.
+[GFX1-]: glxtest: Unable to open a connection to the X server
+[GFX1-]: glxtest: libEGL missing
+[GFX1-]: No GPUs detected via PCI
+1633392162934	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileaeVfCI/search.json.mozlz4", (void 0)))
+1633392164524	Marionette	INFO	Listening on port 38361
+1633392164637	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633392364482	geckodriver	INFO	Listening on 127.0.0.1:59575
+1633392365487	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "-no-remote" "-profile" "/tmp/rust_mozprofilednzuUV"
+*** You are running in headless mode.
+[GFX1-]: glxtest: Unable to open a connection to the X server
+[GFX1-]: glxtest: libEGL missing
+[GFX1-]: No GPUs detected via PCI
+1633392365913	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilednzuUV/search.json.mozlz4", (void 0)))
+1633392367704	Marionette	INFO	Listening on port 40623
+1633392367815	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633392392579	geckodriver	INFO	Listening on 127.0.0.1:39309
+1633392392587	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "-no-remote" "-profile" "/tmp/rust_mozprofileVwH7qr"
+*** You are running in headless mode.
+[GFX1-]: glxtest: Unable to open a connection to the X server
+[GFX1-]: glxtest: libEGL missing
+[GFX1-]: No GPUs detected via PCI
+1633392393141	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileVwH7qr/search.json.mozlz4", (void 0)))
+1633392395218	Marionette	INFO	Listening on port 39633
+1633392395349	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1633393753968	geckodriver	INFO	Listening on 127.0.0.1:48509
+1633393754973	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "-no-remote" "-profile" "/tmp/rust_mozprofileNVtLy0"
+*** You are running in headless mode.
+[GFX1-]: glxtest: Unable to open a connection to the X server
+[GFX1-]: glxtest: libEGL missing
+[GFX1-]: No GPUs detected via PCI
+1633393755271	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileNVtLy0/search.json.mozlz4", (void 0)))
+1633393756796	Marionette	INFO	Listening on port 38063
+1633393756893	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633393777261	geckodriver	INFO	Listening on 127.0.0.1:44015
+1633393778265	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "-no-remote" "-profile" "/tmp/rust_mozprofilesknDxm"
+*** You are running in headless mode.
+[GFX1-]: glxtest: Unable to open a connection to the X server
+[GFX1-]: glxtest: libEGL missing
+[GFX1-]: No GPUs detected via PCI
+1633393778529	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilesknDxm/search.json.mozlz4", (void 0)))
+1633393779746	Marionette	INFO	Listening on port 36445
+1633393779783	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633393794919	geckodriver	INFO	Listening on 127.0.0.1:58143
+1633393794924	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "-no-remote" "-profile" "/tmp/rust_mozprofile9Ogttw"
+*** You are running in headless mode.
+[GFX1-]: glxtest: Unable to open a connection to the X server
+[GFX1-]: glxtest: libEGL missing
+[GFX1-]: No GPUs detected via PCI
+1633393795205	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofile9Ogttw/search.json.mozlz4", (void 0)))
+1633393797245	Marionette	INFO	Listening on port 41955
+1633393797376	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1633394422082	geckodriver	INFO	Listening on 127.0.0.1:58135
+1633394423085	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "-no-remote" "-profile" "/tmp/rust_mozprofileP4HY2t"
+*** You are running in headless mode.
+[GFX1-]: glxtest: Unable to open a connection to the X server
+[GFX1-]: glxtest: libEGL missing
+[GFX1-]: No GPUs detected via PCI
+1633394423374	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileP4HY2t/search.json.mozlz4", (void 0)))
+1633394424895	Marionette	INFO	Listening on port 43355
+1633394425008	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1633394862230	geckodriver	INFO	Listening on 127.0.0.1:54115
+1633394863234	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "-no-remote" "-profile" "/tmp/rust_mozprofile5RpUXQ"
+*** You are running in headless mode.
+[GFX1-]: glxtest: Unable to open a connection to the X server
+[GFX1-]: glxtest: libEGL missing
+[GFX1-]: No GPUs detected via PCI
+1633394864091	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofile5RpUXQ/search.json.mozlz4", (void 0)))
+1633394867702	Marionette	INFO	Listening on port 40085
+1633394867789	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633397330897	geckodriver	INFO	Listening on 127.0.0.1:46041
+1633397331902	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "-no-remote" "-profile" "/tmp/rust_mozprofileBAti9c"
+*** You are running in headless mode.
+[GFX1-]: glxtest: Unable to open a connection to the X server
+[GFX1-]: glxtest: libEGL missing
+[GFX1-]: No GPUs detected via PCI
+1633397332366	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileBAti9c/search.json.mozlz4", (void 0)))
+1633397333898	Marionette	INFO	Listening on port 38001
+1633397333927	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633397336722	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1633397461499	geckodriver	INFO	Listening on 127.0.0.1:57027
+1633397462503	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "-no-remote" "-profile" "/tmp/rust_mozprofileTsYRPl"
+*** You are running in headless mode.
+[GFX1-]: glxtest: Unable to open a connection to the X server
+[GFX1-]: glxtest: libEGL missing
+[GFX1-]: No GPUs detected via PCI
+1633397462791	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileTsYRPl/search.json.mozlz4", (void 0)))
+1633397464113	Marionette	INFO	Listening on port 44177
+1633397464238	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633397465117	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1633397633398	geckodriver	INFO	Listening on 127.0.0.1:38007
+1633397634402	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "-no-remote" "-profile" "/tmp/rust_mozprofilevFZKPD"
+*** You are running in headless mode.
+[GFX1-]: glxtest: Unable to open a connection to the X server
+[GFX1-]: glxtest: libEGL missing
+[GFX1-]: No GPUs detected via PCI
+1633397634673	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilevFZKPD/search.json.mozlz4", (void 0)))
+1633397636157	Marionette	INFO	Listening on port 40957
+1633397636223	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633397638293	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1633397718531	geckodriver	INFO	Listening on 127.0.0.1:48759
+1633397719536	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "-no-remote" "-profile" "/tmp/rust_mozprofilef6phXD"
+*** You are running in headless mode.
+[GFX1-]: glxtest: Unable to open a connection to the X server
+[GFX1-]: glxtest: libEGL missing
+[GFX1-]: No GPUs detected via PCI
+1633397719801	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilef6phXD/search.json.mozlz4", (void 0)))
+1633397721106	Marionette	INFO	Listening on port 36549
+1633397721187	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1633397723247	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1633397881486	geckodriver	INFO	Listening on 127.0.0.1:49787
+1633397882490	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "-no-remote" "-profile" "/tmp/rust_mozprofileShMZMU"
+*** You are running in headless mode.
+[GFX1-]: glxtest: Unable to open a connection to the X server
+[GFX1-]: glxtest: libEGL missing
+[GFX1-]: No GPUs detected via PCI
+1633397882766	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileShMZMU/search.json.mozlz4", (void 0)))
+1633397884218	Marionette	INFO	Listening on port 33701
+1633397884312	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633397885386	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: WebGL warning: <Create>: WebglAllowWindowsNativeGl:false restricts context creation on this system.
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: Failed to create WebGL context: WebGL creation failed: 
+* WebglAllowWindowsNativeGl:false restricts context creation on this system. ()
+* Exhausted GL driver options. (FEATURE_FAILURE_WEBGL_EXHAUSTED_DRIVERS)
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: WebGL warning: <Create>: WebglAllowWindowsNativeGl:false restricts context creation on this system.
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: Failed to create WebGL context: WebGL creation failed: 
+* WebglAllowWindowsNativeGl:false restricts context creation on this system. ()
+* Exhausted GL driver options. (FEATURE_FAILURE_WEBGL_EXHAUSTED_DRIVERS)
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1633398956995	geckodriver	INFO	Listening on 127.0.0.1:34629
+1633398956998	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "-no-remote" "-profile" "/tmp/rust_mozprofileeL2ULu"
+*** You are running in headless mode.
+[GFX1-]: glxtest: Unable to open a connection to the X server
+[GFX1-]: glxtest: libEGL missing
+[GFX1-]: No GPUs detected via PCI
+1633398957287	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileeL2ULu/search.json.mozlz4", (void 0)))
+1633398958764	Marionette	INFO	Listening on port 42341
+1633398958827	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633398960675	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: WebGL warning: <Create>: WebglAllowWindowsNativeGl:false restricts context creation on this system.
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: Failed to create WebGL context: WebGL creation failed: 
+* WebglAllowWindowsNativeGl:false restricts context creation on this system. ()
+* Exhausted GL driver options. (FEATURE_FAILURE_WEBGL_EXHAUSTED_DRIVERS)
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: WebGL warning: <Create>: WebglAllowWindowsNativeGl:false restricts context creation on this system.
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: Failed to create WebGL context: WebGL creation failed: 
+* WebglAllowWindowsNativeGl:false restricts context creation on this system. ()
+* Exhausted GL driver options. (FEATURE_FAILURE_WEBGL_EXHAUSTED_DRIVERS)
+1633399017261	geckodriver	INFO	Listening on 127.0.0.1:41265
+1633399018267	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "-no-remote" "-profile" "/tmp/rust_mozprofileJu3jph"
+*** You are running in headless mode.
+[GFX1-]: glxtest: Unable to open a connection to the X server
+[GFX1-]: glxtest: libEGL missing
+[GFX1-]: No GPUs detected via PCI
+1633399018559	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileJu3jph/search.json.mozlz4", (void 0)))
+1633399019984	Marionette	INFO	Listening on port 39959
+1633399020094	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633399020917	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+JavaScript error: resource://gre/actors/AutoCompleteChild.jsm, line 125: Error: Invalid autocomplete selectedIndex
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: WebGL warning: <Create>: WebglAllowWindowsNativeGl:false restricts context creation on this system.
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: Failed to create WebGL context: WebGL creation failed: 
+* WebglAllowWindowsNativeGl:false restricts context creation on this system. ()
+* Exhausted GL driver options. (FEATURE_FAILURE_WEBGL_EXHAUSTED_DRIVERS)
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: WebGL warning: <Create>: WebglAllowWindowsNativeGl:false restricts context creation on this system.
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: Failed to create WebGL context: WebGL creation failed: 
+* WebglAllowWindowsNativeGl:false restricts context creation on this system. ()
+* Exhausted GL driver options. (FEATURE_FAILURE_WEBGL_EXHAUSTED_DRIVERS)
+1633399181078	geckodriver	INFO	Listening on 127.0.0.1:42437
+1633399181084	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "-no-remote" "-profile" "/tmp/rust_mozprofile3e8Q2o"
+*** You are running in headless mode.
+[GFX1-]: glxtest: Unable to open a connection to the X server
+[GFX1-]: glxtest: libEGL missing
+[GFX1-]: No GPUs detected via PCI
+1633399181369	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofile3e8Q2o/search.json.mozlz4", (void 0)))
+1633399182762	geckodriver	INFO	Listening on 127.0.0.1:56613
+1633399183240	Marionette	INFO	Listening on port 42391
+1633399183314	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633399183765	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "-no-remote" "-profile" "/tmp/rust_mozprofileJsakIw"
+*** You are running in headless mode.
+[GFX1-]: glxtest: Unable to open a connection to the X server
+[GFX1-]: glxtest: libEGL missing
+[GFX1-]: No GPUs detected via PCI
+1633399184113	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileJsakIw/search.json.mozlz4", (void 0)))
+1633399185362	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1633399185989	Marionette	INFO	Listening on port 37365
+1633399186139	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633399187118	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+JavaScript error: resource://gre/actors/AutoCompleteChild.jsm, line 125: Error: Invalid autocomplete selectedIndex
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: WebGL warning: <Create>: WebglAllowWindowsNativeGl:false restricts context creation on this system.
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: Failed to create WebGL context: WebGL creation failed: 
+* WebglAllowWindowsNativeGl:false restricts context creation on this system. ()
+* Exhausted GL driver options. (FEATURE_FAILURE_WEBGL_EXHAUSTED_DRIVERS)
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: WebGL warning: <Create>: WebglAllowWindowsNativeGl:false restricts context creation on this system.
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: Failed to create WebGL context: WebGL creation failed: 
+* WebglAllowWindowsNativeGl:false restricts context creation on this system. ()
+* Exhausted GL driver options. (FEATURE_FAILURE_WEBGL_EXHAUSTED_DRIVERS)
+JavaScript error: resource://gre/actors/AutoCompleteChild.jsm, line 125: Error: Invalid autocomplete selectedIndex
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: WebGL warning: <Create>: WebglAllowWindowsNativeGl:false restricts context creation on this system.
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: Failed to create WebGL context: WebGL creation failed: 
+* WebglAllowWindowsNativeGl:false restricts context creation on this system. ()
+* Exhausted GL driver options. (FEATURE_FAILURE_WEBGL_EXHAUSTED_DRIVERS)
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: WebGL warning: <Create>: WebglAllowWindowsNativeGl:false restricts context creation on this system.
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: Failed to create WebGL context: WebGL creation failed: 
+* WebglAllowWindowsNativeGl:false restricts context creation on this system. ()
+* Exhausted GL driver options. (FEATURE_FAILURE_WEBGL_EXHAUSTED_DRIVERS)
+1633399270482	geckodriver	INFO	Listening on 127.0.0.1:54147
+1633399271488	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "-no-remote" "-profile" "/tmp/rust_mozprofileNVRSaY"
+*** You are running in headless mode.
+[GFX1-]: glxtest: Unable to open a connection to the X server
+[GFX1-]: glxtest: libEGL missing
+[GFX1-]: No GPUs detected via PCI
+1633399271869	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileNVRSaY/search.json.mozlz4", (void 0)))
+1633399273959	Marionette	INFO	Listening on port 38593
+1633399274039	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633399275859	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+JavaScript error: resource://gre/actors/AutoCompleteChild.jsm, line 125: Error: Invalid autocomplete selectedIndex
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: WebGL warning: <Create>: WebglAllowWindowsNativeGl:false restricts context creation on this system.
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: Failed to create WebGL context: WebGL creation failed: 
+* WebglAllowWindowsNativeGl:false restricts context creation on this system. ()
+* Exhausted GL driver options. (FEATURE_FAILURE_WEBGL_EXHAUSTED_DRIVERS)
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: WebGL warning: <Create>: WebglAllowWindowsNativeGl:false restricts context creation on this system.
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: Failed to create WebGL context: WebGL creation failed: 
+* WebglAllowWindowsNativeGl:false restricts context creation on this system. ()
+* Exhausted GL driver options. (FEATURE_FAILURE_WEBGL_EXHAUSTED_DRIVERS)
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1633399513154	geckodriver	INFO	Listening on 127.0.0.1:37263
+1633399514158	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "-no-remote" "-profile" "/tmp/rust_mozprofileAFplj6"
+*** You are running in headless mode.
+[GFX1-]: glxtest: Unable to open a connection to the X server
+[GFX1-]: glxtest: libEGL missing
+[GFX1-]: No GPUs detected via PCI
+1633399514520	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileAFplj6/search.json.mozlz4", (void 0)))
+1633399516476	Marionette	INFO	Listening on port 44437
+1633399516590	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633399519039	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+JavaScript error: resource://gre/actors/AutoCompleteChild.jsm, line 125: Error: Invalid autocomplete selectedIndex
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: WebGL warning: <Create>: WebglAllowWindowsNativeGl:false restricts context creation on this system.
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: Failed to create WebGL context: WebGL creation failed: 
+* WebglAllowWindowsNativeGl:false restricts context creation on this system. ()
+* Exhausted GL driver options. (FEATURE_FAILURE_WEBGL_EXHAUSTED_DRIVERS)
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: WebGL warning: <Create>: WebglAllowWindowsNativeGl:false restricts context creation on this system.
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=ACCmBE58AQAAF8B2v3EZDjSLykaLWE8tPjMdB3HDOktFDPD5QGNvL-790mdO, line 1: Failed to create WebGL context: WebGL creation failed: 
+* WebglAllowWindowsNativeGl:false restricts context creation on this system. ()
+* Exhausted GL driver options. (FEATURE_FAILURE_WEBGL_EXHAUSTED_DRIVERS)
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1633401613463	geckodriver	INFO	Listening on 127.0.0.1:59575
+1633401614457	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "-no-remote" "-profile" "/tmp/rust_mozprofilebxFWkv"
+*** You are running in headless mode.
+[GFX1-]: glxtest: Unable to open a connection to the X server
+[GFX1-]: glxtest: libEGL missing
+[GFX1-]: No GPUs detected via PCI
+1633401615348	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilebxFWkv/search.json.mozlz4", (void 0)))
+1633401617623	Marionette	INFO	Listening on port 38587
+1633401617710	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633401619150	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=AEBQSU58AQAA-Y6EmFKMiABtuOGBfUTwXEjLmMfvLx_pRS9pprefkaXiiBHA, line 1: WebGL warning: <Create>: WebglAllowWindowsNativeGl:false restricts context creation on this system.
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=AEBQSU58AQAA-Y6EmFKMiABtuOGBfUTwXEjLmMfvLx_pRS9pprefkaXiiBHA, line 1: Failed to create WebGL context: WebGL creation failed: 
+* WebglAllowWindowsNativeGl:false restricts context creation on this system. ()
+* Exhausted GL driver options. (FEATURE_FAILURE_WEBGL_EXHAUSTED_DRIVERS)
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=AEBQSU58AQAA-Y6EmFKMiABtuOGBfUTwXEjLmMfvLx_pRS9pprefkaXiiBHA, line 1: WebGL warning: <Create>: WebglAllowWindowsNativeGl:false restricts context creation on this system.
+JavaScript warning: https://online.adp.com/inc/js/lib/6a8f894227f41759348779077d1e5851.js?seed=AEBQSU58AQAA-Y6EmFKMiABtuOGBfUTwXEjLmMfvLx_pRS9pprefkaXiiBHA, line 1: Failed to create WebGL context: WebGL creation failed: 
+* WebglAllowWindowsNativeGl:false restricts context creation on this system. ()
+* Exhausted GL driver options. (FEATURE_FAILURE_WEBGL_EXHAUSTED_DRIVERS)

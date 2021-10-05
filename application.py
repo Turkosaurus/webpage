@@ -6,10 +6,13 @@ from twilio.rest import Client
 import os
 import csv
 import re
-
-import threading
-import discord
-from dotenv import load_dotenv
+import time
+from selenium.webdriver import Firefox
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.common.keys import Keys
+# import threading
+# import discord
+# from dotenv import load_dotenv
 
 
 # Flask App
@@ -28,9 +31,75 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 
+def punch():
+
+    # Selenium options
+    opts = Options()
+    opts.set_headless()
+    assert opts.headless  # Operating in headless mode
+    browser = Firefox(options=opts)
+    browser.get('https://workforcenow.adp.com/theme/index.html#/Myself_ttd_MyselfTabTimecardsAttendanceSchCategoryMyTimeEntry/MyselfTabTimecardsAttendanceSchCategoryMyTimeEntry')
+
+    # Login to ADP
+    element = browser.find_element_by_id('login-form_username')
+    username = os.getenv('APS_USERNAME')
+    element.send_keys(username)
+    element.send_keys(Keys.RETURN)
+
+    print(f"Username {username} entered.")
+    time.sleep(5)
+
+    element = browser.find_element_by_id('login-form_password')
+    password = os.getenv('APS_PASSWORD')
+    element.send_keys(password)
+    print(f"Password entered.")
+
+    element = browser.find_element_by_id('signBtn')
+    element.submit()
+
+    print("Waiting for page to load...")
+    time.sleep(5)
+    element.send_keys(Keys.ESCAPE)
+
+    punches = browser.find_element_by_id('form1')
+    print(punches)
+
+    browser.close()
+
+    return punches
+
+
+
+def scrape():
+    # Selenium options
+    opts = Options()
+    opts.set_headless()
+    assert opts.headless  # Operating in headless mode
+    browser = Firefox(options=opts)
+    browser.get('https://www.turkosaur.us')
+
+    # Search and return results
+    element = browser.find_element_by_id('name')
+    element.send_keys('testname')
+
+    element = browser.find_element_by_id('email')
+    element.send_keys('test@email.com')
+
+    element = browser.find_element_by_id('message')
+    element.send_keys('Looks like we made it. 🐱‍🐉')
+
+    element.submit()
+
+    browser.close()
+
+
+    # results = browser.find_elements_by_class_name('result_body')
+    # print(results[0].text)
+    # print(results[0].text)
 
 def fetch_metar(airport):
 
+    # https://www.aviationweather.gov/adds/dataserver_current/current/
     metars = requests.get('https://www.aviationweather.gov/adds/dataserver_current/current/metars.cache.csv')
     url_content = metars.content
 
@@ -60,38 +129,34 @@ def fetch_metar(airport):
                     if row[1] == airport:
                         result = row[0]
 
-    wxkey = {
-   
-    "wind" : {
-        "N" : "⬇",
-        "NE" : "↙",
-        "E" : "⬅",
-        "SE" : "↖",
-        "S" : "⬆",
-        "SW" : "↗",
-        "W" : "➡",
-        "NW" : "↘"
-    },
-
-    "cloud" : {
-        "CLR" : "☀",
-        "FEW" : "🌤",
-        "BKN" : "⛅",
-        "OVC" : "☁"
-    },
-
-    "weather" : {
-        "snow" : "🌨️",
-        "rain" : "🌧️",
-        "lightning" : "🌩️",
-        "tornado" : "🌪️"
-    },
-
-    "temp" : "🌡️",
-    "vis" : "👀",
-    "altemiter" : "🅰️",
-    "time" : "⏳",
-    "warning" : "⚠️"
+    wxkey = {   
+        "wind" : {
+            "N" : "⬇",
+            "NE" : "↙",
+            "E" : "⬅",
+            "SE" : "↖",
+            "S" : "⬆",
+            "SW" : "↗",
+            "W" : "➡",
+            "NW" : "↘"
+        },
+        "cloud" : {
+            "CLR" : "☀",
+            "FEW" : "🌤",
+            "BKN" : "⛅",
+            "OVC" : "☁"
+        },
+        "weather" : {
+            "snow" : "🌨️",
+            "rain" : "🌧️",
+            "lightning" : "🌩️",
+            "tornado" : "🌪️"
+        },
+        "temp" : "🌡️",
+        "vis" : "👀",
+        "altemiter" : "🅰️",
+        "time" : "⏳",
+        "warning" : "⚠️"
     }
 
     print (wxkey)
@@ -100,14 +165,26 @@ def fetch_metar(airport):
 
 
 
+# ROUTES #
+
+@app.route("/test")
+def test():
+
+    result = punch()
+
+    return result
+
+
 @app.route("/")
 def home():
     return render_template("index.html")
+
 
 @app.route("/portfolio")
 def portfolio():
     flash("flashy message")
     return render_template("projects.html")
+
 
 @app.route("/bio")
 def bio():
@@ -132,7 +209,7 @@ def ping():
             to=recipient
         )
 
-    print(message.sid)
+    # print(message.sid)
 
     return redirect('/')
 
@@ -163,7 +240,11 @@ def message():
         ''')
 
     if 'METAR' in body:
-        airports = re.findall("K...", body)
+
+        # Find all airports in text
+        airports = re.findall("([Kk]...)(\s)", body)
+        airports = airports.strip()
+
         print(f"Found airports: {airports}")
 
         metar = fetch_metar(airports[0])
@@ -191,8 +272,8 @@ def pdf():
     return send_file('static/resume_TravisTurk_web.pdf', attachment_filename='resume.TravisTurk.pdf')
 
 
-# # if __name__ == '__main__':
-# #     app.run()
+if __name__ == '__main__':
+    app.run()
 
 # tWebpage = threading.Thread(target=webpage)
 # tWebpage.start()
