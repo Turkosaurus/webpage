@@ -246,7 +246,7 @@ def message():
     if any(x in body for x in metar_words):
 
         # Find all airports in text
-        airports = re.findall("([Kk]...)(\s)", body)
+        airports = re.findall("([Kk]...)", body)
         # airports = airports.strip()
 
         print(f"Found airports: {airports}")
