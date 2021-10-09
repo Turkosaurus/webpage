@@ -37,7 +37,7 @@ def punch():
     opts = Options()
     opts.set_headless()
     assert opts.headless  # Operating in headless mode
-    browser = Firefox(options=opts, executable_path='/usr/local/bin/geckodriver')
+    browser = Firefox(options=opts, executable_path='/app/vendor/geckodriver/geckodriver')
     browser.get('https://workforcenow.adp.com/theme/index.html#/Myself_ttd_MyselfTabTimecardsAttendanceSchCategoryMyTimeEntry/MyselfTabTimecardsAttendanceSchCategoryMyTimeEntry')
 
     # Login to ADP
