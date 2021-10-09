@@ -7,9 +7,13 @@ import os
 import csv
 import re
 import time
-from selenium.webdriver import Firefox
-from selenium.webdriver.firefox.options import Options
+# from selenium.webdriver import Firefox
+# from selenium.webdriver.firefox.options import Options
+# from selenium.webdriver.common.keys import Keys
+from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
+
 # import threading
 # import discord
 # from dotenv import load_dotenv
