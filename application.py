@@ -128,11 +128,11 @@ def fetch_metar(airport):
                 # Capture header if first time encoutering it
                 if header_found == False:
                     header_found = True
-                    headers = row
+                    # headers = row
 
                 # Iterate through rows until match is found
                 else:
-                    if row[1] == airport:
+                    if row[1] == airport.upper():
                         result = row[0]
 
 
@@ -227,7 +227,7 @@ def message():
     """Send a dynamic reply to an incoming text message"""
     # Get the message the user sent our Twilio number
     body = request.values.get('Body', None)
-    print(body)
+    print(f"Message received:\n{body}")
 
     # Start our TwiML response
     resp = MessagingResponse()
