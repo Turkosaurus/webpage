@@ -45,8 +45,8 @@ def punch():
     username = os.getenv('APS_USERNAME')
     element.send_keys(username)
     element.send_keys(Keys.RETURN)
-
     print(f"Username {username} entered.")
+
     time.sleep(5)
 
     element = browser.find_element_by_id('login-form_password')
@@ -64,10 +64,14 @@ def punch():
     punches = browser.find_element_by_id('form1')
     print(punches)
 
+
+    # https://realpython.com/modern-web-automation-with-python-and-selenium/
+    # results = browser.find_elements_by_class_name('result')
+    # print(results[0].text)
+    
     browser.close()
 
     return punches
-
 
 
 def scrape():
@@ -103,7 +107,7 @@ def fetch_metar(airport):
     metars = requests.get('https://www.aviationweather.gov/adds/dataserver_current/current/metars.cache.csv')
     url_content = metars.content
 
-    result = url_content
+    result = 'error: unable to find METAR'
 
     csv_file = open('static/metars.csv', 'wb')
     csv_file.write(url_content)
@@ -116,6 +120,7 @@ def fetch_metar(airport):
         header_found = False
         for row in csv_reader:
 
+            # Skip all of the metadata before the headers
             if len(row) == 1:
                 next(csv_reader)
 
@@ -125,54 +130,55 @@ def fetch_metar(airport):
                     header_found = True
                     headers = row
 
+                # Iterate through rows until match is found
                 else:
                     if row[1] == airport:
                         result = row[0]
 
-    wxkey = {   
-        "wind" : {
-            "N" : "⬇",
-            "NE" : "↙",
-            "E" : "⬅",
-            "SE" : "↖",
-            "S" : "⬆",
-            "SW" : "↗",
-            "W" : "➡",
-            "NW" : "↘"
-        },
-        "cloud" : {
-            "CLR" : "☀",
-            "FEW" : "🌤",
-            "BKN" : "⛅",
-            "OVC" : "☁"
-        },
-        "weather" : {
-            "snow" : "🌨️",
-            "rain" : "🌧️",
-            "lightning" : "🌩️",
-            "tornado" : "🌪️"
-        },
-        "temp" : "🌡️",
-        "vis" : "👀",
-        "altemiter" : "🅰️",
-        "time" : "⏳",
-        "warning" : "⚠️"
-    }
-
-    print (wxkey)
 
     return (result)
 
+def style_metar():
 
+    wxkey = {   
+            "wind" : {
+                "N" : "⬇",
+                "NE" : "↙",
+                "E" : "⬅",
+                "SE" : "↖",
+                "S" : "⬆",
+                "SW" : "↗",
+                "W" : "➡",
+                "NW" : "↘"
+            },
+            "cloud" : {
+                "CLR" : "☀",
+                "FEW" : "🌤",
+                "BKN" : "⛅",
+                "OVC" : "☁"
+            },
+            "weather" : {
+                "snow" : "🌨️",
+                "rain" : "🌧️",
+                "lightning" : "🌩️",
+                "tornado" : "🌪️"
+            },
+            "temp" : "🌡️",
+            "vis" : "👀",
+            "altemiter" : "🅰️",
+            "warning" : "⚠️"
+        }
+
+    return wxkey
 
 # ROUTES #
 
 @app.route("/test")
 def test():
 
-    result = punch()
+    # result = punch()
 
-    return result
+    return redirect('/')
 
 
 @app.route("/")
@@ -226,20 +232,18 @@ def message():
     # Start our TwiML response
     resp = MessagingResponse()
 
+    keywords = ['HELP\n', 'metar k___\n', 'punch time/in/out']
 
-    # TODO add STOP and SETTINGS
-    keywords = ['HELP', 'METAR']
-
-
-
-    if 'HELP' in body:
+    menu_words = ['INFO', 'info', 'MENU', 'menu', 'OPTIONS', 'options']
+    if any(x in body for x in menu_words):
         resp.message(f'''
         OPTIONS\n
         {keywords}
 
         ''')
-
-    if 'METAR' in body:
+    
+    metar_words = ['METAR', 'Metar', 'metar']
+    if any(x in body for x in metar_words):
 
         # Find all airports in text
         airports = re.findall("([Kk]...)(\s)", body)
@@ -249,6 +253,9 @@ def message():
 
         metar = fetch_metar(airports[0])
         resp.message(f"METAR {airports[0]}\n{metar}")        
+
+    if 'punch' in body:
+        print('punch')
 
 
     return str(resp)
