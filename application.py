@@ -232,14 +232,12 @@ def message():
     # Start our TwiML response
     resp = MessagingResponse()
 
-    keywords = ['HELP\n', 'metar k___\n', 'punch time/in/out']
-
-    menu_words = ['INFO', 'info', 'MENU', 'menu', 'OPTIONS', 'options']
+    menu_words = ['INFO', 'Info' 'info', 'MENU', 'Menu', 'menu', 'OPTIONS', 'Options', 'options']
     if any(x in body for x in menu_words):
         resp.message(f'''
-        OPTIONS\n
-        {keywords}
-
+        MENU\n
+        "METAR K___"
+        "Punch time/in/out"
         ''')
     
     metar_words = ['METAR', 'Metar', 'metar']
@@ -254,9 +252,9 @@ def message():
         metar = fetch_metar(airports[0])
         resp.message(f"METAR {airports[0]}\n{metar}")        
 
-    if 'punch' in body:
-        print('punch')
-
+    if 'Punch time' in body:
+        timedata = punch()
+        resp.message(f"Time Card\n---\n{timedata}")        
 
     return str(resp)
 
