@@ -247,7 +247,7 @@ def message():
 
         # Find all airports in text
         airports = re.findall("([Kk]...)(\s)", body)
-        airports = airports.strip()
+        # airports = airports.strip()
 
         print(f"Found airports: {airports}")
 
