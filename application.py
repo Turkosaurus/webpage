@@ -6,13 +6,15 @@ from twilio.rest import Client
 import os
 import csv
 import re
-import time
+import time # TODO replace all use of time with datetime
+import datetime
 # from selenium.webdriver import Firefox
 # from selenium.webdriver.firefox.options import Options
 # from selenium.webdriver.common.keys import Keys
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
+import psycopg2
 
 # import threading
 # import discord
@@ -23,20 +25,27 @@ from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY')
 
-# Twilio
+
+# PostgreSQL database connection
+conn = psycopg2.connect(os.getenv('DATABASE_URL'))
+
+
+# Twilio configuration
 account_sid = os.getenv('TWILIO_ACCOUNT_SID')
 auth_token = os.getenv('TWILIO_AUTH_TOKEN')
 messaging_service_sid='MGd24392f1df2b12a99eb4b85d2bdd4aec'
 number_turk = os.getenv('NUMBER_TURK')
 client = Client(account_sid, auth_token)
 
+
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 
-# https://elements.heroku.com/buildpacks/pyronlaboratory/heroku-integrated-firefox-geckodriver
 def  load_driver():
+    # https://elements.heroku.com/buildpacks/pyronlaboratory/heroku-integrated-firefox-geckodriver
+
 	options = webdriver.FirefoxOptions()
 	
 	# enable trace level for debugging 
@@ -128,6 +137,7 @@ def scrape():
     # print(results[0].text)
     # print(results[0].text)
 
+
 def fetch_metar(airport):
 
     # https://www.aviationweather.gov/adds/dataserver_current/current/
@@ -164,6 +174,7 @@ def fetch_metar(airport):
 
 
     return (result)
+
 
 def style_metar():
 
@@ -250,7 +261,6 @@ def ping():
 @app.route("/message", methods=['POST'])
 def message():
 
-
     """Send a dynamic reply to an incoming text message"""
     # Get the message the user sent our Twilio number
     body = request.values.get('Body', None)
@@ -299,6 +309,27 @@ def resume():
     return render_template("resume.html")
 
 
+@app.route("/admin")
+def admin():
+    # Open a cursor to perform database operations
+    cur = conn.cursor()
+
+    # Execute a query
+    results = cur.execute("SELECT * FROM logs")
+
+    # Retrieve query results
+    records = cur.fetchall()
+
+    print(f"results:{results}")
+    print(f"records:{records}")
+
+    return redirect("/")
+
+@app.route("/<nickname>")
+def short_url(nickname):
+    print(f"short_url:{nickname}")
+
+
 @app.route("/pdf")
 def pdf():
     return send_file('static/resume_TravisTurk_web.pdf', attachment_filename='resume.TravisTurk.pdf')
@@ -306,6 +337,8 @@ def pdf():
 
 if __name__ == '__main__':
     app.run()
+
+
 
 # tWebpage = threading.Thread(target=webpage)
 # tWebpage.start()
