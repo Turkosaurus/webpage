@@ -1,203 +1,544 @@
 {% extends "layout.html" %}
 {% block title %} | Portfolio{% endblock %}
 {% block body %}
-<div class="container">
-    <br>
-    <h1>Portfolio</h1>
-    <hr>
+<div class="container" id="top">
+
+
+
+    <!-- Title -->
+    <div class="row justify-content-left">
+        <div class="col">
+
+            <h1 class="display-1">
+                Portfolio
+            </h1>
+            <!-- <p>
+                I specialize in optimizing workflows, elimnating redundancies, and identifying the right opportunities for automation.
+            </p> -->
+            <hr>
+
+            <!-- Menu -->
+            <li class="list-inline-item">
+                <a class="" href="#nailivic">Nailivic Studios</a>
+            </li>
+            <li class="list-inline-item">
+                <a class="" href="#metar">METAR Text Service</a>
+            </li>
+            <li class="list-inline-item">
+                <a class="" href="#incanon">InCanon</a>
+            </li>
+            <li class="list-inline-item">
+                <a class="" href="#"></a>
+            </li>
+        </div>
+    </div>
+
+
+
+    <!--  -->
+    <!-- Nailivic -->
+    <!--  -->
+
+    <!-- Title -->
+    <div class="row justify-content-left">
+        <div class="col">
+            <h1 class="display-3 project-section" id="nailivic">
+                Nailivic Studios
+            </h1>
+            <h4>
+                Enterprise Resource Planning (ERP)
+            </h4>
+        
+            <li class="list-inline-item">
+                🟢 Active users
+            </li>
+            <li class="list-inline-item">
+                <a href="https://github.com/Turkosaurus/nailivic">🐱 Source Code</a>
+            </li>
+            <li class="list-inline-item">
+                <a href="https://nailivic.herokuapp.com">🌐 Project Site</a>
+            </li>
+        </div>
+    </div>
     
-    <div class="row justify-content-left">
-        <div class="col">
-            <!-- <h2 id="overview">Overview</h2> -->
-            <p>I started coding in 2020, and I love building useful tools that change how people do work. I'm rounding out full stack competencies, currently learning dynamic front-end frameworks.</p>
-        </div>
-    </div>
-
     <br>
-    <hr>
 
+    <!-- Components -->
     <div class="row justify-content-left">
         <div class="col">
-            <h2 class="project-section" id="cluck">Cluck</h2>
-            <h6>Homebrew Personal Assitant via SMS</h6>
+            <h2>
+                Components
+            </h2>
+            <table class="table">
+                <!-- <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                    </tr>
+                </thead> -->
+                <tbody>
+                    <tr>
+                        <th scope="row">Python Libraries</th>
+                        <td><code>psychopg2, session, flash, csv, datetime, send_from_directory</code></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Frameworks</th>
+                        <td><code>Flask, Jinja</code></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Data & Hosting</th>
+                        <td><code>PostgreSQL, Heroku</code></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Style</th>
+                        <td><code>Bootstrap, Font Awesome</code></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+
+    <!-- <br> -->
+
+    <!-- Summary -->
     <div class="row justify-content-left">
-        <div class="col-md-4 col-sm-12">
-            <!-- <a label="Cluck" href="https://nailivic.herokuapp.com" title="Go to the app">
-                <img src="/static/icons/globe-solid.svg" width="50rem">
-            </a> -->
-            <a label="GitHub" href="https://www.github.com/turkosaurus/webpage" title="View the source code">
-                <img src="/static/icons/github-brands.svg" width="50rem">
+        <div class="col-md-10 col-sm-12">
+            <h2>
+                Summary
+            </h2>
+            <p>
+                <a href="https://www.nailivic.com/">Nailivic Studios</a> creates folk art in a variety of sizes, colors, and shapes, all cut from computer controlled lasers.
+                This service manages inventory of parts and items, and calculates production queue. Projections are obtained by importing historical sales data from Square.
+                SKU system established for all possible combinations of size, type, and colors, which is unified across Square, Shopify, and this app.
+            </p>
+            <p>
+                Projections are imported directly from Square sales reports, and stored in a database table, which may also be exported again as a csv after modifications.
+                Parts and items inventory database tables can also be imported or exported via csv. Inventory is unified, while projections are stored by event.
+            </p>
+        </div>
+
+    </div>
+    
+    <div class="col-md-10 col-sm-12">
+        <div id="carousel-nailivic" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-nailivic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-nailivic" data-slide-to="1"></li>
+                <li data-target="#carousel-nailivic" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-interval="20000">
+                <img src="/static/images/nailivic/laser-board.jpg" class="d-block w-100" alt="computer controlled laser with lid open and board prepared for cutting">
+                <div class="carousel-caption d-none d-md-block">
+                    <!-- <h5>Production Management</h5>
+                    <p>Required types, sizes, and quantities are calculated and kept up-to-date</p> -->
+                </div>
+                </div>
+                <div class="carousel-item" data-interval="20000">
+                <img src="/static/images/nailivic/parts.jpg" class="d-block w-100" alt="laser cut wooden octopus parts shown from above">
+                <div class="carousel-caption d-none d-md-block">
+                    <!-- <h5>Inventory Tracking</h5>
+                    <p>Make best use of existing inventory and avoid overproduction.</p> -->
+                </div>
+                </div>
+                <div class="carousel-item" data-interval="20000">
+                <img src="/static/images/nailivic/item.jpg" class="d-block w-100" alt="assembled wooden octopus artwork in final form">
+                <div class="carousel-caption d-none d-md-block">
+                    <!-- <h5>Octopus</h5>
+                    <p></p> -->
+                </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carousel-nailivic" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carousel-nailivic" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
             </a>
         </div>
+        <small><a href="#top">return to top</a></small>
     </div>
-    <br>
-    <h3>Summary</h3>
-    <p>Twilio connected SMS capability build into <a href="https://turkosaur.us">turkosaur.us</a> home. Initial capability is immediate contact from call to action on home page. Roadmap includes connection to Discord bot and reporting capabilities.</p>
-    <!-- <div class="row justify-content-left">
-        <div class="col-md-6 col-sm-12">
-            <h3>Features</h3>
-            <ul>
-                <li>CSV import tool</li>
-                <li>item and part inventory management</li>
-                <li>needed parts are calculated from projected items</li>
-            </ul>    
+
+
+    <!--  -->
+    <!-- METAR -->
+    <!--  -->
+
+    <div class="row justify-content-left">
+        <div class="col">
+            <h1 class="display-3 project-section" id="metar">
+                METAR via SMS
+            </h1>
+            <h4>
+                Text Message Aviation Meteorological Reports
+            </h4>
+            <li class="list-inline-item">
+                🟡 In Testing
+            </li>
+            <li class="list-inline-item">
+                <a href=https://github.com/Turkosaurus/webpage>🐱 Source Code</a>
+            </li>
+            <li class="list-inline-item">
+                <a href=https://www.turkosaur.us/metar>🌐 Project Site</a>
+            </li>
         </div>
-        <div class="col-md-6 col-sm-12">
-            <h3>Technologies Used</h3>
-            <ul>
-                <li>Python</li>
-            </ul>            
+    </div>
+
+    <!-- Components -->
+    <div class="row justify-content-left">
+        <div class="col">
+            <h2>
+                Components
+            </h2>
+            <table class="table">
+                <!-- <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                    </tr>
+                </thead> -->
+                <tbody>
+                    <tr>
+                        <th scope="row">Python Libraries</th>
+                        <td><code>twilio, requests, csv, re, psychopg2, datetime</code></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Frameworks</th>
+                        <td><code>Flask, Jinja, Twilio Messaging API</code></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Data & Hosting</th>
+                        <td><code>PostgreSQL, Heroku</code></td>
+                    </tr>
+                    <!-- <tr>
+                        <th scope="row">Style</th>
+                        <td><code>Bootstrap, Font Awesome</code></td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- <br> -->
+
+    <!-- Summary -->
+    <div class="row justify-content-left">
+        <div class="col-md-10 col-sm-12">
+            <h2>
+                Summary
+            </h2>
+            <p>
+                Because data connections are often spotty, this delivers a timely weather report to the user through simlple, low data SMS protocols.
+            </p>
+            <p>
+                While the client side is handled by the Twilio API, the server parses requests using regular expressions, fetches recent METARs from 
+                the <a href="https://www.aviationweather.gov/dataserver">Aviation Weather Center Text Data Server</a>, and delivers raw METAR text for 
+                any requested <code>K***</code> airport code.
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-10 col-sm-12">
+        <div id="carousel-metar" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-metar" data-slide-to="0" class="active"></li>
+                <!-- <li data-target="#carousel-metar" data-slide-to="1"></li>
+                <li data-target="#carousel-metar" data-slide-to="2"></li> -->
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-interval="20000">
+                <img src="/static/images/metar/metar-example.gif" class="d-block w-100" alt="series of texts retrieving METARs via SMS">
+                <div class="carousel-caption d-none d-md-block">
+                    <!-- <h5>Rapid response</h5>
+                    <p>Quick retrieval for all K*** designated airports.</p> -->
+                </div>
+                </div>
+                <!-- <div class="carousel-item" data-interval="20000">
+                <img src="3" class="d-block w-100" alt="">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>metar-heading</h5>
+                    <p>metar paragraph shows only on desktop.</p>
+                </div>
+                </div>
+                <div class="carousel-item" data-interval="20000">
+                <img src="#" class="d-block w-100" alt="">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>metar-heading</h5>
+                    <p>metar paragraph shows only on desktop.</p>
+                </div>
+                </div> -->
+            </div>
+            <a class="carousel-control-prev" href="#carousel-metar" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carousel-metar" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+
+        </div>
+        <small><a href="#top">return to top</a></small>
+    </div>
+
+
+    <!--  -->
+    <!-- incanon -->
+    <!--  -->
+
+    <!-- Title -->
+    <div class="row justify-content-left">
+        <div class="col">
+            <h1 class="display-3 project-section" id="incanon">
+                InCanon
+            </h1>
+            <h4>
+                Web Application for TTRPG
+            </h4>
+        
+            <li class="list-inline-item">
+                🔺 Development Suspended
+            </li>
+            <li class="list-inline-item">
+                <a href="https://github.com/Turkosaurus/InCanon">🐱 Source Code</a>
+            </li>
+            <li class="list-inline-item">
+                <a href="https://incanon.herokuapp.com/">🌐 Project Site</a>
+            </li>
+        </div>
+    </div>
+    
+    <br>
+
+    <!-- Components -->
+    <div class="row justify-content-left">
+        <div class="col">
+            <h2>
+                Components
+            </h2>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th scope="row">Python Libraries</th>
+                        <td><code>sqlalchemy, cs50, request, session, flash</code></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Frameworks</th>
+                        <td><code>Flask, Jinja</code></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Data & Hosting</th>
+                        <td><code>PostgreSQL, Heroku</code></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Style</th>
+                        <td><code>Bootstrap</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="row justify-content-left">
+        <div class="col-md-10 col-sm-12">
+            <h2>
+                Summary
+            </h2>
+            <p>
+                Table top role playing games (TTRPG) allow for a collaboratively open world, often populated with so many items, quests, and non-player characters 
+                that it can be hard to keep track. 
+            </p>
+            <p>
+                This web application allows logged in users to create campaigns and invite other users to join. In a shared campaign, any player can add to the 
+                compendium of characters, items, and quests, all linked through editable places.
+            </p>
+        </div>
+
+        <div class="col-md-10 col-sm-12">
+
+            <!-- <div id="carousel-incanon" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-incanon" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-incanon" data-slide-to="1"></li>
+                    <li data-target="#carousel-incanon" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active" data-interval="20000">
+                    <img src="#" class="d-block w-100" alt="">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>incanon-heading</h5>
+                        <p>incanon paragraph shows only on desktop.</p>
+                    </div>
+                    </div>
+                    <div class="carousel-item" data-interval="20000">
+                    <img src="3" class="d-block w-100" alt="">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>incanon-heading</h5>
+                        <p>incanon paragraph shows only on desktop.</p>
+                    </div>
+                    </div>
+                    <div class="carousel-item" data-interval="20000">
+                    <img src="#" class="d-block w-100" alt="">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>incanon-heading</h5>
+                        <p>incanon paragraph shows only on desktop.</p>
+                    </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carousel-incanon" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carousel-incanon" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div> -->
+            <small><a href="#top">return to top</a></small>
+        </div>
+    </div>
+
+
+    <small><a href="#top">return to top</a></small>
+
+
+
+
+
+    <!--  -->
+    <!-- template -->
+    <!--  -->
+
+    <!-- Title -->
+    <!-- <div class="row justify-content-left">
+        <div class="col">
+            <h1 class="display-3 project-section" id="template">
+                template
+            </h1>
+            <h4>
+                Web Application
+            </h4>
+        
+            <li class="list-inline-item">
+                🟨 In Development
+            </li>
+            <li class="list-inline-item">
+                <a href="#">🐱 Source Code</a>
+            </li>
+            <li class="list-inline-item">
+                <a href="#">🌐 Project Site</a>
+            </li>
+        </div>
+    </div> -->
+    
+    <br>
+
+    <!-- Components -->
+    <!-- <div class="row justify-content-left">
+        <div class="col">
+            <h2>
+                Components
+            </h2>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th scope="row">Python Libraries</th>
+                        <td><code>psychopg2, session, flash, csv, datetime, send_from_directory</code></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Frameworks</th>
+                        <td><code>Flask, Jinja</code></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Data & Hosting</th>
+                        <td><code>PostgreSQL, Heroku</code></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Style</th>
+                        <td><code>Bootstrap, Font Awesome</code></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div> -->
 
-    <hr>
-    <br>
-
-
-
-
-
-
-    <div class="row justify-content-left">
-        <div class="col">
-            <h2 class="project-section" id="nailivic">Nailivc Studios</h2>
-            <h6>Inventory and production management (web app)</h6>
+    <!-- Summary -->
+    <!-- <div class="row justify-content-left">
+        <div class="col-md-10 col-sm-12">
+            <h2>
+                Summary
+            </h2>
+            <p>
+                This exists because...
+            </p>
+            <p>
+                Features include...
+            </p>
         </div>
-    </div>
-    <div class="row justify-content-left">
-        <div class="col-md-4 col-sm-12">
-            <a label="Nailivic" href="https://nailivic.herokuapp.com" title="Go to the app">
-                <img src="/static/icons/globe-solid.svg" width="50rem">
-            </a>
-            <a label="GitHub" href="https://www.github.com/turkosaurus/nailivic" title="View the source code">
-                <img src="/static/icons/github-brands.svg" width="50rem">
-            </a>
-        </div>
-    </div>
-    <br>
-    <h3>Summary</h3>
-    <p>Nailivic Studios creates folk art in a variety of sizes, colors, and shapes, all cut from computer controlled lasers.</p>
-    <p>This web app is being built to streamline inventory management and production tracking.</p>
-    <p>In addition, connection to the Shopify REST API will facilitate a dashboard for shipping needs.</p>        
-    <div class="row justify-content-left">
-        <div class="col-md-6 col-sm-12">
-            <h3>Features</h3>
-            <ul>
-                <li>CSV import tool</li>
-                <li>item and part inventory management</li>
-                <li>needed parts are calculated from projected items</li>
-            </ul>    
-        </div>
-        <div class="col-md-6 col-sm-12">
-            <h3>Technologies Used</h3>
-            <ul>
-                <li>Python</li>
-                <li>Flask</li>
-                <li>PostgereSQL</li>
-                <li>Bootstrap</li>
-                <li>Heroku</li>
-            </ul>            
-        </div>
-    </div>
 
-    <hr>
-    <br>
+        <div class="col-md-10 col-sm-12">
 
-
-    <div class="row justify-content-left">
-        <div class="col">
-            <h2 class="project-section" id="incanon">InCanon</h2>
-            <h6>Datbase notebook for RPGs (web app)</h6>
+            <div id="carousel-template" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-template" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-template" data-slide-to="1"></li>
+                    <li data-target="#carousel-template" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active" data-interval="20000">
+                    <img src="#" class="d-block w-100" alt="">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>template-heading</h5>
+                        <p>Template paragraph shows only on desktop.</p>
+                    </div>
+                    </div>
+                    <div class="carousel-item" data-interval="20000">
+                    <img src="3" class="d-block w-100" alt="">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>template-heading</h5>
+                        <p>Template paragraph shows only on desktop.</p>
+                    </div>
+                    </div>
+                    <div class="carousel-item" data-interval="20000">
+                    <img src="#" class="d-block w-100" alt="">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>template-heading</h5>
+                        <p>Template paragraph shows only on desktop.</p>
+                    </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carousel-template" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carousel-template" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+            <small><a href="#top">return to top</a></small>
         </div>
-    </div>
-    <div class="row justify-content-left">
-        <div class="col-md-4 col-sm-12">
-            <a label="InCanon" href="https://incanon.herokuapp.com/" title="Go to the app">
-                <img src="/static/icons/globe-solid.svg" width="50rem">
-            </a>
-            <a label="GitHub" href="https://www.github.com/turkosaurus/incanon" title="View the source code">
-                <img src="/static/icons/github-brands.svg" width="50rem">
-            </a>
-        </div>
-    </div>
-    <br>
-    <h3>Summary</h3>
-    <p>The web app uses a relational database to allow users to collaboratively build a compendium of all the people, places, and things that animate a role-playing campaign setting.</p>
-    <p>Players and Game Masters can join their own shared campaign in which everyone views the index of notable entries as their home page, and anyone can add new information.</p>
-    <p>Originally, this app was a project submission to CS50x, but through continued development it has been released as a standalone web app.</p>
-    <div class="row justify-content-left">
-        <div class="col-md-6 col-sm-12">
-            <h3>Features</h3>
-            <ul>
-                <li>User management</li>
-                <li>Hashed passwords and input sanitization</li>
-                <li>Persistent user and game data</li>
-                <li>Scales to support multiple campaigns</li>
-            </ul>    
-        </div>
-        <div class="col-md-6 col-sm-12">
-            <h3>Technologies Used</h3>
-            <ul>
-                <li>Python</li>
-                <li>Flask</li>
-                <li>Bootstrap</li>
-                <li>Jinja</li>
-                <li>SQLite3</li>
-                <li>PostgereSQL</li>
-                <li>Heroku</li>
-            </ul>    
-        </div>
-    </div>
-
-    <hr>
-    <br>
-
-    <div class="row justify-content-left">
-        <div class="col">
-            <h2 class="project-section" id="cursedsand">Cursed Sand</h2>
-            <h6>Card based RPG prototype</h6>
-        </div>
-    </div>
-    <div class="row justify-content-left">
-        <div class="col-md-4 col-sm-12">
-            <a label="CursedSand" href="https://www.cursedsand.com" title="Go to the app">
-                <img src="/static/icons/globe-solid.svg" width="50rem">
-            </a>
-            <a label="GitHub" href="https://github.com/Cursed-Sand/phasergame" title="View the source code">
-                <img src="/static/icons/github-brands.svg" width="50rem">
-            </a>
-        </div>
-    </div>
-    <br>
-    <h3>Summary</h3>
-    <p>Expanding front end competencies with React and Phaser JavaScript libraries and Flask.</p>
-    <div class="row justify-content-left">
-        <div class="col-md-6 col-sm-12">
-            <h3>Features</h3>
-            <ul>
-                <li>Coming soon</li>
-            </ul>    
-        </div>
-        <div class="col-md-6 col-sm-12">
-            <h3>Technologies Used</h3>
-            <ul>
-                <li>Python</li>
-                <li>Flask</li>
-                <li>PostgereSQL</li>
-                <li>Flexbox</li>
-                <li>Heroku</li>
-            </ul>            
-        </div>
-    </div>
+    </div> -->
 
 
-    <!-- <br>
-    <h2>Maker Coffee</h2>
-        <p></p>
-        <p></p>
-        <p></p>
-    <br> -->
+
+
+
+
+
+
+
+
+
+
+
+
 </div>
 {% endblock %}

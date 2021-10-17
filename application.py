@@ -37,8 +37,7 @@ auth_token = os.getenv('TWILIO_AUTH_TOKEN')
 number_turk = os.getenv('NUMBER_TURK')
 client = Client(account_sid, auth_token)
 
-
-# Ensure templates are auto-reloaded
+# App - Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
@@ -302,6 +301,9 @@ def message_status():
     # https://www.twilio.com/docs/sms/tutorials/how-to-confirm-delivery-python
     return redirect('/')
 
+@app.route("/metar")
+def metar():
+    return render_template('cluck.html')
 
 @app.route("/resume")
 def resume():

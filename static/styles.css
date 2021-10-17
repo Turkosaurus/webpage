@@ -18,6 +18,9 @@ html {
     scroll-behavior: smooth;
 }
 
+th, code {
+    color: var(--dark-warm);
+}
 
 .project-section:before {
     height: 60px;
@@ -25,6 +28,10 @@ html {
     display:block;
 }
 
+.carousel {
+    /* padding: 0; */
+    margin: 0;
+}
 
 .card {
     margin: 0 auto;
@@ -39,13 +46,15 @@ html {
     background-color: var(--light-cool);
 }
 
-
+.list-group-item {
+    background-color: var(--light-cool);
+}
 
 .navbar {
     background-color: var(--dark-warm);
   }
 
-  
+
 /* Courtesy */
 /* https://work.smarchal.com/twbscolor/css/e74c3cc0392becf0f1ffbbbc0 */
   .navbar .navbar-brand {
@@ -222,7 +231,7 @@ body {
 
 /* Navbar mobile menu icon */
 .icon-sm {
-    width: 2em;
+    width: 1.5em;
     color: var(--accent2);
 }
 
