@@ -1,0 +1,203 @@
+{% extends "layout.html" %}
+{% block title %} | Portfolio{% endblock %}
+{% block body %}
+<div class="container">
+    <br>
+    <h1>Portfolio</h1>
+    <hr>
+    
+    <div class="row justify-content-left">
+        <div class="col">
+            <!-- <h2 id="overview">Overview</h2> -->
+            <p>I started coding in 2020, and I love building useful tools that change how people do work. I'm rounding out full stack competencies, currently learning dynamic front-end frameworks.</p>
+        </div>
+    </div>
+
+    <br>
+    <hr>
+
+    <div class="row justify-content-left">
+        <div class="col">
+            <h2 class="project-section" id="cluck">Cluck</h2>
+            <h6>Homebrew Personal Assitant via SMS</h6>
+        </div>
+    </div>
+    <div class="row justify-content-left">
+        <div class="col-md-4 col-sm-12">
+            <!-- <a label="Cluck" href="https://nailivic.herokuapp.com" title="Go to the app">
+                <img src="/static/icons/globe-solid.svg" width="50rem">
+            </a> -->
+            <a label="GitHub" href="https://www.github.com/turkosaurus/webpage" title="View the source code">
+                <img src="/static/icons/github-brands.svg" width="50rem">
+            </a>
+        </div>
+    </div>
+    <br>
+    <h3>Summary</h3>
+    <p>Twilio connected SMS capability build into <a href="https://turkosaur.us">turkosaur.us</a> home. Initial capability is immediate contact from call to action on home page. Roadmap includes connection to Discord bot and reporting capabilities.</p>
+    <!-- <div class="row justify-content-left">
+        <div class="col-md-6 col-sm-12">
+            <h3>Features</h3>
+            <ul>
+                <li>CSV import tool</li>
+                <li>item and part inventory management</li>
+                <li>needed parts are calculated from projected items</li>
+            </ul>    
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <h3>Technologies Used</h3>
+            <ul>
+                <li>Python</li>
+            </ul>            
+        </div>
+    </div> -->
+
+    <hr>
+    <br>
+
+
+
+
+
+
+    <div class="row justify-content-left">
+        <div class="col">
+            <h2 class="project-section" id="nailivic">Nailivc Studios</h2>
+            <h6>Inventory and production management (web app)</h6>
+        </div>
+    </div>
+    <div class="row justify-content-left">
+        <div class="col-md-4 col-sm-12">
+            <a label="Nailivic" href="https://nailivic.herokuapp.com" title="Go to the app">
+                <img src="/static/icons/globe-solid.svg" width="50rem">
+            </a>
+            <a label="GitHub" href="https://www.github.com/turkosaurus/nailivic" title="View the source code">
+                <img src="/static/icons/github-brands.svg" width="50rem">
+            </a>
+        </div>
+    </div>
+    <br>
+    <h3>Summary</h3>
+    <p>Nailivic Studios creates folk art in a variety of sizes, colors, and shapes, all cut from computer controlled lasers.</p>
+    <p>This web app is being built to streamline inventory management and production tracking.</p>
+    <p>In addition, connection to the Shopify REST API will facilitate a dashboard for shipping needs.</p>        
+    <div class="row justify-content-left">
+        <div class="col-md-6 col-sm-12">
+            <h3>Features</h3>
+            <ul>
+                <li>CSV import tool</li>
+                <li>item and part inventory management</li>
+                <li>needed parts are calculated from projected items</li>
+            </ul>    
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <h3>Technologies Used</h3>
+            <ul>
+                <li>Python</li>
+                <li>Flask</li>
+                <li>PostgereSQL</li>
+                <li>Bootstrap</li>
+                <li>Heroku</li>
+            </ul>            
+        </div>
+    </div>
+
+    <hr>
+    <br>
+
+
+    <div class="row justify-content-left">
+        <div class="col">
+            <h2 class="project-section" id="incanon">InCanon</h2>
+            <h6>Datbase notebook for RPGs (web app)</h6>
+        </div>
+    </div>
+    <div class="row justify-content-left">
+        <div class="col-md-4 col-sm-12">
+            <a label="InCanon" href="https://incanon.herokuapp.com/" title="Go to the app">
+                <img src="/static/icons/globe-solid.svg" width="50rem">
+            </a>
+            <a label="GitHub" href="https://www.github.com/turkosaurus/incanon" title="View the source code">
+                <img src="/static/icons/github-brands.svg" width="50rem">
+            </a>
+        </div>
+    </div>
+    <br>
+    <h3>Summary</h3>
+    <p>The web app uses a relational database to allow users to collaboratively build a compendium of all the people, places, and things that animate a role-playing campaign setting.</p>
+    <p>Players and Game Masters can join their own shared campaign in which everyone views the index of notable entries as their home page, and anyone can add new information.</p>
+    <p>Originally, this app was a project submission to CS50x, but through continued development it has been released as a standalone web app.</p>
+    <div class="row justify-content-left">
+        <div class="col-md-6 col-sm-12">
+            <h3>Features</h3>
+            <ul>
+                <li>User management</li>
+                <li>Hashed passwords and input sanitization</li>
+                <li>Persistent user and game data</li>
+                <li>Scales to support multiple campaigns</li>
+            </ul>    
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <h3>Technologies Used</h3>
+            <ul>
+                <li>Python</li>
+                <li>Flask</li>
+                <li>Bootstrap</li>
+                <li>Jinja</li>
+                <li>SQLite3</li>
+                <li>PostgereSQL</li>
+                <li>Heroku</li>
+            </ul>    
+        </div>
+    </div>
+
+    <hr>
+    <br>
+
+    <div class="row justify-content-left">
+        <div class="col">
+            <h2 class="project-section" id="cursedsand">Cursed Sand</h2>
+            <h6>Card based RPG prototype</h6>
+        </div>
+    </div>
+    <div class="row justify-content-left">
+        <div class="col-md-4 col-sm-12">
+            <a label="CursedSand" href="https://www.cursedsand.com" title="Go to the app">
+                <img src="/static/icons/globe-solid.svg" width="50rem">
+            </a>
+            <a label="GitHub" href="https://github.com/Cursed-Sand/phasergame" title="View the source code">
+                <img src="/static/icons/github-brands.svg" width="50rem">
+            </a>
+        </div>
+    </div>
+    <br>
+    <h3>Summary</h3>
+    <p>Expanding front end competencies with React and Phaser JavaScript libraries and Flask.</p>
+    <div class="row justify-content-left">
+        <div class="col-md-6 col-sm-12">
+            <h3>Features</h3>
+            <ul>
+                <li>Coming soon</li>
+            </ul>    
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <h3>Technologies Used</h3>
+            <ul>
+                <li>Python</li>
+                <li>Flask</li>
+                <li>PostgereSQL</li>
+                <li>Flexbox</li>
+                <li>Heroku</li>
+            </ul>            
+        </div>
+    </div>
+
+
+    <!-- <br>
+    <h2>Maker Coffee</h2>
+        <p></p>
+        <p></p>
+        <p></p>
+    <br> -->
+</div>
+{% endblock %}

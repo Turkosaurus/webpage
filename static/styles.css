@@ -20,10 +20,10 @@ html {
 
 
 .project-section:before {
-    height: 54px;
+    height: 60px;
     content: "";
     display:block;
-}  
+}
 
 
 .card {
@@ -61,6 +61,8 @@ color: var(--light-cool);
 .navbar .navbar-text a {
 color: var(--accent2);
 }
+
+
 
 .navbar .navbar-text a:hover,
 .navbar .navbar-text a:focus {
@@ -116,7 +118,7 @@ color: var(--accent2);
   
 @media (max-width: 575px) {
 .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item {
-    color: var(--light-cool);
+    color: var(--dark-warm);
 }
 .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item:hover,
 .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item:focus {

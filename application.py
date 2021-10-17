@@ -18,8 +18,9 @@ import psycopg2
 
 # import threading
 # import discord
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 
+load_dotenv()
 
 # Flask App
 app = Flask(__name__)
@@ -29,11 +30,10 @@ app.secret_key = os.getenv('SECRET_KEY')
 # PostgreSQL database connection
 conn = psycopg2.connect(os.getenv('DATABASE_URL'))
 
-
 # Twilio configuration
+messaging_service_sid='MGd24392f1df2b12a99eb4b85d2bdd4aec'
 account_sid = os.getenv('TWILIO_ACCOUNT_SID')
 auth_token = os.getenv('TWILIO_AUTH_TOKEN')
-messaging_service_sid='MGd24392f1df2b12a99eb4b85d2bdd4aec'
 number_turk = os.getenv('NUMBER_TURK')
 client = Client(account_sid, auth_token)
 
@@ -77,25 +77,25 @@ def punch():
     browser.get('https://workforcenow.adp.com/theme/index.html#/Myself_ttd_MyselfTabTimecardsAttendanceSchCategoryMyTimeEntry/MyselfTabTimecardsAttendanceSchCategoryMyTimeEntry')
 
     # Login to ADP
-    element = browser.find_element_by_id('login-form_username')
+    form_username = browser.find_element_by_id('login-form_username')
     username = os.getenv('APS_USERNAME')
-    element.send_keys(username)
-    element.send_keys(Keys.RETURN)
+    form_username.send_keys(username)
+    form_username.send_keys(Keys.RETURN)
     print(f"Username {username} entered.")
 
     time.sleep(5)
 
-    element = browser.find_element_by_id('login-form_password')
+    form_password = browser.find_element_by_id('login-form_password')
     password = os.getenv('APS_PASSWORD')
-    element.send_keys(password)
+    form_password.send_keys(password)
     print(f"Password entered.")
 
-    element = browser.find_element_by_id('signBtn')
-    element.submit()
+    form_submit = browser.find_element_by_id('signBtn')
+    form_submit.submit()
 
     print("Waiting for page to load...")
     time.sleep(5)
-    element.send_keys(Keys.ESCAPE)
+    form_submit.send_keys(Keys.ESCAPE)
 
     punches = browser.find_element_by_id('form1')
     print(punches)
@@ -303,7 +303,6 @@ def message_status():
     return redirect('/')
 
 
-
 @app.route("/resume")
 def resume():
     return render_template("resume.html")
@@ -327,7 +326,10 @@ def admin():
 
 @app.route("/<nickname>")
 def short_url(nickname):
+    #URL shortener
+
     print(f"short_url:{nickname}")
+    return redirect("/")
 
 
 @app.route("/pdf")
