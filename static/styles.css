@@ -39,10 +39,13 @@ html {
     background-color: var(--light-cool);
 }
 
+
+
 .navbar {
     background-color: var(--dark-warm);
   }
 
+  
 /* Courtesy */
 /* https://work.smarchal.com/twbscolor/css/e74c3cc0392becf0f1ffbbbc0 */
   .navbar .navbar-brand {
@@ -214,6 +217,13 @@ body {
     color: var(--accent);
     /* padding: .2em; */
     margin: .5em;
+}
+
+
+/* Navbar mobile menu icon */
+.icon-sm {
+    width: 2em;
+    color: var(--accent2);
 }
 
 .icon-med {
