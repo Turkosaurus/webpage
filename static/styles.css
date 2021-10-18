@@ -28,6 +28,10 @@ th, code {
     display:block;
 }
 
+.alert {
+    padding-top: 80px;
+}
+
 .carousel {
     /* padding: 0; */
     margin: 0;

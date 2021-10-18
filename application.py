@@ -225,7 +225,6 @@ def home():
 
 @app.route("/portfolio")
 def portfolio():
-    flash("flashy message")
     return render_template("projects.html")
 
 
@@ -252,7 +251,7 @@ def ping():
             to=recipient
         )
 
-    # print(message.sid)
+    flash("Thank you. We'll be in touch soon!")
 
     return redirect('/')
 
@@ -301,9 +300,57 @@ def message_status():
     # https://www.twilio.com/docs/sms/tutorials/how-to-confirm-delivery-python
     return redirect('/')
 
-@app.route("/metar")
+@app.route("/metar", methods=['GET', 'POST'])
 def metar():
-    return render_template('cluck.html')
+    if request.method == 'GET':
+        return render_template('cluck.html')
+
+    # Post
+    else:
+        number = request.form.get("number")
+        notify = request.form.get("notify")
+        if notify != 'true':
+            notify = False
+
+        # Convert to E.164 per 
+        # https://www.twilio.com/docs/lookup/tutorials/validation-and-formatting#validate-a-national-phone-number
+        phone_number = client.lookups \
+                     .v1 \
+                     .phone_numbers(number) \
+                     .fetch(country_code='US')
+
+        if phone_number.phone_number is None:
+            flash("Invalid Number")
+
+        else:
+
+            number = phone_number.phone_number
+
+            cur = conn.cursor()
+            # cur.execute("SELECT * FROM numbers")
+            cur.execute("SELECT * FROM numbers WHERE number=%(number)s", {'number': number})
+
+            existing = cur.fetchall()
+
+            print(f"existing:{existing}")
+
+            if not existing:
+                time = datetime.datetime.utcnow().isoformat()
+                cur.execute("INSERT INTO numbers (number, notify, created_on) VALUES (%s, %s, %s)", (number, notify, time))
+
+            elif notify == 'true':
+                cur.execute("UPDATE numbers SET notify = 'true' WHERE number=%(number)s", {'number': number})
+
+            elif notify == 'false':
+                cur.execute("UPDATE numbers SET notify = 'true' WHERE number=%(number)s", {'number': number})
+
+            conn.commit()
+            cur.close()
+
+            flash("Thank you. We'll be in touch soon!")
+
+        return redirect('/metar')
+
 
 @app.route("/resume")
 def resume():
@@ -339,8 +386,8 @@ def pdf():
     return send_file('static/resume_TravisTurk_web.pdf', attachment_filename='resume.TravisTurk.pdf')
 
 
-if __name__ == '__main__':
-    app.run()
+# if __name__ == '__main__':
+#     app.run()
 
 
 
