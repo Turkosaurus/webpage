@@ -35,6 +35,7 @@ messaging_service_sid = os.getenv('TWILIO_MESSAGING_SERVICE_SID')
 account_sid = os.getenv('TWILIO_ACCOUNT_SID')
 auth_token = os.getenv('TWILIO_AUTH_TOKEN')
 number_turk = os.getenv('NUMBER_TURK')
+number_cluck = os.getenv('NUMBER_CLUCK')
 client = Client(account_sid, auth_token)
 
 # App - Ensure templates are auto-reloaded
@@ -179,7 +180,8 @@ def send_msg(recipient, message):
     message = client.messages.create(
         body = message,
         messaging_service_sid=messaging_service_sid,
-        to = recipient
+        to = recipient,
+        from_ = number_cluck
     )
 
     return 0
