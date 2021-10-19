@@ -31,7 +31,7 @@ app.secret_key = os.getenv('SECRET_KEY')
 conn = psycopg2.connect(os.getenv('DATABASE_URL'))
 
 # Twilio configuration
-messaging_service_sid='MGd24392f1df2b12a99eb4b85d2bdd4aec'
+messaging_service_sid = os.getenv('TWILIO_MESSAGING_SERVICE_SID')
 account_sid = os.getenv('TWILIO_ACCOUNT_SID')
 auth_token = os.getenv('TWILIO_AUTH_TOKEN')
 number_turk = os.getenv('NUMBER_TURK')
@@ -138,6 +138,7 @@ def scrape():
 
 
 def fetch_metar(airport):
+    print(f"Fetching METAR for {airport}")
 
     # https://www.aviationweather.gov/adds/dataserver_current/current/
     metars = requests.get('https://www.aviationweather.gov/adds/dataserver_current/current/metars.cache.csv')
@@ -171,8 +172,18 @@ def fetch_metar(airport):
                     if row[1] == airport.upper():
                         result = row[0]
 
-
     return (result)
+
+
+def send_msg(recipient, message):
+    message = client.messages.create(
+        body = message,
+        messaging_service_sid=messaging_service_sid,
+        to = recipient
+    )
+
+    return 0
+
 
 
 def style_metar():
@@ -233,6 +244,7 @@ def bio():
     return render_template("bio.html")
 
 
+
 @app.route("/ping", methods=['POST'])
 def ping():
 
@@ -256,6 +268,7 @@ def ping():
     return redirect('/')
 
 
+
 @app.route("/message", methods=['POST'])
 def message():
 
@@ -263,9 +276,30 @@ def message():
     # Get the message the user sent our Twilio number
     body = request.values.get('Body', None)
     num_from = request.values.get('From', None)
+    MessageSid = request.values.get('MessageSid', None)
     NumMedia = request.values.get('NumMedia', None) # The number of media items associated with your message
 
-    print(f"Message received:")
+
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM numbers WHERE number=%(number)s", {'number': number})
+    existing = cur.fetchone()
+    if not existing:
+        time = datetime.datetime.utcnow().isoformat()
+        cur.execute("INSERT INTO numbers (number, notify, created_on) VALUES (%s, %s, %s)", (num_from, 'False', time))
+
+    cur.execute("SELECT num_id FROM numbers WHERE number=%(num_from)s", {'num_from': num_from})
+    num_id = cur.fetchone()[0]
+    print(f"Creating activity for num_id:{num_id}")
+
+    time = datetime.datetime.utcnow().isoformat()
+    activity = "message"
+    cur.execute("INSERT INTO activity (num_id, timestamp, activity, messagesid) VALUES (%s, %s, %s, %s)", (num_id, time, activity, MessageSid))
+
+    conn.commit()
+    cur.close()
+
+
+    print("Message received:")
     print(f"from: {num_from}\n")
     print(body)
 
@@ -276,17 +310,11 @@ def message():
     # Start our TwiML response
     resp = MessagingResponse()
 
-    # Check for Main Menu
-    menu_words = ['INFO', 'Info' 'info', 'MENU', 'Menu', 'menu', 'OPTIONS', 'Options', 'options']
-    if any(x in body for x in menu_words):
-        resp.message(f'''
-        MENU\n
-        "METAR K___"\n
-        ''')
-        # "Punch time/in/out"\n
+    response_match = False
     
     metar_words = ['METAR', 'Metar', 'metar']
     if any(x in body for x in metar_words):
+        response_match = True
 
         # Find all airports in text
         airports = re.findall("([Kk]...)", body)
@@ -299,8 +327,27 @@ def message():
         resp.message(f"METAR {airports[0]}\n{metar}")        
 
     if 'Punch time' in body:
+        response_match = True
         timedata = punch()
-        resp.message(f"Time Card\n---\n{timedata}")        
+        resp.message(f"Time Card\n---\n{timedata}")
+
+    if response_match == False:
+
+        resp.message(f'''
+        https://www.turkosaur.us/metar
+        MENU
+        METAR K___
+        ''')
+
+        # Check for Main Menu
+        # menu_words = ['INFO', 'Info' 'info', 'MENU', 'Menu', 'menu', 'OPTIONS', 'Options', 'options']
+        # if any(x in body for x in menu_words):
+            # response_match = True
+            # resp.message(f'''
+            # __MENU__
+            # METAR K___
+            # ''')
+            # "Punch time/in/out"\n
 
     return str(resp)
 
@@ -313,6 +360,7 @@ def message_status():
 
 @app.route("/metar", methods=['GET', 'POST'])
 def metar():
+    
     if request.method == 'GET':
         return render_template('cluck.html')
 
@@ -323,19 +371,22 @@ def metar():
         if notify != 'true':
             notify = False
 
+        print(f"number:{number}")
+
         # Convert to E.164 per 
         # https://www.twilio.com/docs/lookup/tutorials/validation-and-formatting#validate-a-national-phone-number
-        phone_number = client.lookups \
-                     .v1 \
-                     .phone_numbers(number) \
-                     .fetch(country_code='US')
+        try:
+            phone_number = client.lookups \
+                        .v1 \
+                        .phone_numbers(number) \
+                        .fetch(country_code='US')
 
-        if phone_number.phone_number is None:
+        except:
             flash("Invalid Number")
 
         else:
-
             number = phone_number.phone_number
+            print(f"received text from:{number}")
 
             cur = conn.cursor()
             # cur.execute("SELECT * FROM numbers")
@@ -358,9 +409,21 @@ def metar():
             conn.commit()
             cur.close()
 
+            message = "Thanks for signing up for METAR by SMS by Turkosaurus. Reply 'METAR KAUS' or 'METAR KLAX' for weather."
+            send_msg(number, message)
+
             flash("Thank you. We'll be in touch soon!")
 
-        return redirect('/metar')
+        return redirect("/metar")
+
+@app.route("/metar/now", methods=['POST'])
+def metar_button():
+
+    airport = request.form.get("airport")
+
+    metar = fetch_metar(airport)
+    flash(f"{metar}")
+    return redirect("/metar")
 
 
 @app.route("/resume")

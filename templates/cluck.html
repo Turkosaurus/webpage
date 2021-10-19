@@ -27,25 +27,51 @@
         <div class="col-lg-6 col-md-6 col-sm-12">
             <form action="/metar" method="post">
                 <div class="form-group">
-                    <label for="phone" class="col-">Enter your phone number:</label>
-                    <input class="form-control" type="tel" id="number" name="number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="512-555-0000">
+                    <label for="phone" class="col-">Enter your phone number for METAR by SMS:</label>
+                    <input class="form-control" type="tel" id="number" name="number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="000-000-0000">
                     <small>
                         Only US numbers and US airports with <code>K***</code> designations supported.
-                    </small>
-                </div>
+                    </small>    
+                </div>    
                 <br>
-                <input type="submit" value="Submit" class="btn btn-lg btn-secondary btn-block">
+                <input type="submit" value="Send Me a Text" class="btn btn-lg btn-secondary btn-block">
                 <div class="form-group">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="notify" name="notify" value="true">
                         <label class="form-check-label" for="notify">
-                            Notify me of updates and improvements. Phone number will be stored to facilitate services and development, but will never be shared.
-                        </label>
-                    </div>
-                </div>
+                            Notify me of updates and improvements.
+                        </label>    
+                    </div>    
+                </div>    
                 <br>
+            </form>    
+
+            <br>
+            <hr>
+
+            <form action="/metar/now" method="post">
+                <div class="form-group row">
+                    <h5 class="col-sm-5">
+                        Try it out in the app
+                    </h5>
+                    <label for="airport" class="col-sm-1 col-form-label-sm">Airport:</label>
+                    <label for="airport" class=""></label>
+                    <div class="col-sm-3">
+                      <input class="form-control form-control-sm" type="text" id="airport" name="airport" value="KAUS" maxlength="4">
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="submit" value="Retrieve" title="METAR will show at top" class="btn btn-sm btn-block btn-secondary">
+                    </div>
+                  </div>
             </form>
+
+
         </div>
+
+
+
+
+
 
         <div class="col-lg-5 col-md-6 col-sm-12">
             <br>
