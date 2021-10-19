@@ -281,7 +281,7 @@ def message():
 
 
     cur = conn.cursor()
-    cur.execute("SELECT * FROM numbers WHERE number=%(number)s", {'number': number})
+    cur.execute("SELECT * FROM numbers WHERE number=%(num_from)s", {'num_from': num_from})
     existing = cur.fetchone()
     if not existing:
         time = datetime.datetime.utcnow().isoformat()
