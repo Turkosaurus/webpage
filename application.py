@@ -180,7 +180,6 @@ def send_msg(recipient, message):
     message = client.messages.create(
         body = message,
         messaging_service_sid=messaging_service_sid,
-        from_ = number_cluck,
         to = recipient
     )
 
@@ -262,8 +261,7 @@ def ping():
         .create(
             body=message,
             messaging_service_sid=messaging_service_sid,
-            to=recipient,
-            from_=number_cluck
+            to=recipient
         )
 
     flash("Thank you. We'll be in touch soon!")
