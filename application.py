@@ -333,11 +333,7 @@ def message():
 
     if response_match == False:
 
-        resp.message(f'''
-        https://www.turkosaur.us/metar
-        MENU
-        METAR K___
-        ''')
+        resp.message(f"MENU\n✈ Reply 'METAR K---' for aviation weather\n")
 
         # Check for Main Menu
         # menu_words = ['INFO', 'Info' 'info', 'MENU', 'Menu', 'menu', 'OPTIONS', 'Options', 'options']
