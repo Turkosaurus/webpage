@@ -263,7 +263,7 @@ def message():
     # Get the message the user sent our Twilio number
     body = request.values.get('Body', None)
     num_from = request.values.get('From', None)
-    NumMedia = request.valuse.get('NumMedia', None) # The number of media items associated with your message
+    NumMedia = request.values.get('NumMedia', None) # The number of media items associated with your message
 
     print(f"Message received:")
     print(f"from: {num_from}\n")
