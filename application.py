@@ -262,18 +262,28 @@ def message():
     """Send a dynamic reply to an incoming text message"""
     # Get the message the user sent our Twilio number
     body = request.values.get('Body', None)
-    print(f"Message received:\n{body}")
+    num_from = request.values.get('From', None)
+    NumMedia = request.valuse.get('NumMedia', None) # The number of media items associated with your message
+
+    print(f"Message received:")
+    print(f"from: {num_from}\n")
+    print(body)
+
+    print("looping through the body")
+    for item in body:
+        print(item)
 
     # Start our TwiML response
     resp = MessagingResponse()
 
+    # Check for Main Menu
     menu_words = ['INFO', 'Info' 'info', 'MENU', 'Menu', 'menu', 'OPTIONS', 'Options', 'options']
     if any(x in body for x in menu_words):
         resp.message(f'''
         MENU\n
-        "METAR K___"
-        "Punch time/in/out"
+        "METAR K___"\n
         ''')
+        # "Punch time/in/out"\n
     
     metar_words = ['METAR', 'Metar', 'metar']
     if any(x in body for x in metar_words):
@@ -284,6 +294,7 @@ def message():
 
         print(f"Found airports: {airports}")
 
+        # TODO iterate to loop through each airport that matches
         metar = fetch_metar(airports[0])
         resp.message(f"METAR {airports[0]}\n{metar}")        
 
