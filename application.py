@@ -427,9 +427,11 @@ def metar_button():
 
 @app.route("/data", methods=['GET', 'POST'])
 def data():
-    if request.method == 'GET':
-        return render_template("data.html")
 
+    data = []
+
+    if request.method == 'GET':
+        return render_template("data.html", data=data)
 
 
     else:
@@ -462,9 +464,8 @@ def data():
                 csv_reader = csv.reader(csvfile)
 
                 # next(csv_reader)
-                row_counter = 1
+                row_counter = 0
 
-                data = []
                 negatives = []
 
                 for row in csv_reader:
@@ -477,14 +478,18 @@ def data():
                             if int(row[i]) < 0:
                                 print(f"found a negative value ({row[i]}) on row {row_counter}")
                                 row[i] = abs(int(row[i]))
-                                negatives.append(row_counter)
+                                negatives.append(row_counter + 1)
 
                         except:
                             print("EXCEPTION")
 
                     row_counter += 1
 
-                print(data)
+
+            # TODO save as binary object
+            # https://www.postgresqltutorial.com/postgresql-python/blob/
+
+
 
             with open(f'static/uploads/{filename_user}', 'w') as csvfile:
 
@@ -502,6 +507,7 @@ def data():
 
             if delivery == 'view':
                 return render_template("data.html", data=data)
+
         return redirect('/data')
 
 

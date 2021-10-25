@@ -49,28 +49,29 @@
                 </div>
                 <br>
                 <input type="submit" value="Go" class="btn btn-lg btn-secondary btn-block">
-            </form>    
-
-            <br>            
-
+            </form>
+            <br>
         </div>
     </div>
 
     <hr>
 
-    <h1>Data</h1>
-    <div class="row">
-        <table class="table table-bordered">
-            <tbody>
-                {% for row in data %}
-                    <tr>
-                        {% for value in row  %}
-                            <td>{{ value }}</td>
-                        {% endfor %}
-                    </tr>
-                {% endfor %}
-            </tbody>
-          </table>
-    </div>
+    {% if data %}
+        <h1>Data</h1>
+        <div class="row">
+            <table class="table table-bordered">
+                <tbody>
+                    {% for row in data %}
+                        <tr>
+                            {% for value in row  %}
+                                <td>{{ value }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+
 </div>
 {% endblock %}
