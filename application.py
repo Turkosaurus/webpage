@@ -15,6 +15,8 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 import psycopg2
+from werkzeug.utils import secure_filename
+from data import allowed_file
 
 # import threading
 # import discord
@@ -41,7 +43,7 @@ client = Client(account_sid, auth_token)
 # App - Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-
+app.config['UPLOAD_FOLDER'] = os.getenv('PWD') + "/static/uploads"
 
 def  load_driver():
     # https://elements.heroku.com/buildpacks/pyronlaboratory/heroku-integrated-firefox-geckodriver
@@ -421,6 +423,74 @@ def metar_button():
     metar = fetch_metar(airport)
     flash(f"{metar}")
     return redirect("/metar")
+
+
+@app.route("/data", methods=['GET', 'POST'])
+def data():
+    if request.method == 'GET':
+        return render_template("data.html")
+
+
+
+    else:
+        request.form
+
+        # https://flask.palletsprojects.com/en/2.0.x/patterns/fileuploads/
+
+        # check if the post request has the file part
+        if 'inputfile' not in request.files:
+            flash('No file part')
+            return redirect("/data")
+
+        file = request.files['inputfile']
+
+        # If the user does not select a file, the browser submits an empty file without a filename.
+        if file.filename == '':
+            flash('No selected file')
+            return redirect("/data")
+
+        if file and allowed_file(file.filename):
+            filename_user = secure_filename(file.filename) # User supplied filenames kept
+            # filename = 'tmp.csv'
+            print(f"filename:{filename_user}")
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename_user))
+
+            # Read loterias.csv into a SQL table
+            with open(f'static/uploads/{filename_user}', 'r') as csvfile:
+
+                print(f'Reading {filename_user}...')
+                csv_reader = csv.reader(csvfile)
+
+                next(csv_reader)
+                row_counter = 0
+
+                data = []
+                negatives = []
+
+                for row in csv_reader:
+                    data.append(row)
+
+                for row in data:
+                    print(row)
+                    for i in range(len(row)):
+                        try:
+                            if int(row[i]) < 0:
+                                print(f"found a negative value ({row[i]}) on row {row_counter}")
+                                row[i] = abs(int(row[i]))
+                                negatives.append(row_counter)
+
+                        except:
+                            print("EXCEPTION")
+
+                    row_counter += 1
+
+                print(data)
+
+            flash(f"File uploaded. {row_counter} rows assessed.")
+            if negatives:
+                flash(f"Negative values found and converted on lines {negatives + 1}")
+
+        return render_template("data.html", data=data)
 
 
 @app.route("/resume")
