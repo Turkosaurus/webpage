@@ -1,4 +1,4 @@
-from flask import Flask, render_template, send_file, url_for, redirect, flash, request
+from flask import Flask, render_template, send_file, url_for, redirect, flash, request, send_from_directory
 from flask_session import Session
 from twilio.twiml.messaging_response import MessagingResponse
 import requests
@@ -433,7 +433,7 @@ def data():
 
 
     else:
-        request.form
+        delivery = request.form.get('delivery')
 
         # https://flask.palletsprojects.com/en/2.0.x/patterns/fileuploads/
 
@@ -461,8 +461,8 @@ def data():
                 print(f'Reading {filename_user}...')
                 csv_reader = csv.reader(csvfile)
 
-                next(csv_reader)
-                row_counter = 0
+                # next(csv_reader)
+                row_counter = 1
 
                 data = []
                 negatives = []
@@ -486,14 +486,23 @@ def data():
 
                 print(data)
 
+            with open(f'static/uploads/{filename_user}', 'w') as csvfile:
+
+                scribe = csv.writer(csvfile)
+
+                for row in data:
+                    scribe.writerow(row)
+
             flash(f"File uploaded. {row_counter} rows assessed.")
             if negatives:
-                flash(f"Negative values found and converted on lines {negatives + 1}")
+                flash(f"Negative values found and converted on row {negatives}")
 
-            # TODO
+            if delivery == 'download':
+                return send_from_directory(app.config['UPLOAD_FOLDER'], filename=filename_user, attachment_filename=filename_user, as_attachment=True, mimetype='text/csv')
 
-
-        return render_template("data.html", data=data)
+            if delivery == 'view':
+                return render_template("data.html", data=data)
+        return redirect('/data')
 
 
 @app.route("/resume")
