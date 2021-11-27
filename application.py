@@ -242,12 +242,6 @@ def portfolio():
     return render_template("projects.html")
 
 
-@app.route("/bio")
-def bio():
-    return render_template("bio.html")
-
-
-
 @app.route("/ping", methods=['POST'])
 def ping():
 
@@ -542,7 +536,7 @@ def short_url(nickname):
 
 @app.route("/pdf")
 def pdf():
-    return send_file('static/resume_TravisTurk_web.pdf', attachment_filename='resume.TravisTurk.pdf')
+    return send_file('static/resume-TravisTurk-web.pdf', attachment_filename='resume.TravisTurk.pdf')
 
 
 # if __name__ == '__main__':
