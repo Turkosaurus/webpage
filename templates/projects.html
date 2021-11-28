@@ -1,37 +1,19 @@
 {% extends "layout.html" %}
 {% block title %} | Portfolio{% endblock %}
 {% block body %}
+
 <div class="container" id="top">
-
-
 
     <!-- Title -->
     <div class="row justify-content-left">
         <div class="col">
-
             <h1 class="display-1">
                 Portfolio
             </h1>
-            <h4>
-                Project Management
-            </h4>
-            <p>
-                I specialize in optimizing workflows, elimnating redundancies, and identifying the right opportunities for automation.
-            </p>
-            <h4>
-                User Support
-            </h4>
-            <p>
-                I specialize in optimizing workflows, elimnating redundancies, and identifying the right opportunities for automation.
-            </p>
-            <h4>
-                User Support
-            </h4>
-            <p>
-                I specialize in optimizing workflows, elimnating redundancies, and identifying the right opportunities for automation.
-            </p>
-            <hr>
-
+        </div>
+    </div>
+    <div class="row justify-content-left">
+        <div class="col">
             <!-- Menu -->
             <li class="list-inline-item">
                 <a class="" href="#nailivic">Nailivic Studios</a>
@@ -43,11 +25,161 @@
                 <a class="" href="#incanon">InCanon</a>
             </li>
             <li class="list-inline-item">
+                <a class="" href="#data">Data Utilities</a>
+            </li>
+            <li class="list-inline-item">
                 <a class="" href="#"></a>
             </li>
         </div>
     </div>
+    <hr>
+    
 
+    <div class="row">
+        <div class="col" id="about-me">
+            <h2>
+                About Me
+            </h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8 col-md-10 col-sm-12">
+            <p>
+                When COVID disrupted my hospitality finance and administration management career in 2020, I began studying computer science fundamentals through 
+                <a href="https://www.edx.org/course/introduction-computer-science-harvardx-cs50x">CS50</a>, and I am now a junior web developer building 
+                full stack web applications.
+            </p>
+            <p>
+                I have active users for <a href="#nailivic">Nailivic Studios</a>, and beta testers for <a href="#metar">METAR by SMS</a>, both built using Flask, PostgreSQL, and Heroku. 
+                My next project will be built with Node.js and React.js.
+            </p>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+        </div>
+        <div class="col-lg-4 col-md-0 col-sm-0">
+        </div>
+    </div>
+
+    <br>
+
+
+    <div class="row">
+        <div class="col">
+            <h2>
+                Workflow and Toolsets
+            </h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="card" style="width: 20rem;">
+                <a data-toggle="modal" data-target="#modalA">
+                    <img src="/static/images/portfolio/roadmap.png" class="card-img-top" alt="image of project roadmap">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">Project Management</h5>
+                    <p class="card-text">"Plan your work, then work your plan."</p>
+                    <p class="card-text">Roadmaps and Kanbans organized through Jira projects.</p>
+                    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="modalA" tabindex="-1" aria-labelledby="modalALabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <span style="text-align: right;">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </span>
+                        <img src="/static/images/portfolio/roadmap.png" class="img-fluid" alt="image of project roadmap">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col">
+            <div class="card" style="width: 20rem;">
+                <a data-toggle="modal" data-target="#modalB">
+                    <img src="/static/images/portfolio/widget.gif" class="card-img-top" alt="demonstration of user access to support widget">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">User Support</h5>
+                    <p class="card-text">Jira service projects are leveraged to provide in-app help widget, which creates helpdesk tickets integrated with project management.</p>
+                    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="modalB" tabindex="-1" aria-labelledby="modalBLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <span style="text-align: right;">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </span>
+                        <img src="/static/images/portfolio/widget.gif" class="img-fluid" alt="demonstration of user access to support widget">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col">
+            <div class="card" style="width: 20rem;">
+                <a data-toggle="modal" data-target="#modalC">
+                    <img src="/static/images/portfolio/repo.png" class="card-img-top" alt="image of github version control dashboard">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">Version Control</h5>
+                    <p class="card-text">All projects managed on git repositories, with efforts to follow the <a href="https://12factor.net/">twelve-factors</a> to minimize software erosion.</p>
+                    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="modalC" tabindex="-1" aria-labelledby="modalCLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <span style="text-align: right;">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </span>
+                        <img src="/static/images/portfolio/repo.png" class="img-fluid" alt="image of github version control dashboard">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+
+
+    <div class="row">
+        <div class="col">
+            <h1 class="display-2">
+                Projects
+            </h1>
+        </div>
+    </div>
+    <div class="row justify-content-left">
+        <div class="col">
+            <!-- Menu -->
+            <li class="list-inline-item">
+                <a class="" href="#nailivic">Nailivic Studios</a>
+            </li>
+            <li class="list-inline-item">
+                <a class="" href="#metar">METAR Text Service</a>
+            </li>
+            <li class="list-inline-item">
+                <a class="" href="#incanon">InCanon</a>
+            </li>
+            <li class="list-inline-item">
+                <a class="" href="#data">Data Utilities</a>
+            </li>
+            <li class="list-inline-item">
+                <a class="" href="#"></a>
+            </li>
+        </div>
+    </div>
+    <hr>
 
 
     <!--  -->
@@ -57,7 +189,7 @@
     <!-- Title -->
     <div class="row justify-content-left">
         <div class="col">
-            <h1 class="display-3 project-section" id="nailivic">
+            <h1 class="display-4 project-section" id="nailivic">
                 Nailivic Studios
             </h1>
             <h4>
@@ -185,7 +317,7 @@
 
     <div class="row justify-content-left">
         <div class="col">
-            <h1 class="display-3 project-section" id="metar">
+            <h1 class="display-4 project-section" id="metar">
                 METAR via SMS
             </h1>
             <h4>
@@ -251,7 +383,7 @@
                 Summary
             </h2>
             <p>
-                Because data connections are often spotty, this delivers a timely weather report to the user through simlple, low data SMS protocols.
+                Because data connections are often spotty, this delivers a timely weather report to the pilot user through simlple, low data SMS protocols.
             </p>
             <p>
                 While the client side is handled by the Twilio API, the server parses requests using regular expressions, fetches recent METARs from 
@@ -312,7 +444,7 @@
     <!-- Title -->
     <div class="row justify-content-left">
         <div class="col">
-            <h1 class="display-3 project-section" id="incanon">
+            <h1 class="display-4 project-section" id="incanon">
                 InCanon
             </h1>
             <h4>
@@ -430,11 +562,11 @@
     <!-- Title -->
     <div class="row justify-content-left">
         <div class="col">
-            <h1 class="display-3 project-section" id="template">
+            <h1 class="display-4 project-section" id="data">
                 Data Utilities
             </h1>
             <h4>
-                Data manipulation through the web with python <code>csv</code>
+                File correction/manipulation through the web with python <code>csv</code>
             </h4>
         
             <li class="list-inline-item">
@@ -548,7 +680,7 @@
     <!-- Title -->
     <!-- <div class="row justify-content-left">
         <div class="col">
-            <h1 class="display-3 project-section" id="template">
+            <h1 class="display-4 project-section" id="template">
                 template
             </h1>
             <h4>

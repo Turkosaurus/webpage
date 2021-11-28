@@ -43,7 +43,8 @@ th, code {
     background-color: var(--light-cool);
     border-width: 1px;
     border-radius: 5;
-    border-color: var(--dark-warm)
+    border-color: var(--dark-warm);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .card li {
@@ -286,7 +287,7 @@ a:hover {
 }
 
 
-.about-me {
+/* .about-me {
     padding:2em;
     max-width: 40em;
     margin-left: auto;
@@ -310,61 +311,7 @@ a:hover {
     height: 200px;
     background-size: cover;
     padding: 2rem;
-    /* color */
-}
-
-#coffee {
-    background-image:
-    linear-gradient(to right, var(--fade-color-1), var(--fade-color-2)),
-    url(/static/images/coffee.jpg);
-}
-
-#key {
-    background-image: 
-        linear-gradient(to right, var(--fade-color-1), var(--fade-color-2)),
-        url(/static/images/keyboard.jpg);
-}
-
-#dice {
-    background-image: 
-        linear-gradient(to right, var(--fade-color-1), var(--fade-color-2)),
-        url(/static/images/dice.jpg);
-}
-
-#e6b {
-    background-image: 
-        linear-gradient(to right, var(--fade-color-1), var(--fade-color-2)),
-        url(/static/images/e6b.jpg);
-}
-
-#elevenspeed {
-    background-image: 
-        linear-gradient(to right, var(--fade-color-1), var(--fade-color-2)),
-        url(/static/images/elevenspeed.jpg);
-}
-
-#sectional {
-    background-image: 
-        linear-gradient(to right, var(--fade-color-1), var(--fade-color-2)),
-        url(/static/images/sectional.jpg);
-}
-
-#tele {
-    background-image: 
-        linear-gradient(to right, var(--fade-color-1), var(--fade-color-2)),
-        url(/static/images/tele.jpg);
-}
-
-#tolex {
-    background-image: 
-        linear-gradient(to right, var(--fade-color-1), var(--fade-color-2)),
-        url(/static/images/tolex.jpg);
-}
-
-
-
-
-
+} */
 
 
 /* 
