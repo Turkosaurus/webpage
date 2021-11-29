@@ -332,11 +332,7 @@ def message():
 
     print("Message received:")
     print(f"from: {num_from}\n")
-    print(body)
-
-    print("looping through the body")
-    for item in body:
-        print(item)
+    print(f"body: {body}")
 
     # Start our TwiML response
     resp = MessagingResponse()
@@ -379,14 +375,15 @@ def message():
     return str(resp)
 
 
-@app.route("/message/status")
+@app.route("/message/status", methods=['POST'])
 def message_status():
 
+    # BUG not currently proven functional
     # TODO consolidate into logging function
     # https://www.twilio.com/docs/sms/tutorials/how-to-confirm-delivery-python
     message_sid = request.values.get('MessageSid', None)
     message_status = request.values.get('MessageStatus', None)
-    num_from = request.values.get('from', None)
+    num_from = request.values.get('From', None)
 
     cur = conn.cursor()
     cur.execute("SELECT * FROM numbers WHERE number=%(num_from)s", {'num_from': num_from})
