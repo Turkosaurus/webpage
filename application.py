@@ -385,6 +385,7 @@ def message_status():
     # https://www.twilio.com/docs/sms/tutorials/how-to-confirm-delivery-python
     message_sid = request.values.get('MessageSid', None)
     message_status = request.values.get('MessageStatus', None)
+    num_from = request.values.get('from', None)
 
     cur = conn.cursor()
     cur.execute("SELECT * FROM numbers WHERE number=%(num_from)s", {'num_from': num_from})
@@ -398,7 +399,7 @@ def message_status():
     print(f"Creating activity for num_id:{num_id}")
 
     time = datetime.datetime.utcnow().isoformat()
-    activity = "message"
+    activity = "callback"
     cur.execute("INSERT INTO activity (num_id, timestamp, activity, messagesid, status) VALUES (%s, %s, %s, %s, %s)", (num_id, time, activity, message_sid, message_status))
 
     conn.commit()
