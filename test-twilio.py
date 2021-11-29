@@ -6,6 +6,9 @@ import requests
 import urllib
 import os
 
+from dotenv import load_dotenv
+load_dotenv()
+
 # Your Auth Token from twilio.com/user/account saved as an environment variable
 # Remember never to hard code your auth token in code, browser Javascript, or distribute it in mobile apps
 auth_token = os.environ.get('TWILIO_AUTH_TOKEN')

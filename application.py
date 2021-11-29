@@ -12,6 +12,8 @@ import csv
 import re
 import time # TODO replace all use of time with datetime
 import datetime
+import logging
+
 # from selenium.webdriver import Firefox
 # from selenium.webdriver.firefox.options import Options
 # from selenium.webdriver.common.keys import Keys
@@ -27,6 +29,9 @@ from data import allowed_file
 from dotenv import load_dotenv
 
 load_dotenv()
+
+logging.basicConfig(level=logging.INFO)
+
 
 # Flask App
 app = Flask(__name__)
@@ -304,7 +309,7 @@ def message():
     MessageSid = request.values.get('MessageSid', None)
     NumMedia = request.values.get('NumMedia', None) # The number of media items associated with your message
 
-
+    # TODO consolidate into logging function
     cur = conn.cursor()
     cur.execute("SELECT * FROM numbers WHERE number=%(num_from)s", {'num_from': num_from})
     existing = cur.fetchone()
@@ -376,8 +381,30 @@ def message():
 @app.route("/message/status")
 def message_status():
 
+    # TODO consolidate into logging function
     # https://www.twilio.com/docs/sms/tutorials/how-to-confirm-delivery-python
-    return redirect('/')
+    message_sid = request.values.get('MessageSid', None)
+    message_status = request.values.get('MessageStatus', None)
+
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM numbers WHERE number=%(num_from)s", {'num_from': num_from})
+    existing = cur.fetchone()
+    if not existing:
+        time = datetime.datetime.utcnow().isoformat()
+        cur.execute("INSERT INTO numbers (number, notify, created_on) VALUES (%s, %s, %s)", (num_from, 'False', time))
+
+    cur.execute("SELECT num_id FROM numbers WHERE number=%(num_from)s", {'num_from': num_from})
+    num_id = cur.fetchone()[0]
+    print(f"Creating activity for num_id:{num_id}")
+
+    time = datetime.datetime.utcnow().isoformat()
+    activity = "message"
+    cur.execute("INSERT INTO activity (num_id, timestamp, activity, messagesid, status) VALUES (%s, %s, %s, %s, %s)", (num_id, time, activity, message_sid, message_status))
+
+    conn.commit()
+    cur.close()
+
+    return ('', 204)
 
 @app.route("/metar", methods=['GET', 'POST'])
 def metar():
