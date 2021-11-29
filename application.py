@@ -214,7 +214,7 @@ def fetch_metar(airport):
 def send_msg(recipient, message):
     message = client.messages.create(
         body = message,
-        status_callback='https://www.turkosaur.us/message/status'
+        status_callback='https://www.turkosaur.us/message/status',
         messaging_service_sid=messaging_service_sid,
         to = recipient
     )
