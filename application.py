@@ -1,5 +1,9 @@
-from flask import Flask, render_template, send_file, url_for, redirect, flash, request, send_from_directory
+from flask import Flask, render_template, send_file, url_for, redirect, flash, request, send_from_directory, abort, current_app
 from flask_session import Session
+
+from functools import wraps
+
+from twilio.request_validator import RequestValidator
 from twilio.twiml.messaging_response import MessagingResponse
 import requests
 from twilio.rest import Client
@@ -44,6 +48,7 @@ client = Client(account_sid, auth_token)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 app.config['UPLOAD_FOLDER'] = os.getenv('PWD') + "/static/uploads"
+
 
 # https://www.twilio.com/docs/usage/tutorials/how-to-secure-your-flask-app-by-validating-incoming-twilio-requests#
 def validate_twilio_request(f):
@@ -286,7 +291,6 @@ def ping():
     flash("Thank you. We'll be in touch soon!")
 
     return redirect('/')
-
 
 
 @app.route("/message", methods=['POST'])
