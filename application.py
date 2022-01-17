@@ -163,6 +163,8 @@ def punch():
     punches = browser.find_element_by_id('form1')
     print(punches)
 
+    print(driver.page_source)
+
 
     # https://realpython.com/modern-web-automation-with-python-and-selenium/
     # results = browser.find_elements_by_class_name('result')
@@ -175,10 +177,12 @@ def punch():
 
 def scrape():
     # Selenium options
-    opts = Options()
-    opts.set_headless()
-    assert opts.headless  # Operating in headless mode
-    browser = Firefox(options=opts)
+    # opts = Options()
+    # opts.set_headless()
+    # assert opts.headless  # Operating in headless mode
+    # browser = Firefox(options=opts)
+
+    browser = load_driver()
     browser.get('https://www.turkosaur.us')
 
     # Search and return results
@@ -320,7 +324,9 @@ def style_metar():
 def test():
     count_pageview('/test')
 
-    # result = punch()
+    result = punch()
+    print(result)
+    scrape()
 
     return redirect('/')
 
@@ -672,6 +678,8 @@ def pdf():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    count_pageview('/register')
+
     """Register user"""
 
     # Serve registration page
@@ -711,7 +719,6 @@ def register():
             return redirect('/register')
 
 
-
         # Check if username is already taken
         if not db.execute("SELECT username FROM users WHERE username LIKE (?)", username):
 
@@ -736,6 +743,8 @@ def register():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    count_pageview('/login')
+
     """Log user in"""
 
     # Forget any user_id
@@ -781,6 +790,7 @@ def login():
 
 @app.route("/logout")
 def logout():
+    count_pageview('/logout')
     """Log user out"""
 
    # Forget any user_id
@@ -788,8 +798,6 @@ def logout():
 
     # Redirect user to login form
     return redirect("/")
-
-
 
 
 
