@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block title %} | Portfolio{% endblock %}
+{% block body %}
+<div class="container" id="top">
+
+    <br>
+
+    <div class="row justify-content-center">
+        <h1 class="display-3">Register</h1>
+    </div>
+
+    <br>
+    
+    <div class="row justify-content-center">
+        <form action="/register" method="post">
+            <div class="form-group">
+                <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="password" placeholder="Password" type="password">
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="passwordconfirm" placeholder="Password (confirm)" type="password">
+                <small id="passwordhelp" class="form-text text-muted">8 character minimum</small>
+            </div>
+            <button class="btn btn-secondary btn-block" type="submit">Register</button>
+        </form>
+    </div>
+    
+</div>
+{% endblock %}

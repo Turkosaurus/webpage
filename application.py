@@ -1,7 +1,11 @@
-from flask import Flask, render_template, send_file, url_for, redirect, flash, request, send_from_directory, abort, current_app
+from flask import Flask, render_template, send_file, url_for, redirect, flash, request, send_from_directory, abort, session, current_app
 from flask_session import Session
 
 from functools import wraps
+
+from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
+from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.utils import secure_filename
 
 from twilio.request_validator import RequestValidator
 from twilio.twiml.messaging_response import MessagingResponse
@@ -20,7 +24,9 @@ import logging
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
+
 import psycopg2
+
 from werkzeug.utils import secure_filename
 from data import allowed_file
 
@@ -29,6 +35,10 @@ from data import allowed_file
 from dotenv import load_dotenv
 
 load_dotenv()
+
+# Import Authorized User List
+authusers = []
+authusers.append(os.getenv('USERA'))
 
 logging.basicConfig(level=logging.INFO)
 
@@ -52,7 +62,24 @@ client = Client(account_sid, auth_token)
 # App - Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
 app.config['UPLOAD_FOLDER'] = os.getenv('PWD') + "/static/uploads"
+
+
+Session(app)
+
+def login_required(f):
+    """
+    Decorate routes to require login.
+    http://flask.pocoo.org/docs/1.0/patterns/viewdecorators/
+    """
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get("user_id") is None:
+            return redirect("/login")
+        return f(*args, **kwargs)
+    return decorated_function
 
 
 # https://www.twilio.com/docs/usage/tutorials/how-to-secure-your-flask-app-by-validating-incoming-twilio-requests#
@@ -243,6 +270,7 @@ def count_pageview(page):
     cur.close()
 
     return 0
+
 
 def retrieve_pageview():
     cur = conn.cursor()
@@ -637,6 +665,132 @@ def pdf():
     count_pageview('/pdf')
 
     return send_file('static/resume-TravisTurk-web.pdf', attachment_filename='resume.TravisTurk.pdf')
+
+
+
+###### USER ACCOUNTS ######
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    """Register user"""
+
+    # Serve registration page
+    if request.method == 'GET':
+        return render_template("register.html")
+
+    # Process submitted form responses on POST
+    else:
+
+        # Error Checking
+        # Ensure username was submitted
+        if not request.form.get("username"):
+            flash("Username required.")
+            return redirect('/register')
+
+        # Ensure password was submitted
+        if not request.form.get("password"):
+            flash("Password required.")
+            return redirect('/register')
+
+        # Ensure password and password confirmation match
+        if request.form.get("password") != request.form.get("passwordconfirm"):
+            flash("Passwords must match.")
+            return redirect('/register')
+
+        # Ensure minimum password length
+        if len(request.form.get("password")) < 8:
+            flash("Password must be at least 8 characters.")
+            return redirect('/register')
+
+        # Store the hashed username and password
+        username = request.form.get("username")
+        hashedpass = generate_password_hash(request.form.get("password"))
+
+        if username not in authusers:
+            flash("Unauthorized user.")
+            return redirect('/register')
+
+
+
+        # Check if username is already taken
+        if not db.execute("SELECT username FROM users WHERE username LIKE (?)", username):
+
+
+            #TODO #TURK-112 incoporate this new psychopg paradigm into this, replacing all db objects
+            cur = conn.cursor()
+            cur.execute("")
+            pageviews = cur.fetchall()
+            conn.commit()
+            cur.close()
+
+
+            # Add the username
+            time = datetime.datetime.utcnow().isoformat()
+            db.execute("INSERT INTO users (username, password, created_on) VALUES (:username, :hashedpass, :time)",
+                        username=username, hashedpass=hashedpass, time=time)
+            return redirect("/")
+
+        else:
+            return render_template("error.html", errcode=403, errmsg="Username invalid or already taken.")
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    """Log user in"""
+
+    # Forget any user_id
+    session.clear()
+
+    # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+
+        # Ensure username was submitted
+        if not request.form.get("username"):
+            return render_template("error.html", errcode=400, errmsg="Username required.")
+
+        # Ensure password was submitted
+        elif not request.form.get("password"):
+            return render_template("error.html", errcode=400, errmsg="Password required.")
+
+        # Query database for username
+        rows = db.execute("SELECT * FROM users WHERE username = :username",
+                          username=request.form.get("username"))
+
+        # Ensure username exists
+        if len(rows) != 1:
+            return render_template("register.html", errmsg="Username not found.")
+
+        # Ensure username exists and password is correct
+        if not check_password_hash(rows[0]["password"], request.form.get("password")):
+            return render_template("error.html", errcode=403, errmsg="Incorrect password.")
+
+        # Remember which user has logged in
+        session["user_id"] = rows[0]["id"]
+
+        # Update "last_login"
+        time = datetime.datetime.utcnow().isoformat()
+        db.execute("UPDATE users SET last_login=:time WHERE id=:id", time=time, id=session["user_id"])
+
+        # Redirect user to home page
+        return redirect("/")
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        return render_template("login.html")
+
+
+@app.route("/logout")
+def logout():
+    """Log user out"""
+
+   # Forget any user_id
+    session.clear()
+
+    # Redirect user to login form
+    return redirect("/")
+
+
+
 
 
 # if __name__ == '__main__':
