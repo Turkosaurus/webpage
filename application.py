@@ -78,6 +78,7 @@ def validate_twilio_request(f):
             return abort(403)
     return decorated_function
 
+
 def  load_driver():
     # https://elements.heroku.com/buildpacks/pyronlaboratory/heroku-integrated-firefox-geckodriver
 
@@ -222,6 +223,35 @@ def send_msg(recipient, message):
     return 0
 
 
+def count_pageview(page):
+
+    # obtain IP
+    try:
+        # Obtain client IP (even when proxy is used)
+        if request.environ.get('HTTP_X_FORWARDED_FOR') is None:
+            ip = request.environ['REMOTE_ADDR']
+        else:
+            ip = request.environ['HTTP_X_FORWARDED_FOR'] # if behind a proxy
+    except Exception as e:
+        ip = e
+
+    time = datetime.datetime.utcnow().isoformat()
+
+    cur = conn.cursor()
+    cur.execute("INSERT INTO pageviews (time, ip, page) VALUES (%s, %s, %s)", (time, ip, page))
+    conn.commit()
+    cur.close()
+
+    return 0
+
+def retrieve_pageview():
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM pageviews")
+    pageviews = cur.fetchall()
+    conn.commit()
+    cur.close()
+    return pageviews
+
 
 def style_metar():
 
@@ -260,6 +290,7 @@ def style_metar():
 
 @app.route("/test")
 def test():
+    count_pageview('/test')
 
     # result = punch()
 
@@ -268,11 +299,14 @@ def test():
 
 @app.route("/")
 def home():
+    count_pageview('/')
     return render_template("index.html")
 
 
 @app.route("/portfolio")
 def portfolio():
+    count_pageview('/portfolio')
+
     return render_template("projects.html")
 
 
@@ -407,6 +441,7 @@ def message_status():
 
 @app.route("/metar", methods=['GET', 'POST'])
 def metar():
+    count_pageview('/metar')
     
     if request.method == 'GET':
         return render_template('cluck.html')
@@ -475,6 +510,7 @@ def metar_button():
 
 @app.route("/data", methods=['GET', 'POST'])
 def data():
+    count_pageview('/data')
 
     data = []
 
@@ -561,27 +597,35 @@ def data():
 
 @app.route("/resume")
 def resume():
+    count_pageview('/resume')
     return render_template("resume.html")
 
 
 @app.route("/admin")
 def admin():
+    count_pageview('/admin')
+
     # Open a cursor to perform database operations
     cur = conn.cursor()
 
     # Execute a query
-    results = cur.execute("SELECT * FROM logs")
+    #TODO this is probably wrong, results is none, but records populates
+    cur.execute("SELECT * FROM logs")
 
     # Retrieve query results
     records = cur.fetchall()
 
-    print(f"results:{results}")
+    pageviews = retrieve_pageview()
+
     print(f"records:{records}")
+    print(f"pageviews:{pageviews}")
 
     return redirect("/")
 
 @app.route("/<nickname>")
 def short_url(nickname):
+    count_pageview('/short_url')
+
     #URL shortener
 
     print(f"short_url:{nickname}")
@@ -590,6 +634,8 @@ def short_url(nickname):
 
 @app.route("/pdf")
 def pdf():
+    count_pageview('/pdf')
+
     return send_file('static/resume-TravisTurk-web.pdf', attachment_filename='resume.TravisTurk.pdf')
 
 
