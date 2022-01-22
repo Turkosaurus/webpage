@@ -318,17 +318,18 @@ def style_metar():
 
     return wxkey
 
+
 # ROUTES #
 
-@app.route("/test")
-def test():
-    count_pageview('/test')
+# @app.route("/test")
+# def test():
+#     count_pageview('/test')
 
-    result = punch()
-    print(result)
-    scrape()
+#     result = punch()
+#     print(result)
+#     scrape()
 
-    return redirect('/')
+#     return redirect('/')
 
 
 @app.route("/")
@@ -473,6 +474,7 @@ def message_status():
 
     return ('', 204)
 
+
 @app.route("/metar", methods=['GET', 'POST'])
 def metar():
     count_pageview('/metar')
@@ -531,6 +533,7 @@ def metar():
             flash("Thank you. We'll be in touch soon!")
 
         return redirect("/metar")
+
 
 @app.route("/metar/now", methods=['POST'])
 def metar_button():
@@ -656,13 +659,15 @@ def admin():
 
     return redirect("/")
 
-@app.route("/<nickname>")
-def short_url(nickname):
-    count_pageview('/short_url')
+
+@app.route("/<shorturl>")
+def short_url(shorturl):
+
+    count_pageview(shorturl)
 
     #URL shortener
 
-    print(f"short_url:{nickname}")
+    print(f"short_url:{shorturl}")
     return redirect("/")
 
 
@@ -672,9 +677,41 @@ def pdf():
 
     return send_file('static/resume-TravisTurk-web.pdf', attachment_filename='resume.TravisTurk.pdf')
 
+#TODO get this working to enable resume updates
+ # @app.route("/pdf-upload")
+# def pdf_upload():
+#     count_pageview('/pdf-upload')
+
+#     # File and metadata
+#     uploaded = datetime.datetime.utcnow().isoformat()
+#     name = "fooresume"
+#     filetype = "pdf"
+#     description = "A very nice resume."
+
+#     file = open('static/resume-TravisTurk-web.pdf', 'rb')
+#     filedata = file.read()
+
+#     # Database
+#     cur = conn.cursor()
+#     cur.execute("INSERT INTO files (uploaded, name, filetype, description, filedata) VALUES (%s, %s, %s, %s, %s)", (uploaded, name, filetype, description, filedata))
+#     conn.commit()
+#     cur.close()
+
+#     print("File saved to database.")
+
+#     cur = conn.cursor()
+#     cur.execute("SELECT * FROM files WHERE id=1")
+#     dlfiledata = cur.fetchone()
+#     print(f'dlfiledata:\n{dlfiledata}')
+
+#     file.close()
+
+#     return send_file(dlfiledata, attachment_filename='resume.TravisTurk.pdf')
 
 
-###### USER ACCOUNTS ######
+
+###### USER ACCOUNTS ####
+#TODO write HMTL files, add @login required pdf submission for updated resume
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
