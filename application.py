@@ -256,6 +256,8 @@ def send_msg(recipient, message):
 
 def count_pageview(page):
 
+    errors = 0
+
     # obtain IP
     try:
         # Obtain client IP (even when proxy is used)
@@ -268,12 +270,24 @@ def count_pageview(page):
 
     time = datetime.datetime.utcnow().isoformat()
 
-    cur = conn.cursor()
-    cur.execute("INSERT INTO pageviews (time, ip, page) VALUES (%s, %s, %s)", (time, ip, page))
-    conn.commit()
-    cur.close()
+    try:
+        cur = conn.cursor()
+        cur.execute("INSERT INTO pageviews (time, ip, page) VALUES (%s, %s, %s)", (time, ip, page))
+        conn.commit()
+        cur.close()
 
-    return 0
+    except Exception as e:
+        errors += 1
+        log_error(time, 'count_pageview', e)
+
+    return errors
+
+
+def log_error(time, location, error):
+    with open('log.csv', 'a') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow([time, location, error])
+
 
 
 def retrieve_pageview():
