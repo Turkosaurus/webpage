@@ -66,6 +66,7 @@ client = Client(account_sid, auth_token)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 app.config["SESSION_PERMANENT"] = False
+app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(hours=0.001)
 app.config["SESSION_TYPE"] = "filesystem"
 app.config['UPLOAD_FOLDER'] = os.getenv('PWD') + "/static/uploads"
 
@@ -657,6 +658,20 @@ def data():
 @app.route("/resume")
 def resume():
     count_pageview('/resume')
+
+    # TODO add authorizations/click tracking
+
+    # Find public resume
+    cur = conn.cursor()
+    print(f"Finding most recent public resume ID", end='')
+    print(f".", end='')
+    print(f".", end='')
+    print(f".", end='')
+    cur.execute("SELECT id FROM files WHERE description=%s;", ["resume_public"])
+    id = cur.fetchone()[0]
+    print(f"{id}")
+    cur.close()
+
     return render_template("resume.html")
 
 
@@ -724,15 +739,16 @@ def file_retrieve(id):
 
     return {"filedata": filedata, "filename": filename, "description": description}
 
+
 @app.route("/pdf-upload")
 def pdf_upload():
     count_pageview('/pdf-upload')
 
     # Default file metadata
     uploaded = datetime.datetime.utcnow().isoformat()
-    name = "fooresume"
+    name = "resume.TravisTurk"
     filetype = "pdf"
-    description = "A very nice resume."
+    description = "resume_public"
 
     # Open file, convert to bytes
     file = open('static/resume-TravisTurk-web.pdf', 'rb')
@@ -758,8 +774,9 @@ def pdf_upload():
 
     file = file_retrieve(id)
 
-    return send_file(file['filedata'], mimetype=filetype, as_attachment=True, attachment_filename=file['filename'])
+    send_file(file['filedata'], mimetype=filetype, as_attachment=True, attachment_filename=file['filename'])
 
+    return redirect('/portfolio')
 
 
 ###### USER ACCOUNTS ####
