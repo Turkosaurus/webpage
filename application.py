@@ -696,20 +696,22 @@ def pdf():
 
 
 
-# def file_retrieve(id):
+def file_retrieve(id):
 
-#     # Download file by id
-#     cur.execute("SELECT * FROM files WHERE id=%s", [id])
-#     data = cur.fetchone()
-#     print(f"data:{data}")
+    # Download file by id
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM files WHERE id=%s", [id])
+    data = cur.fetchone()
+    cur.close()
+    print(f"data:{data}")
 
-#     # Generate file object and file name
-#     filedata = BytesIO(data[5])
-#     filetype = data[3]
-#     filename = f"{data[2]}_{id}.{filetype}"
-#     print(f"Delivering file: {filename}")
+    # Generate file object and file name
+    filedata = BytesIO(data[5])
+    filetype = data[3]
+    filename = f"{data[2]}_{id}.{filetype}"
+    print(f"Delivering file: {filename}")
 
-#     return {"filedata": filedata, "filetype": filetype}
+    return {"filedata": filedata, "filename": filename}
 
 @app.route("/pdf-upload")
 def pdf_upload():
@@ -741,20 +743,11 @@ def pdf_upload():
     ids = cur.fetchall()
     id = max(ids)[0]
     print(f"max_id:{id}")
-
-    # Download file by id
-    cur.execute("SELECT * FROM files WHERE id=%s", [id])
-    data = cur.fetchone()
     cur.close()
-    print(f"data:{data}")
 
-    # Generate file object and file name
-    filedata = BytesIO(data[5])
-    filetype = data[3]
-    filename = f"{data[2]}_{id}.{filetype}"
-    print(f"Delivering file: {filename}")
+    file = file_retrieve(id)
 
-    return send_file(filedata, mimetype=filetype, as_attachment=True, attachment_filename=filename)
+    return send_file(file['filedata'], mimetype=filetype, as_attachment=True, attachment_filename=file['filename'])
 
 
 
