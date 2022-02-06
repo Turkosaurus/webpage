@@ -292,7 +292,6 @@ def log_error(time, location, error):
         writer.writerow([time, location, error])
 
 
-
 def retrieve_pageview():
     cur = conn.cursor()
     cur.execute("SELECT * FROM pageviews")
@@ -354,6 +353,12 @@ def home():
     count_pageview('/')
     return render_template("index.html")
 
+
+@app.route("/admin")
+def admin():
+
+    data = retrieve_pageview()
+    return render_template("admin.html", data=data)
 
 @app.route("/portfolio")
 def portfolio():
@@ -655,9 +660,9 @@ def resume():
     return render_template("resume.html")
 
 
-@app.route("/admin")
-def admin():
-    count_pageview('/admin')
+@app.route("/logs")
+def logs():
+    count_pageview('/logs')
 
     # Open a cursor to perform database operations
     cur = conn.cursor()
@@ -696,6 +701,11 @@ def pdf():
 
 
 
+
+def file_store(filename, description):
+    uploaded = datetime.datetime.utcnow().isoformat()
+
+
 def file_retrieve(id):
 
     # Download file by id
@@ -707,11 +717,12 @@ def file_retrieve(id):
 
     # Generate file object and file name
     filedata = BytesIO(data[5])
+    description = data[4]
     filetype = data[3]
     filename = f"{data[2]}_{id}.{filetype}"
     print(f"Delivering file: {filename}")
 
-    return {"filedata": filedata, "filename": filename}
+    return {"filedata": filedata, "filename": filename, "description": description}
 
 @app.route("/pdf-upload")
 def pdf_upload():

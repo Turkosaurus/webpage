@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %} | Portfolio{% endblock %}
+{% block title %} | Admin{% endblock %}
 {% block body %}
 <div class="container" id="top">
 
@@ -7,20 +7,19 @@
         <div class="col">
 
             <h1 class="display-1">
-                CSV Tools
+                Admin
             </h1>
             <hr>
             <h4>
-                Utilities and tools for basic data manipulation
+                Content Management Dashboard
             </h4>
-            <small>(<a href="/portfolio#data">how it's made</a>)</small>
         </div>
     </div>
 
     <div class="row">
         <div class="col">
-            <h1 class="display-3 project-section">
-                Upload File
+            <h1 class="display-4 project-section">
+                Update Resume
             </h1>
         </div>
     </div>
@@ -31,47 +30,32 @@
                 <div class="form-group">
                     <label for="operation">Choose Operation</label>
                     <select class="form-control" name="operation" id="operation">
-                        <option value="abs">Absolute Value Converter</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="delivery">Choose Delivery</label>
-                    <select class="form-control" name="delivery" id="delivery">
-                        <option value="view">View in Browser</option>
-                        <option value="download">Download Corrected File</option>
+                        <option value="web">Web</option>
+                        <option value="private">Private</option>
                     </select>
                 </div>
                 <div class="input-group">
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputfile" name="inputfile" accept=".csv" aria-describedby="custom-file-label">
-                        <label class="custom-file-label" for="userfile">Choose *.csv file</label>
+                        <input type="file" class="custom-file-input" id="inputfile" name="inputfile" accept=".pdf" aria-describedby="custom-file-label">
+                        <label class="custom-file-label" for="userfile">Choose *.pdf file</label>
                     </div>
                 </div>
                 <br>
-                <input type="submit" value="Go" class="btn btn-lg btn-secondary btn-block">
+                <input type="submit" value="Update" class="btn btn-lg btn-secondary btn-block">
             </form>
             <br>
         </div>
     </div>
 
-    <hr>
-
-    {% if data %}
-        <h1>Data</h1>
-        <div class="row">
-            <table class="table table-bordered">
-                <tbody>
-                    {% for row in data %}
-                        <tr>
-                            {% for value in row  %}
-                                <td>{{ value }}</td>
-                            {% endfor %}
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+    <div class="row">
+        <div class="col">
+            <h1 class="display-4 project-section">
+                Manage URL Routes
+            </h1>
         </div>
-    {% endif %}
+    </div>
 
+
+    
 </div>
 {% endblock %}
