@@ -18,6 +18,9 @@ import time # TODO replace all use of time with datetime
 import datetime
 import logging
 
+
+from io import BytesIO
+
 # from selenium.webdriver import Firefox
 # from selenium.webdriver.firefox.options import Options
 # from selenium.webdriver.common.keys import Keys
@@ -689,38 +692,69 @@ def short_url(shorturl):
 def pdf():
     count_pageview('/pdf')
 
-    return send_file('static/resume-TravisTurk-web.pdf', attachment_filename='resume.TravisTurk.pdf')
+    return send_file('static/resume-TravisTurk-web.pdf', mimetype='pdf', as_attachment=True, attachment_filename='resume.TravisTurk.pdf')
 
-#TODO get this working to enable resume updates
- # @app.route("/pdf-upload")
-# def pdf_upload():
-#     count_pageview('/pdf-upload')
 
-#     # File and metadata
-#     uploaded = datetime.datetime.utcnow().isoformat()
-#     name = "fooresume"
-#     filetype = "pdf"
-#     description = "A very nice resume."
 
-#     file = open('static/resume-TravisTurk-web.pdf', 'rb')
-#     filedata = file.read()
+# def file_retrieve(id):
 
-#     # Database
-#     cur = conn.cursor()
-#     cur.execute("INSERT INTO files (uploaded, name, filetype, description, filedata) VALUES (%s, %s, %s, %s, %s)", (uploaded, name, filetype, description, filedata))
-#     conn.commit()
-#     cur.close()
+#     # Download file by id
+#     cur.execute("SELECT * FROM files WHERE id=%s", [id])
+#     data = cur.fetchone()
+#     print(f"data:{data}")
 
-#     print("File saved to database.")
+#     # Generate file object and file name
+#     filedata = BytesIO(data[5])
+#     filetype = data[3]
+#     filename = f"{data[2]}_{id}.{filetype}"
+#     print(f"Delivering file: {filename}")
 
-#     cur = conn.cursor()
-#     cur.execute("SELECT * FROM files WHERE id=1")
-#     dlfiledata = cur.fetchone()
-#     print(f'dlfiledata:\n{dlfiledata}')
+#     return {"filedata": filedata, "filetype": filetype}
 
-#     file.close()
+@app.route("/pdf-upload")
+def pdf_upload():
+    count_pageview('/pdf-upload')
 
-#     return send_file(dlfiledata, attachment_filename='resume.TravisTurk.pdf')
+    # Default file metadata
+    uploaded = datetime.datetime.utcnow().isoformat()
+    name = "fooresume"
+    filetype = "pdf"
+    description = "A very nice resume."
+
+    # Open file, convert to bytes
+    file = open('static/resume-TravisTurk-web.pdf', 'rb')
+    filedata = file.read()
+    file.close()
+    filedata = bytes(filedata)
+    # print(f"filedata:{filedata}")
+        
+    # Insert into database
+    cur = conn.cursor()
+    cur.execute("INSERT INTO files (uploaded, name, filetype, description, filedata) VALUES (%s, %s, %s, %s, %s)", (uploaded, name, filetype, description, filedata))
+    conn.commit()
+    cur.close()
+    print("File saved to database.")
+
+    # Find newest file
+    cur = conn.cursor()
+    cur.execute("SELECT id FROM files;")
+    ids = cur.fetchall()
+    id = max(ids)[0]
+    print(f"max_id:{id}")
+
+    # Download file by id
+    cur.execute("SELECT * FROM files WHERE id=%s", [id])
+    data = cur.fetchone()
+    cur.close()
+    print(f"data:{data}")
+
+    # Generate file object and file name
+    filedata = BytesIO(data[5])
+    filetype = data[3]
+    filename = f"{data[2]}_{id}.{filetype}"
+    print(f"Delivering file: {filename}")
+
+    return send_file(filedata, mimetype=filetype, as_attachment=True, attachment_filename=filename)
 
 
 
