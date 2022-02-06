@@ -33,43 +33,58 @@
             <img class="icon-sm" src=/static/icons/bars-solid.svg>
             <!-- <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" class="svg-inline--fa fa-bars fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="current" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path></svg>    </button> -->
     </button>
+
+
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-            <!-- <a class="nav-item nav-link" href="/bio">Bio</a> -->
-            <!-- <a class="nav-item nav-link" href="/cluck">Cluck</a> -->
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Portfolio
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/portfolio">Overview</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/portfolio#nailivic">Nailivic Studios ERP</a>
-                    <a class="dropdown-item" href="/portfolio#metar">METAR Text Aviation Weather</a>
-                    <a class="dropdown-item" href="/portfolio#incanon">InCanon RPG Tool</a>
-                    <a class="dropdown-item" href="/portfolio#data">Data Utilities for CSV</a>
-                    <!-- <a class="dropdown-item" href="/portfolio#cursedsand">Cursed Sand</a> -->
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Utilities
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/metar">METAR by SMS</a>
-                    <a class="dropdown-item" href="/data">Data Tools</a>
-                    <!-- <a class="dropdown-item" disabled href="#"></a> -->
-                </div>
-            </li>
 
+        <ul class="navbar-nav mr-auto mt-2">
+            <div class="navbar-nav">
+                <!-- <a class="nav-item nav-link" href="/bio">Bio</a> -->
+                <!-- <a class="nav-item nav-link" href="/cluck">Cluck</a> -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Portfolio
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/portfolio">Overview</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/portfolio#nailivic">Nailivic Studios ERP</a>
+                        <a class="dropdown-item" href="/portfolio#metar">METAR Text Aviation Weather</a>
+                        <a class="dropdown-item" href="/portfolio#incanon">InCanon RPG Tool</a>
+                        <a class="dropdown-item" href="/portfolio#data">Data Utilities for CSV</a>
+                        <!-- <a class="dropdown-item" href="/portfolio#cursedsand">Cursed Sand</a> -->
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Utilities
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/metar">METAR by SMS</a>
+                        <a class="dropdown-item" href="/data">Data Tools</a>
+                        <!-- <a class="dropdown-item" disabled href="#"></a> -->
+                    </div>
+                </li>
+                
+                <!-- <a class="nav-item nav-link" href="/login">Login</a> -->
+            </div>
+        </ul>
 
-            <!-- <a class="nav-item nav-link disabled" href="#">Disabled</a> -->
-        </div>
+        {% if session.user_id %}
+            <ul class="navbar-nav ml-auto mt-2">
+                <li class="nav-item"><a href="/admin" class="nav-link">Admin</a></li>
+            </ul>
+        {% else %}
+            <ul class="navbar-nav ml-auto mt-2">
+                <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
+            </ul>
+        {% endif %}
+
     </div>
-  </nav>
+</nav>
 
     {% if get_flashed_messages() %}
-        <header>
+    <header>
             <div class="alert alert-primary border text-center" role="alert">
                 {{ get_flashed_messages() | join(" ") }}
             </div>

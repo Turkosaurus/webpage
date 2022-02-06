@@ -1,2 +1,4 @@
 foo,bar,bat
 baz,bar,bam
+2022-02-06T22:06:32.179803,count_pageview,"current transaction is aborted, commands ignored until end of transaction block
+"

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, send_file, url_for, redirect, flash, request, send_from_directory, abort, session, current_app
+from flask import Flask, render_template, send_file, url_for, redirect, flash, request, send_from_directory, abort, session, current_app, make_response
 from flask_session import Session
 
 from functools import wraps
@@ -66,8 +66,10 @@ client = Client(account_sid, auth_token)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 app.config["SESSION_PERMANENT"] = False
-app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(hours=0.001)
+# app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(hours=0.001)
 app.config["SESSION_TYPE"] = "filesystem"
+# app.config["SESSION_TYPE"] = "null"
+
 app.config['UPLOAD_FOLDER'] = os.getenv('PWD') + "/static/uploads"
 
 
@@ -334,6 +336,31 @@ def style_metar():
         }
 
     return wxkey
+
+
+def file_store(filename, description):
+    uploaded = datetime.datetime.utcnow().isoformat()
+    return 0
+
+def file_retrieve(id):
+
+    # Download file by id, structure metadata
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM files WHERE id=%s", [id])
+    data = cur.fetchone()
+    cur.close()
+    # print(f"data:{data}")
+
+    filedata = data[5]
+    description = data[4]
+    filetype = data[3]
+    uploaded = datetime.datetime.fromisoformat(str(data[1]))
+    uploaded_short = data[1].strftime("%B%Y")
+
+    filename = f"{data[2]}.{filetype}"
+    # print(f"Delivering file: {filename}")
+
+    return {"filedata": filedata, "description": description, "filetype": filetype, "filename": filename, "uploaded_short": uploaded_short, "uploaded": uploaded}
 
 
 # ROUTES #
@@ -657,24 +684,36 @@ def data():
 
 @app.route("/resume")
 def resume():
-    count_pageview('/resume')
+
+    count_pageview(f'/resume')
 
     # TODO add authorizations/click tracking
 
-    # Find public resume
+    # Find most recent public resume
     cur = conn.cursor()
-    print(f"Finding most recent public resume ID", end='')
-    print(f".", end='')
-    print(f".", end='')
-    print(f".", end='')
-    cur.execute("SELECT id FROM files WHERE description=%s;", ["resume_public"])
+    cur.execute("SELECT id FROM files WHERE description=%s ORDER by ID DESC LIMIT 1;", ["resume_public"])
     id = cur.fetchone()[0]
-    print(f"{id}")
+    print(f"Most recent resume_public: id = {id}")
     cur.close()
 
-    return render_template("resume.html")
+    file = file_retrieve(id)
 
+    # # LOCAL - Create new local file
+    # with open("static/uploads/resume-recent.pdf", "wb") as f:
+    #     print((file['filedata']))
+    #     f.write(file['filedata'])
 
+    # EMBED
+    # https://stackoverflow.com/questions/18281433/flask-handling-a-pdf-as-its-own-page
+    # https://flask.palletsprojects.com/en/2.0.x/api/#flask.make_response
+
+    response = make_response(bytes(file['filedata']))
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'inline; filename=%s' % file['filename']
+
+    return response
+
+# TODO move this into admin
 @app.route("/logs")
 def logs():
     count_pageview('/logs')
@@ -699,7 +738,6 @@ def logs():
 
 @app.route("/<shorturl>")
 def short_url(shorturl):
-
     count_pageview(shorturl)
 
     #URL shortener
@@ -708,75 +746,67 @@ def short_url(shorturl):
     return redirect("/")
 
 
-@app.route("/pdf")
-def pdf():
-    count_pageview('/pdf')
+@app.route("/secret/<key>")
+def secret(key):
+    count_pageview(f"secret/{key}")
+    # Lookup links table to enable logic here
 
-    return send_file('static/resume-TravisTurk-web.pdf', mimetype='pdf', as_attachment=True, attachment_filename='resume.TravisTurk.pdf')
+# @app.route("/pdf")
+# def pdf():
+#     count_pageview('/pdf')
 
+#     return send_file('static/resume-TravisTurk-web.pdf', mimetype='pdf', as_attachment=True, attachment_filename='resume.TravisTurk.pdf')
 
+# @app.route("/file/<id>")
+# @login_required
+# def file(id):
 
-
-def file_store(filename, description):
-    uploaded = datetime.datetime.utcnow().isoformat()
-
-
-def file_retrieve(id):
-
-    # Download file by id
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM files WHERE id=%s", [id])
-    data = cur.fetchone()
-    cur.close()
-    print(f"data:{data}")
-
-    # Generate file object and file name
-    filedata = BytesIO(data[5])
-    description = data[4]
-    filetype = data[3]
-    filename = f"{data[2]}_{id}.{filetype}"
-    print(f"Delivering file: {filename}")
-
-    return {"filedata": filedata, "filename": filename, "description": description}
+#     # Retrieve file from database, generate file object from data using BytesIO()
+#     file = file_retrieve(id)
+#     data = BytesIO(file['filedata'])
+  
+#     return send_file(data, mimetype=file['filetype'], as_attachment=True, attachment_filename=file['filename'])
 
 
-@app.route("/pdf-upload")
-def pdf_upload():
-    count_pageview('/pdf-upload')
+# @app.route("/pdf-upload")
+# def pdf_upload():
+#     count_pageview('/pdf-upload')
 
-    # Default file metadata
-    uploaded = datetime.datetime.utcnow().isoformat()
-    name = "resume.TravisTurk"
-    filetype = "pdf"
-    description = "resume_public"
+#     # Default file metadata
+#     uploaded = datetime.datetime.utcnow().isoformat()
+#     name = "resume_TravisTurk"
+#     filetype = "pdf"
+#     description = "resume_public"
 
-    # Open file, convert to bytes
-    file = open('static/resume-TravisTurk-web.pdf', 'rb')
-    filedata = file.read()
-    file.close()
-    filedata = bytes(filedata)
-    # print(f"filedata:{filedata}")
+#     # Open file, convert to bytes
+#     file = open('static/resume-TravisTurk-web.pdf', 'rb')
+#     filedata = file.read()
+#     file.close()
+#     filedata = bytes(filedata)
+#     # print(f"filedata:{filedata}")
         
-    # Insert into database
-    cur = conn.cursor()
-    cur.execute("INSERT INTO files (uploaded, name, filetype, description, filedata) VALUES (%s, %s, %s, %s, %s)", (uploaded, name, filetype, description, filedata))
-    conn.commit()
-    cur.close()
-    print("File saved to database.")
+#     # Insert into database
+#     cur = conn.cursor()
+#     cur.execute("INSERT INTO files (uploaded, name, filetype, description, filedata) VALUES (%s, %s, %s, %s, %s)", (uploaded, name, filetype, description, filedata))
+#     conn.commit()
+#     cur.close()
+#     print("File saved to database.")
 
-    # Find newest file
-    cur = conn.cursor()
-    cur.execute("SELECT id FROM files;")
-    ids = cur.fetchall()
-    id = max(ids)[0]
-    print(f"max_id:{id}")
-    cur.close()
+#     # Find newest file
+#     cur = conn.cursor()
+#     cur.execute("SELECT id FROM files;")
+#     ids = cur.fetchall()
+#     id = max(ids)[0]
+#     print(f"max_id:{id}")
+#     cur.close()
 
-    file = file_retrieve(id)
+#     # Retrieve file from database
+#     file = file_retrieve(id)
+#     data = BytesIO(file['filedata'])
+  
+#     return send_file(data, mimetype=filetype, as_attachment=True, attachment_filename=file['filename'])
 
-    send_file(file['filedata'], mimetype=filetype, as_attachment=True, attachment_filename=file['filename'])
-
-    return redirect('/portfolio')
+ 
 
 
 ###### USER ACCOUNTS ####
@@ -822,29 +852,28 @@ def register():
 
         if username not in authusers:
             flash("Unauthorized user.")
-            return redirect('/register')
+            return redirect('/')
 
-
+        #TODO #TURK-112 incoporate this new psychopg paradigm into this, replacing all db objects
         # Check if username is already taken
-        if not db.execute("SELECT username FROM users WHERE username LIKE (?)", username):
+        cur = conn.cursor()
+        cur.execute("SELECT username FROM users WHERE username LIKE %s;", [username])
+        matches = cur.fetchall()
 
-
-            #TODO #TURK-112 incoporate this new psychopg paradigm into this, replacing all db objects
-            cur = conn.cursor()
-            cur.execute("")
-            pageviews = cur.fetchall()
-            conn.commit()
-            cur.close()
-
+        if not matches:
 
             # Add the username
             time = datetime.datetime.utcnow().isoformat()
-            db.execute("INSERT INTO users (username, password, created_on) VALUES (:username, :hashedpass, :time)",
-                        username=username, hashedpass=hashedpass, time=time)
+            cur.execute("INSERT INTO users (username, password, created_on) VALUES (%s, %s, %s)",
+                        [username, hashedpass, time])
+            conn.commit()
+            cur.close()
             return redirect("/")
 
         else:
-            return render_template("error.html", errcode=403, errmsg="Username invalid or already taken.")
+            cur.close()
+            flash("Username invalid or already taken.")
+            return redirect("/")
 
 
 @app.route("/login", methods=["GET", "POST"])
