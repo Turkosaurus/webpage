@@ -354,7 +354,7 @@ def file_retrieve(id):
     filedata = data[5]
     description = data[4]
     filetype = data[3]
-    uploaded = datetime.datetime.fromisoformat(str(data[1]))
+    uploaded = (data[1])
     uploaded_short = data[1].strftime("%B%Y")
 
     filename = f"{data[2]}.{filetype}"
