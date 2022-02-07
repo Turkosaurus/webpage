@@ -14,7 +14,7 @@ from twilio.rest import Client
 import os
 import csv
 import re
-import time # TODO replace all use of time with datetime
+import time
 import datetime
 import logging
 
@@ -72,8 +72,8 @@ app.config["SESSION_TYPE"] = "filesystem"
 
 app.config['UPLOAD_FOLDER'] = os.getenv('PWD') + "/static/uploads"
 
-
 Session(app)
+
 
 def login_required(f):
     """
@@ -383,10 +383,18 @@ def home():
 
 
 @app.route("/admin")
+@login_required
 def admin():
 
     data = retrieve_pageview()
     return render_template("admin.html", data=data)
+
+@app.route("/admin/<action>", methods=['POST'])
+@login_required
+def admin_edit(action):
+
+    if action == 'resume':
+        version = request.form.get('version')
 
 @app.route("/portfolio")
 def portfolio():
@@ -628,7 +636,7 @@ def data():
             print(f"filename:{filename_user}")
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename_user))
 
-            # Read loterias.csv into a SQL table
+            # Read into a SQL table
             with open(f'static/uploads/{filename_user}', 'r') as csvfile:
 
                 print(f'Reading {filename_user}...')
@@ -768,45 +776,72 @@ def secret(key):
 #     return send_file(data, mimetype=file['filetype'], as_attachment=True, attachment_filename=file['filename'])
 
 
-# @app.route("/pdf-upload")
-# def pdf_upload():
-#     count_pageview('/pdf-upload')
+@app.route("/upload", methods=['POST'])
+@login_required
+def pdf_upload():
+    count_pageview('/upload')
 
-#     # Default file metadata
-#     uploaded = datetime.datetime.utcnow().isoformat()
-#     name = "resume_TravisTurk"
-#     filetype = "pdf"
-#     description = "resume_public"
 
-#     # Open file, convert to bytes
-#     file = open('static/resume-TravisTurk-web.pdf', 'rb')
-#     filedata = file.read()
-#     file.close()
-#     filedata = bytes(filedata)
-#     # print(f"filedata:{filedata}")
+    version = request.form.get('version')
+
+    if version == 'public':
+        filename = 'resume_TravisTurk_web'
+        description = 'resume_public'
+
+    if version == 'private':
+        filename = 'resume_TravisTurk'
+        description = 'resume_private'
+
+
+    # https://flask.palletsprojects.com/en/2.0.x/patterns/fileuploads/
+
+    # check if the post request has the file part
+    if 'inputfile' not in request.files:
+        flash('No file part')
+        return redirect("/admin")
+
+    file = request.files['inputfile']
+    # filename_override = request.form.get('filename_override')
+
+    # If the user does not select a file, the browser submits an empty file without a filename.
+    if file.filename == '':
+        flash('No selected file')
+        return redirect("/admin")
+
+
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+    # TODO reinstitute checks for public files
+    # if file and allowed_file(file.filename):
+    #     # filename = secure_filename(file.filename) # original filenames kept
+    #     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+    # else:
+    #     flash('Upload Error')
+    #     return redirect("/admin")
+        # # Read into a SQL table
+        # with open(f'static/uploads/{filename_user}', 'r') as csvfile:
+
+
+    # Default file metadata
+    uploaded = datetime.datetime.utcnow().isoformat()
+    filetype = "pdf" # TODO infer filetypes to make this more generic
+
+    # Open file, convert to bytes
+    file = open(f"{app.config['UPLOAD_FOLDER']}/{filename}.{filetype}", 'rb')
+    filedata = file.read()
+    file.close()
+    filedata = bytes(filedata)
+    # print(f"filedata:{filedata}")
         
-#     # Insert into database
-#     cur = conn.cursor()
-#     cur.execute("INSERT INTO files (uploaded, name, filetype, description, filedata) VALUES (%s, %s, %s, %s, %s)", (uploaded, name, filetype, description, filedata))
-#     conn.commit()
-#     cur.close()
-#     print("File saved to database.")
+    # Insert into database
+    cur = conn.cursor()
+    cur.execute("INSERT INTO files (uploaded, name, filetype, description, filedata) VALUES (%s, %s, %s, %s, %s)", (uploaded, filename, filetype, description, filedata))
+    conn.commit()
+    cur.close()
+    flash("File saved to database.")
+    return redirect('/admin.html')
 
-#     # Find newest file
-#     cur = conn.cursor()
-#     cur.execute("SELECT id FROM files;")
-#     ids = cur.fetchall()
-#     id = max(ids)[0]
-#     print(f"max_id:{id}")
-#     cur.close()
-
-#     # Retrieve file from database
-#     file = file_retrieve(id)
-#     data = BytesIO(file['filedata'])
-  
-#     return send_file(data, mimetype=filetype, as_attachment=True, attachment_filename=file['filename'])
-
- 
 
 
 ###### USER ACCOUNTS ####
@@ -854,7 +889,6 @@ def register():
             flash("Unauthorized user.")
             return redirect('/')
 
-        #TODO #TURK-112 incoporate this new psychopg paradigm into this, replacing all db objects
         # Check if username is already taken
         cur = conn.cursor()
         cur.execute("SELECT username FROM users WHERE username LIKE %s;", [username])
@@ -890,38 +924,56 @@ def login():
 
         # Ensure username was submitted
         if not request.form.get("username"):
-            return render_template("error.html", errcode=400, errmsg="Username required.")
+            flash("Username required")
+            return redirect("/login")
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            return render_template("error.html", errcode=400, errmsg="Password required.")
+            flash("Password Required")
+            return render_template("login.html")
+
+        username = request.form.get("username")
 
         # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = :username",
-                          username=request.form.get("username"))
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM users WHERE username=%s;", [username])
+        rows = cur.fetchall()
+        cur.close()
 
         # Ensure username exists
         if len(rows) != 1:
-            return render_template("register.html", errmsg="Username not found.")
+            print("loginerror")
+            flash("Login Error")
+            return render_template("login.html")
 
-        # Ensure username exists and password is correct
-        if not check_password_hash(rows[0]["password"], request.form.get("password")):
-            return render_template("error.html", errcode=403, errmsg="Incorrect password.")
+         # Ensure username exists and password is correct
+        if not check_password_hash(rows[0][2], request.form.get("password")):
+
+            # # TODO implement fancier backoff
+            # time.sleep(5)
+            print("passworderror")
+
+            flash("Password Error")
+            return render_template("login.html")
 
         # Remember which user has logged in
-        session["user_id"] = rows[0]["id"]
+        session["user_id"] = rows[0][0]
+
 
         # Update "last_login"
-        time = datetime.datetime.utcnow().isoformat()
-        db.execute("UPDATE users SET last_login=:time WHERE id=:id", time=time, id=session["user_id"])
+        lastlogin = datetime.datetime.utcnow().isoformat()
+        cur = conn.cursor()
+        cur.execute("UPDATE users SET last_login=%s WHERE id=%s", [lastlogin, session["user_id"]])
+        conn.commit()
+        cur.close()
 
         # Redirect user to home page
-        return redirect("/")
+        flash(f"Welcome, {username}")
+        return redirect("/admin")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("login.html")
-
 
 @app.route("/logout")
 def logout():
@@ -932,6 +984,7 @@ def logout():
     session.clear()
 
     # Redirect user to login form
+    flash("Session Cleared")
     return redirect("/")
 
 

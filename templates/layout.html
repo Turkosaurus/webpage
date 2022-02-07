@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Page icon -->
-    <link href="/static/dinosaur.png" rel="icon">
+    <link href="static/dinosaur.png" rel="icon">
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -30,7 +30,7 @@
     <a class="navbar-brand travisturk" href="/">Travis Turk</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <!-- <span class="navbar-toggler-icon"></span> -->
-            <img class="icon-sm" src=/static/icons/bars-solid.svg>
+            <img class="icon-sm" src=static/icons/bars-solid.svg>
             <!-- <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" class="svg-inline--fa fa-bars fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="current" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path></svg>    </button> -->
     </button>
 
@@ -73,6 +73,7 @@
         {% if session.user_id %}
             <ul class="navbar-nav ml-auto mt-2">
                 <li class="nav-item"><a href="/admin" class="nav-link">Admin</a></li>
+                <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
             </ul>
         {% else %}
             <ul class="navbar-nav ml-auto mt-2">

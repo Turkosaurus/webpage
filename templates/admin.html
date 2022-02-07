@@ -19,33 +19,46 @@
     <div class="row">
         <div class="col">
             <h1 class="display-4 project-section">
-                Update Resume
+                Resume
             </h1>
         </div>
     </div>
-    
-    <div class="row">        
+<!--     
+    <form action="/upload" method="post" enctype="multipart/form-data" class="">
+        <div class="form-group">
+            <div class="custom-file">
+                <label class="custom-file-label" for="inputfile">Choose *.pdf file</label>
+                <input type="file" class="custom-file-input" id="inputfile" name="inputfile" accept=".pdf">
+            </div>
+        </div>
+        <input type="submit" value="" class="btn btn-lg btn-secondary btn-block">
+    </form> -->
+
+
+    <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12">
-            <form action="/data" method="post" enctype="multipart/form-data">
+            <form action="/upload" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="operation">Choose Operation</label>
-                    <select class="form-control" name="operation" id="operation">
-                        <option value="web">Web</option>
+                    <label for="version">Public or Private</label>
+                    <select class="form-control" name="version" id="version">
+                        <option value="public">Public</option>
                         <option value="private">Private</option>
                     </select>
                 </div>
-                <div class="input-group">
+        
+                <div class="form-group">
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputfile" name="inputfile" accept=".pdf" aria-describedby="custom-file-label">
-                        <label class="custom-file-label" for="userfile">Choose *.pdf file</label>
+                        <label for="inputfile">Upload most recent version of resume.</label>
+                        <input type="file" class="form-control-file" name="inputfile" id="inputfile" accept=".pdf">
+                        <br>
+                        <input type="submit" value="Update" class="btn btn-lg btn-secondary btn-block">
                     </div>
                 </div>
-                <br>
-                <input type="submit" value="Update" class="btn btn-lg btn-secondary btn-block">
             </form>
-            <br>
         </div>
     </div>
+
+    <hr>
 
     <div class="row">
         <div class="col">
@@ -55,6 +68,13 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col">
+            <h1 class="display-4 project-section">
+                Logs
+            </h1>
+        </div>
+    </div>
 
     
 </div>
