@@ -295,6 +295,27 @@ def log_error(time, location, error):
         writer.writerow([time, location, error])
 
 
+
+@app.route("/backup/<table>")
+@login_required
+def backup(table):
+
+    print("BACKUP")
+    cur = conn.cursor()
+    cur.execute(f"SELECT * FROM {table} ORDER BY id ASC;")
+    data = cur.fetchall()
+    cur.close()
+
+    with open(f'{table}.csv', 'a') as file:
+        writer = csv.writer(file)
+
+        for line in data:
+            writer.writerow(line)
+    
+    return "Backup complete."
+
+
+
 def retrieve_pageview():
     cur = conn.cursor()
     cur.execute("SELECT * FROM pageviews")
