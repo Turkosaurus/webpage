@@ -62,7 +62,7 @@ th, code {
 
 /* Courtesy */
 /* https://work.smarchal.com/twbscolor/css/e74c3cc0392becf0f1ffbbbc0 */
-  .navbar .navbar-brand {
+.navbar .navbar-brand {
 color: var(--light-cool);
 }
 
