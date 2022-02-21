@@ -1,0 +1,185 @@
+{% extends "layout.html" %}
+{% block title %} | Keg Weight{% endblock %}
+{% block body %}
+<div class="container" id="top">
+
+    <div class="row">
+        <div class="col">
+
+            <h1 class="display-1">
+                Keg Weight
+            </h1>
+            <hr>
+            <h4>
+                Calculate beer consumption by difference in beginning and ending keg weights.
+            </h4>
+            <!-- <small>(<a href="/portfolio#data">how it's made</a>)</small> -->
+        </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+        <div class="col">
+            <h1>
+                Settings
+            </h1>
+        </div>
+    </div>
+    <div class="row align-items-end">
+        <div class="col-lg-2 col-md-4 col-sm-6">
+            <div class="form-group">
+                <label for="taps">Number of Kegs</label>
+                <input class="form-control" type="number" id="taps" name="taps" value="1" min="1">
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6">
+            <div class="form-group">
+                <label for="units">Units</label>
+                <select class="form-control" name="units" id="units">
+                    <option value="imperial">Imperial (US)</option>
+                    <option value="metric">Metric</option>
+                </select>
+            </div>                
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6">
+            <div class="form-group">
+                <!-- <input type="submit" class="btn btn-lg btn-secondary btn-block"> -->
+                <!-- <submit>
+                    <button class="btn btn-secondary btn-block">Update</button>
+                </submit> -->
+                <!-- <label for="units">Units</label>
+                <select class="form-control" name="units" id="units">
+                    <option value="imperial">Imperial (US)</option>
+                    <option value="metric">Metric</option>
+                </select> -->
+            </div>                
+        </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+        <div class="col">
+            <h1>
+            Enter Beer Data
+            </h1>
+            <div class="row align-items-end">
+
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="name">Beer Name</label>
+                        <input class="form-control" type="text" id="name" name="name">
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="form-group">
+
+                        <label for="kegsize">Keg Size</label>
+                        <select class="form-control" name="kegsize" id="kegsize">
+                            <option value="1/2 BBL">
+                                1/2 BBL
+                            </option>
+                            <option value="1/3 BBL">
+                                1/3 BBL
+                            </option>
+                        </select>
+                    </div>                
+                </div>
+
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="weightBegin">Starting Weight</label>
+                        <input class="form-control" type="number" id="weightBegin" name="weightBegin" value="0" min="0">
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label for="weightEnd">Ending Weight</label>
+                        <input class="form-control" type="number" id="weightEnd" name="weightEnd" value="1" min="1">
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-secondary btn-block">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+        <div class="col">
+            <h1>
+                Results
+            </h1>
+            <table class="table table-bordered">
+                <thead>
+                    <th style="width: 16%">
+                        Name
+                    </th>
+                    <th style="width: 16%">
+                        Keg Type
+                    </th>
+                    <th style="width: 16%" colspan="2">
+                        Starting Weight
+                    </th>
+                    <th style="width: 16%" colspan="2">
+                        Ending Weight
+                    </th>
+                    <th style="width: 16%">
+                        Weight +/-
+                    </th>
+                    <th style="width: 16%">
+                        Volume +/-
+                    </th>
+
+                </thead>
+                <tr>
+                    <td>
+                        <input type="text">
+                    </td>
+                    <td>
+                        <select class="form-control">
+                            <option value="1/2 BBL">
+                                1/2 BBL
+                            </option>
+                            <option value="1/3 BBL">
+                                1/3 BBL
+                            </option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="number" min="1">
+                    </td>
+                    <td>
+                        (XX%)
+                    </td>
+                    <td>
+                        <input type="number" min="1">
+                    </td>
+                    <td>
+                        (XX%)
+                    </td>
+                </tr>
+                <tbody>
+                    {% for row in data %}
+                        <tr>
+                            {% for value in row  %}
+                                <td>{{ value }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <hr>
+</div>
+{% endblock %}

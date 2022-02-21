@@ -30,8 +30,8 @@ from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 
 import psycopg2
 
-from werkzeug.utils import secure_filename
-from data import allowed_file
+
+from helpers import allowed_file, style_metar, count_pageview, retrieve_pageviews
 
 # import threading
 # import discord
@@ -88,8 +88,8 @@ def login_required(f):
     return decorated_function
 
 
-# https://www.twilio.com/docs/usage/tutorials/how-to-secure-your-flask-app-by-validating-incoming-twilio-requests#
 def validate_twilio_request(f):
+# https://www.twilio.com/docs/usage/tutorials/how-to-secure-your-flask-app-by-validating-incoming-twilio-requests#
     """Validates that incoming requests genuinely originated from Twilio"""
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -209,7 +209,7 @@ def scrape():
     # results = browser.find_elements_by_class_name('result_body')
     # print(results[0].text)
     # print(results[0].text)
-
+    return 0
 
 def fetch_metar(airport):
     print(f"Fetching METAR for {airport}")
@@ -248,7 +248,6 @@ def fetch_metar(airport):
 
     return (result)
 
-
 def send_msg(recipient, message):
     message = client.messages.create(
         body = message,
@@ -260,108 +259,38 @@ def send_msg(recipient, message):
     return 0
 
 
-def count_pageview(page):
-
-    errors = 0
-
-    # obtain IP
-    try:
-        # Obtain client IP (even when proxy is used)
-        if request.environ.get('HTTP_X_FORWARDED_FOR') is None:
-            ip = request.environ['REMOTE_ADDR']
-        else:
-            ip = request.environ['HTTP_X_FORWARDED_FOR'] # if behind a proxy
-    except Exception as e:
-        ip = e
-
-    time = datetime.datetime.utcnow().isoformat()
-
-    try:
-        cur = conn.cursor()
-        cur.execute("INSERT INTO pageviews (time, ip, page) VALUES (%s, %s, %s)", (time, ip, page))
-        conn.commit()
-        cur.close()
-
-    except Exception as e:
-        errors += 1
-        log_error(time, 'count_pageview', e)
-
-    return errors
-
-
-def log_error(time, location, error):
-    with open('log.csv', 'a') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow([time, location, error])
-
-
 
 @app.route("/backup/<table>")
 @login_required
 def backup(table):
 
     print("BACKUP")
-    cur = conn.cursor()
-    cur.execute(f"SELECT * FROM {table} ORDER BY id ASC;")
-    data = cur.fetchall()
-    cur.close()
 
-    with open(f'{table}.csv', 'a') as file:
-        writer = csv.writer(file)
+    try:
+        cur = conn.cursor()
+        cur.execute(f"SELECT * FROM {table} ORDER BY id ASC;")
+        data = cur.fetchall()
+        cur.close()
 
-        for line in data:
-            writer.writerow(line)
-    
-    return "Backup complete."
+        with open(f'{table}.csv', 'a') as file:
+            writer = csv.writer(file)
 
+            for line in data:
+                writer.writerow(line)
+        flash("Backup complete.")
+        return redirect("/admin")
 
-
-def retrieve_pageview():
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM pageviews")
-    pageviews = cur.fetchall()
-    conn.commit()
-    cur.close()
-    return pageviews
+    except Exception as e:
+        flash(e)
+        return redirect("/admin")
 
 
-def style_metar():
-
-    wxkey = {   
-            "wind" : {
-                "N" : "⬇",
-                "NE" : "↙",
-                "E" : "⬅",
-                "SE" : "↖",
-                "S" : "⬆",
-                "SW" : "↗",
-                "W" : "➡",
-                "NW" : "↘"
-            },
-            "cloud" : {
-                "CLR" : "☀",
-                "FEW" : "🌤",
-                "BKN" : "⛅",
-                "OVC" : "☁"
-            },
-            "weather" : {
-                "snow" : "🌨️",
-                "rain" : "🌧️",
-                "lightning" : "🌩️",
-                "tornado" : "🌪️"
-            },
-            "temp" : "🌡️",
-            "vis" : "👀",
-            "altemiter" : "🅰️",
-            "warning" : "⚠️"
-        }
-
-    return wxkey
 
 
 def file_store(filename, description):
     uploaded = datetime.datetime.utcnow().isoformat()
     return 0
+
 
 def file_retrieve(id):
 
@@ -376,24 +305,28 @@ def file_retrieve(id):
     description = data[4]
     filetype = data[3]
     uploaded = (data[1])
+    # https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior
     uploaded_short = data[1].strftime("%B%Y")
 
     filename = f"{data[2]}.{filetype}"
     # print(f"Delivering file: {filename}")
 
-    return {"filedata": filedata, "description": description, "filetype": filetype, "filename": filename, "uploaded_short": uploaded_short, "uploaded": uploaded}
+    package =  {
+        "filedata": filedata,
+        "description": description,
+        "filetype": filetype,
+        "filename": filename,
+        "uploaded_short": uploaded_short,
+        "uploaded": uploaded
+        }
 
+    return package
 
 # ROUTES #
 
 # @app.route("/test")
+# @login_required
 # def test():
-#     count_pageview('/test')
-
-#     result = punch()
-#     print(result)
-#     scrape()
-
 #     return redirect('/')
 
 
@@ -402,13 +335,28 @@ def home():
     count_pageview('/')
     return render_template("index.html")
 
+@app.route("/status")
+def status():
+    return render_template("index.html")
 
 @app.route("/admin")
 @login_required
 def admin():
 
-    data = retrieve_pageview()
-    return render_template("admin.html", data=data)
+    count_pageview('/admin')
+
+    # Open a cursor to perform database operations
+    cur = conn.cursor()
+
+    # Execute a query
+    #TODO this is probably wrong, results is none, but records populates
+    cur.execute("SELECT * FROM logs")
+
+    # Retrieve query results
+    logs = cur.fetchall()
+    pageviews = retrieve_pageviews()
+
+    return render_template("admin.html", logs=logs, pageviews=pageviews)
 
 @app.route("/admin/<action>", methods=['POST'])
 @login_required
@@ -422,6 +370,13 @@ def portfolio():
     count_pageview('/portfolio')
 
     return render_template("projects.html")
+
+
+@app.route("/keg")
+def keg():
+    count_pageview('/keg')
+
+    return render_template("keg.html")
 
 
 @app.route("/ping", methods=['POST'])
@@ -451,31 +406,39 @@ def ping():
 @validate_twilio_request
 def message():
 
-    """Send a dynamic reply to an incoming text message"""
-    # Get the message the user sent our Twilio number
-    body = request.values.get('Body', None)
-    num_from = request.values.get('From', None)
-    MessageSid = request.values.get('MessageSid', None)
-    NumMedia = request.values.get('NumMedia', None) # The number of media items associated with your message
+    # Testing environment:
+    if os.getenv('FLASK_DEBUG') == '1':
+        body = """
+        lorem ipsum
+        foo foo froofy foo
+        """
 
-    # TODO consolidate into logging function
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM numbers WHERE number=%(num_from)s", {'num_from': num_from})
-    existing = cur.fetchone()
-    if not existing:
+    else:
+        """Send a dynamic reply to an incoming text message"""
+        # Get the message the user sent our Twilio number
+        body = request.values.get('Body', None)
+        num_from = request.values.get('From', None)
+        MessageSid = request.values.get('MessageSid', None)
+        NumMedia = request.values.get('NumMedia', None) # The number of media items associated with your message
+
+        # TODO consolidate into logging function
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM numbers WHERE number=%(num_from)s", {'num_from': num_from})
+        existing = cur.fetchone()
+        if not existing:
+            time = datetime.datetime.utcnow().isoformat()
+            cur.execute("INSERT INTO numbers (number, notify, created_on) VALUES (%s, %s, %s)", (num_from, 'False', time))
+
+        cur.execute("SELECT num_id FROM numbers WHERE number=%(num_from)s", {'num_from': num_from})
+        num_id = cur.fetchone()[0]
+        print(f"Creating activity for num_id:{num_id}")
+
         time = datetime.datetime.utcnow().isoformat()
-        cur.execute("INSERT INTO numbers (number, notify, created_on) VALUES (%s, %s, %s)", (num_from, 'False', time))
+        activity = "message"
+        cur.execute("INSERT INTO activity (num_id, timestamp, activity, messagesid) VALUES (%s, %s, %s, %s)", (num_id, time, activity, MessageSid))
 
-    cur.execute("SELECT num_id FROM numbers WHERE number=%(num_from)s", {'num_from': num_from})
-    num_id = cur.fetchone()[0]
-    print(f"Creating activity for num_id:{num_id}")
-
-    time = datetime.datetime.utcnow().isoformat()
-    activity = "message"
-    cur.execute("INSERT INTO activity (num_id, timestamp, activity, messagesid) VALUES (%s, %s, %s, %s)", (num_id, time, activity, MessageSid))
-
-    conn.commit()
-    cur.close()
+        conn.commit()
+        cur.close()
 
 
     print("Message received:")
@@ -522,17 +485,15 @@ def message():
 
     return str(resp)
 
-
 @app.route("/message/status", methods=['GET', 'POST'])
 def message_status():
 
-    # BUG not currently proven functional
-    # TODO consolidate into logging function
     # https://www.twilio.com/docs/sms/tutorials/how-to-confirm-delivery-python
     message_sid = request.values.get('MessageSid', None)
     message_status = request.values.get('MessageStatus', None)
     num_from = request.values.get('From', None)
 
+    # Find existing number id, or create new one if not existing
     cur = conn.cursor()
     cur.execute("SELECT * FROM numbers WHERE number=%(num_from)s", {'num_from': num_from})
     existing = cur.fetchone()
@@ -540,6 +501,7 @@ def message_status():
         time = datetime.datetime.utcnow().isoformat()
         cur.execute("INSERT INTO numbers (number, notify, created_on) VALUES (%s, %s, %s)", (num_from, 'False', time))
 
+    # TODO move this up and consolidate, as it's a redundant query
     cur.execute("SELECT num_id FROM numbers WHERE number=%(num_from)s", {'num_from': num_from})
     num_id = cur.fetchone()[0]
     print(f"Creating activity for num_id:{num_id}")
@@ -552,7 +514,6 @@ def message_status():
     cur.close()
 
     return ('', 204)
-
 
 @app.route("/metar", methods=['GET', 'POST'])
 def metar():
@@ -632,7 +593,6 @@ def data():
 
     if request.method == 'GET':
         return render_template("data.html", data=data)
-
 
     else:
         delivery = request.form.get('delivery')
@@ -742,27 +702,8 @@ def resume():
 
     return response
 
-# TODO move this into admin
-@app.route("/logs")
-def logs():
-    count_pageview('/logs')
 
-    # Open a cursor to perform database operations
-    cur = conn.cursor()
 
-    # Execute a query
-    #TODO this is probably wrong, results is none, but records populates
-    cur.execute("SELECT * FROM logs")
-
-    # Retrieve query results
-    records = cur.fetchall()
-
-    pageviews = retrieve_pageview()
-
-    print(f"records:{records}")
-    print(f"pageviews:{pageviews}")
-
-    return redirect("/")
 
 
 @app.route("/<shorturl>")
@@ -801,7 +742,6 @@ def secret(key):
 @login_required
 def pdf_upload():
     count_pageview('/upload')
-
 
     version = request.form.get('version')
 
@@ -860,14 +800,12 @@ def pdf_upload():
     cur.execute("INSERT INTO files (uploaded, name, filetype, description, filedata) VALUES (%s, %s, %s, %s, %s)", (uploaded, filename, filetype, description, filedata))
     conn.commit()
     cur.close()
-    flash("File saved to database.")
+    flash(f"{filename}.{filetype} ({description})saved to database.")
     return redirect('/admin.html')
 
 
 
 ###### USER ACCOUNTS ####
-#TODO write HMTL files, add @login required pdf submission for updated resume
-
 @app.route("/register", methods=["GET", "POST"])
 def register():
     count_pageview('/register')

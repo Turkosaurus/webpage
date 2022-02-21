@@ -73,6 +73,42 @@
             <h1 class="display-4 project-section">
                 Logs
             </h1>
+            <div class="row">
+                <table class="table table-bordered">
+                    <tbody>
+                        {% for row in logs %}
+                            <tr>
+                                {% for value in row  %}
+                                    <td>{{ value }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+    
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col">
+            <h1 class="display-4 project-section">
+                Pageviews
+            </h1>
+            <div class="row">
+                <table class="table table-bordered">
+                    <tbody>
+                        {% for row in pageviews %}
+                            <tr>
+                                {% for value in row  %}
+                                    <td>{{ value }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+    
         </div>
     </div>
 
