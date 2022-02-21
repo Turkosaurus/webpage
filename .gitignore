@@ -2,3 +2,4 @@ __pycache__/
 .env
 resume_TravisTurk.pdf
 resume_TravisTurk_web.pdf
+/flask_session
