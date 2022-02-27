@@ -21,7 +21,7 @@
 
     <!-- <form action="" id="kegForm" name="kegForm"> -->
     <div class="row">
-        <div class="col-lg-6 col-md-8 col-sm-12">
+        <div class="col-lg-4 col-sm-12">
             <div class="row">
                 <div class="col-sm-4">
 
@@ -116,11 +116,66 @@
 
             <div class="form-group row">
                 <div class="col-sm-4">
-
+                    <button id="reset" name="reset" class="btn btn-secondary btn-block">reset</button>
                 </div>
                 <div class="col-sm-8">
                     <button id="nextKeg" name="nextKeg" class="btn btn-secondary btn-block">Next</button>
                     <!-- <input type="submit" value="Next" class="btn btn-secondary btn-block"> -->
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8 col-sm-12">
+            <div class="row">
+                <div class="col">
+                    <h1>
+                        Results
+                    </h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <button id="print" name="print" class="btn btn-secondary btn-block">
+                        Print
+                    </button>            
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <button disabled id="download" name="download" class="btn btn-secondary btn-block">
+                        Download
+                    </button>            
+                </div>
+            </div>
+            
+            <br>
+        
+            <div class="row">
+                <div class="col">
+                    <table id="inventory" name="inventory" class="table table-bordered">
+                        <thead>
+                            <th>
+                                #
+                            </th>
+                            <th>
+                                Beer Name
+                            </th>
+                            <th>
+                                Keg Type
+                            </th>
+                            <th>
+                                Starting Weight (lbs.)
+                            </th>
+                            <th>
+                                Ending Weight (lbs.)
+                            </th>
+                            <th>
+                                Used %
+                            </th>
+                            <th>
+                                Used Volume (gal.)
+                            </th>
+        
+                        </thead>
+                    </table>
                 </div>
             </div>
         </div>
@@ -129,79 +184,6 @@
 
     <br>
 
-    <div class="row">
-        <div class="col">
-            <h1>
-                Results
-            </h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-2 col-md-4 col-sm-6">
-            <button id="print" name="print" class="btn btn-secondary btn-block">
-                Print
-            </button>            
-        </div>
-        <div class="col-lg-2 col-md-4 col-sm-6">
-            <button id="download" name="download" class="btn btn-secondary btn-block">
-                Download
-            </button>            
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col">
-            <table id="inventory" name="inventory" class="table table-bordered">
-                <thead>
-                    <th>
-                        #
-                    </th>
-                    <th>
-                        Beer Name
-                    </th>
-                    <th>
-                        Keg Type
-                    </th>
-                    <th>
-                        Starting Weight (lbs.)
-                    </th>
-                    <th>
-                        Ending Weight (lbs.)
-                    </th>
-                    <th>
-                        Used %
-                    </th>
-                    <th>
-                        Used Volume (gal.)
-                    </th>
-
-                </thead>
-                <!-- <tr>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                </tr> -->
-                <!-- <tbody>
-                    {% for row in data %}
-                        <tr>
-                            {% for value in row  %}
-                                <td>{{ value }}</td>
-                            {% endfor %}
-                        </tr>
-                    {% endfor %}
-                </tbody> -->
-            </table>
-        </div>
-    </div>
     <hr>
 </div>
 {% endblock %}
