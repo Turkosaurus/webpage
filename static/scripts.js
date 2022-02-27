@@ -1,5 +1,6 @@
-const beerDensity = 8.345 // Density of beer in pounds/gallon
-
+const beerDensity = 8.345; // Density of beer in pounds/gallon
+const galPerLiter = 3.78541;
+let unit = "imperial";
 const kegData = {
     "1/2 BBL": {
         "capacityGal":15.5,
@@ -23,148 +24,179 @@ const kegData = {
     }
 }
 
-document.addEventListener('DOMContentLoaded', loadListeners, false);
+const tapData = {
+    "kegNumber":1,
+    "name":'',
+    "size":'',
+    "weightBegin":'',
+    "weightEnd":'',
+    "usedPercent":'',
+    "usedVolume":''
+}
+console.log(tapData);
 
-let kegs = 0;
+document.addEventListener('DOMContentLoaded', initializePage, false);
 
-function loadListeners() {
+
+function initializePage() {
     
     // Grab DOM Objects
     const kegName = document.getElementById("kegName");
+    const kegSize = document.getElementById('kegSize');
     const weightBegin = document.getElementById("weightBegin");
     const weightEnd = document.getElementById('weightEnd');
-    const kegSize = document.getElementById('kegSize');
-    const kegSizeSmall = document.querySelector('small#kegSize')
-
-    kegName.placeholder = `Keg Tap #${kegs + 1}`
-
-    console.log(kegSizeSmall)
+    const nextKeg = document.getElementById('nextKeg');
 
     // Load Keg Data into option list
     let kegDataEnum = 0;
-
     for(const keg in kegData) {
         // console.log(kegSize);
         const option = document.createElement('option');
         option.value = keg;
         option.text = `${keg} "${kegData[keg].nickname}" (${kegData[keg].capacityGal} gal)`;
         option.small = `${kegData[keg].nickname}`; // AKA or nicknames
-        kegSize.add(option);
-        
-        console.log(option);
-
-        console.log(`${keg}: ${kegData[keg].capacityGal}`);
+        kegSize.add(option);        
+        // console.log(option);
+        // console.log(`${keg}: ${kegData[keg].capacityGal}`);
         kegDataEnum += 1
     }
+    resetKegForm(kegName);
     console.log(`Loaded ${kegDataEnum} keg size options`);
 
+    // Allow eventlisteners to be passed objects
+    // https://ultimatecourses.com/blog/avoiding-anonymous-javascript-functions
+
+    kegName.addEventListener('change', function () {
+        tapData.name = kegName.value;
+    }, false);
+
+    kegSize.addEventListener('change', function () {
+        updateKegSize(kegSize, weightBegin, weightEnd);
+    }, false);
+
+    weightBegin.addEventListener('change', function () {
+        calculatePercent(kegSize, weightBegin, weightEnd);
+    }, false);
+
+    weightEnd.addEventListener('change', function () {
+        calculatePercent(kegSize, weightBegin, weightEnd);
+    }, false);
+
+    nextKeg.addEventListener('click', function() {
+        nextKegUpdate(kegName, kegSize, weightBegin, weightEnd);
+    }, false);
+}
+
+function resetKegForm(kegName) {
+    console.log("RESET");
+    kegName.value = '';
+    kegName.placeholder = tapData.name = `Keg Tap #${tapData.kegNumber}`;
+    tapData.size = '';
+    tapData.weightBegin = '';
+    tapData.weightEnd = '';
+    tapData.usedPercent = '';
+    tapData.usedVolume = '';
+}
+
+function updateKegSize(kegSize, weightBegin, weightEnd) {
+    let size = tapData.size = kegSize.value; //test
+    let min = kegData[size].weightEmpty;
+    let max = (kegData[size].capacityGal * beerDensity) + min;    
+    max = Number.parseFloat(max).toFixed(0);
     
-    kegSize.addEventListener('change', (event) => {
-        let size = event.target.value;
-        let min = kegData[size].weightEmpty;
-        let shell = kegData[size].weightEmpty
-        let max = (kegData[size].capacityGal * beerDensity) + shell;
+    // kegSizeSmall.innerHTML = `Min-Max: ${min}-${max} pounds`
+    weightBegin.min = min;
+    weightBegin.max = max;
 
-        max = Number.parseFloat(max).toFixed(2);
-        console.log(max);
-        
-        weightBegin.min = min;
-        weightBegin.max = max;
-        weightBegin.value = max;
-        console.log("weight begin small")
-        console.log(weightBegin)
+    const weightBeginLabel = document.querySelector("small#weightBegin");
+    weightBeginLabel.innerHTML = `(max: ${max} lbs.)`
+ 
+    const weightEndLabel = document.querySelector("small#weightEnd");
+    weightEndLabel.innerHTML = `(min: ${min} lbs.)`
 
+    weightBegin.value = max;
+    // weightEnd.value = min; // TODO remove after testing
 
-        kegSizeSmall.innerHTML = `Min: ${min} pounds | Max: ${max} pounds`
+    weightEnd.min = min;
+    weightEnd.max = max;
+    
+    calculatePercent(kegSize, weightBegin, weightEnd);
+}
 
-        console.log(weightBeginSmall)
+function calculatePercent(kegSize, weightBegin, weightEnd) {
 
+    // console.log("calculatePercent()");
+    const usedPercent = document.getElementById('usedPercent');
+    const usedVolume = document.getElementById('usedVolume');
+    // const usedPercentSmall = document.querySelector("small#usedPercent");
+    // const usedVolumeSmall = document.querySelector("small#usedVolume");
+ 
+    console.log(`kegSize.value:${kegSize.value}`)
 
-        for(let i = 0; i < weightBegin.labels.length; i++) {
-            console.log(weightBegin.labels[i].textContent);
-        }
+    let size = kegSize.value;
+    let min = kegData[size].weightEmpty;
+    let max = (kegData[size].capacityGal * beerDensity) + min;
 
-        console.log(`label:${weightBegin.textContent}`);
+    if (weightEnd.value > 0) {
 
-        // https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/labels#browser_compatibility
-        // https://stackoverflow.com/questions/285522/find-html-label-associated-with-a-given-input
-        // document.querySelector("label[for=" + vHtmlInputElement.id + "]");
+        startPercent = (weightBegin.value - min) / (max - min)
+        endPercent = (weightEnd.value - min) / (max - min)
 
-        weightEnd.min = min;
-        weightEnd.max = max;
-        
-        // weightEnd.value = "";
-        console.log(event.target.value)
-    });
+        resultPercent = startPercent - endPercent
+        resultPercent = Number.parseFloat(resultPercent).toFixed(3);
 
-    const percentUsed = document.getElementById('percentUsed');
-    const percentUsedSmall = document.querySelector("small#percentUsed")
-    weightEnd.addEventListener('change', (event) => {
-        // if zero, insert placeholder
-        let size = kegSize.value
-        let shell = kegData[size].weightEmpty
-        result = (weightEnd.value - shell) /  (weightBegin.max - shell)
-        
-        result = Number.parseFloat(result * 100).toFixed(1);
-        // console.log(result)
-        // percentUsed.value = "foo"
-        percentUsed.value = `${result}%`
-        
-        let gals = Number.parseFloat(result * (kegData[size].capacityGal / 100)).toFixed(2)
-        percentUsedSmall.innerHTML = `Volume: ${gals} gallons | ${gals * 8} pints`
-    });
+        resultVolume = resultPercent * kegData[size].capacityGal
+        resultVolume = Number.parseFloat(resultVolume).toFixed(1)    
+
+        resultPercent = Number.parseFloat(resultPercent * 100).toFixed(1);
+        usedPercent.value = `${resultPercent} %`;
+        usedVolume.value = `${resultVolume} gal.`;
+
+        tapData.weightBegin = weightBegin.value;
+        tapData.weightEnd = weightEnd.value;
+        tapData.usedPercent = resultPercent;
+        tapData.usedVolume = resultVolume;
+    } else {
+        tapData.weightBegin = ''
+        tapData.weightEnd = ''
+        tapData.usedPercent = ''
+        tapData.usedVolume = ''
+        usedPercent.value = "-";
+        usedVolume.value = "-";
+    }
 }
 
 
 
+function nextKegUpdate(kegName, kegSize, weightBegin, weightEnd) {
 
-function updatePercent() {
+    if(tapData.size === '') {
+        alert("Size required.")
+        return
+    }
 
-}
+    const inventory = document.getElementById("inventory");
+    let row = inventory.insertRow(inventory.rows.length);
+    let i = 0;
+    for(tap in tapData) {
+        let cell = row.insertCell(i);
+        cell.innerHTML = tapData[tap];
+        i++;
+    }
 
+    tapData.kegNumber += 1;
+    // document.getElementById("kegForm").reset();
+    resetKegForm(kegName);
+    kegSize.value = '';
+    weightBegin.value = '';
+    weightEnd.value = '';
+    calculatePercent(kegSize, weightBegin, weightEnd);
 
-function updateKegMinMax() {
-    console.log("HOLY HELL WE MADE IT");
-    alert("we made it");
-}
-
-
-
-// event listener for keg size, set min
-    // starting weight is maximum possible (or TODO the saved, cached last value for that beer)
-    // populate minimum and maximum starting weight and ending weights
-
-function nextKeg() {
     // add a row to the results
     // clear the form
+    console.log(tapData);
 
-}
 
 
-// PSEUDOCODE
 
-// Match kegType to kegWeights data to find base weight
-
-// get keg size
-
-function difference (kegType, weightGross) {
-
-    // match kegType to kegData
-    let capacityGal = kegData[kegType]['capacityGal'];
-    let weightEmpty = kegData[kegType]['weightEmpty'];
-
-    // Calculate usage
-    let weightMax = capacityGal * beerDensity; // Weight of beer within a full keg
-    let weightLiquid = weightGross - weightEmpty; // Subtract shell weight
-
-    // Beer remaining
-    let percent = weightLiquid / weightMax;
-    let gallons = weightLiquid / 8.345;
-    
-    let results = {
-        'percent':percent,
-        'galons':gallons
-    };
-
-    return results;
 }
