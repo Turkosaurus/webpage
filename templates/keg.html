@@ -10,26 +10,24 @@
                 Keg Weight
             </h1>
             <hr>
-            <h4>
-                Calculate beer consumption by difference in beginning and ending keg weights.
-            </h4>
+            <p>
+                Calculate inventory usage by comparing beginning and ending keg weights
+            </p>
             <!-- <small>(<a href="/portfolio#data">how it's made</a>)</small> -->
         </div>
     </div>
 
-    <br>
-
     <!-- <form action="" id="kegForm" name="kegForm"> -->
     <div class="row">
-        <div class="col-lg-4 col-sm-12">
+        <div class="col-lg-4 col-sm-12 d-print-none">
             <div class="row">
                 <div class="col-sm-4">
 
                 </div>
                 <div class="col-sm-8">
-                    <h1>
-                        Enter Keg Weight
-                    </h1>
+                    <h2>
+                        Enter Info
+                    </h2>
                 </div>
             </div>
 
@@ -115,11 +113,11 @@
 
 
             <div class="form-group row">
-                <div class="col-sm-4">
-                    <button id="reset" name="reset" class="btn btn-secondary btn-block">reset</button>
+                <div class="col-sm-4 col-xs-6">
+                    <button id="reset" name="reset" class="btn btn-secondary btn-block">Reset</button>
                 </div>
-                <div class="col-sm-8">
-                    <button id="nextKeg" name="nextKeg" class="btn btn-secondary btn-block">Next</button>
+                <div class="col-sm-8 col-xs-6">
+                    <button id="nextKeg" name="nextKeg" class="btn btn-lg btn-secondary btn-block">Next</button>
                     <!-- <input type="submit" value="Next" class="btn btn-secondary btn-block"> -->
                 </div>
             </div>
@@ -127,54 +125,55 @@
 
         <div class="col-lg-8 col-sm-12">
             <div class="row">
-                <div class="col">
-                    <h1>
+                <div class="col-lg-8 col-sm-12">
+                    <h2>
                         Results
-                    </h1>
+                    </h2>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 col-sm-6">
+                <div class="col-md-2 col-sm-6 d-print-none">
                     <button id="print" name="print" class="btn btn-secondary btn-block">
                         Print
                     </button>            
                 </div>
-                <div class="col-md-4 col-sm-6">
-                    <button disabled id="download" name="download" class="btn btn-secondary btn-block">
+                <div class="col-md-2 col-sm-6 d-print-none">
+                    <button id="download" name="download" class="btn btn-secondary btn-block">
                         Download
                     </button>            
                 </div>
+            </div>
+            <div class="row d-print-none">
             </div>
             
             <br>
         
             <div class="row">
                 <div class="col">
-                    <table id="inventory" name="inventory" class="table table-bordered">
+                    <table id="inventory" name="inventory" class="table table-sm table-bordered">
                         <thead>
                             <th>
                                 #
                             </th>
                             <th>
-                                Beer Name
+                                Name
                             </th>
                             <th>
-                                Keg Type
+                                Type
                             </th>
                             <th>
-                                Starting Weight (lbs.)
+                                Start (lbs.)
                             </th>
                             <th>
-                                Ending Weight (lbs.)
+                                End (lbs.)
                             </th>
                             <th>
-                                Used %
+                                Used (%)
                             </th>
                             <th>
-                                Used Volume (gal.)
+                                Used (gal.)
                             </th>
         
                         </thead>
+                        <caption id="time"></caption>
                     </table>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 const beerDensity = 8.345; // Density of beer in pounds/gallon
 const galPerLiter = 3.78541;
-let unit = "imperial";
+// let unit = "imperial";
 const kegData = {
     "1/2 BBL": {
         "capacityGal":15.5,
@@ -24,6 +24,7 @@ const kegData = {
     }
 }
 
+// Active keg's form data, globally available for processing and validation
 const tapData = {
     "kegNumber":1,
     "name":'',
@@ -33,10 +34,16 @@ const tapData = {
     "usedPercent":'',
     "usedVolume":''
 }
-console.log(tapData);
+
+// Setep result arrays for download or csv export
+const inventoryResults = []
+let headerRow = []
+for(i in tapData) {
+    headerRow.push(i);
+}
+inventoryResults.push(headerRow);
 
 document.addEventListener('DOMContentLoaded', initializePage, false);
-
 
 function initializePage() {
     
@@ -107,13 +114,16 @@ function resetKegForm(kegName, weightBegin, weightEnd) {
     const usedPercent = document.getElementById('usedPercent');
     const usedVolume = document.getElementById('usedVolume');
 
-    console.log("RESET");
-    kegName.value = '';
-    kegName.placeholder = tapData.name = `Keg Tap #${tapData.kegNumber}`;
+    const weightBeginLabel = document.querySelector("small#weightBegin");
+    weightBeginLabel.innerHTML = `(max: - lbs.)`
+ 
+    const weightEndLabel = document.querySelector("small#weightEnd");
+    weightEndLabel.innerHTML = `(min: - lbs.)`
 
-    console.log(kegSize)
+    kegName.value = '';
+    kegName.placeholder = tapData.name = `Keg Tap ${tapData.kegNumber}`;
+
     document.getElementById("kegSize").selectedIndex = "0";
-    // kegSize.selectedIndex = "3";
     weightBegin.value = '';
     weightEnd.value = '';
     tapData.size = '';
@@ -155,12 +165,7 @@ function calculatePercent(kegSize, weightBegin, weightEnd) {
     // console.log("calculatePercent()");
     const usedPercent = document.getElementById('usedPercent');
     const usedVolume = document.getElementById('usedVolume');
-    // const usedPercentSmall = document.querySelector("small#usedPercent");
-    // const usedVolumeSmall = document.querySelector("small#usedVolume");
- 
-    console.log(`kegSize.value:${kegSize.value}`)
-
-    
+     
     if (weightEnd.value > 0 && kegSize.value != '') {
 
         let size = kegSize.value;
@@ -194,7 +199,6 @@ function calculatePercent(kegSize, weightBegin, weightEnd) {
     }
 }
 
-
 function nextKegUpdate(kegName, kegSize, weightBegin, weightEnd) {
 
     if(tapData.size === '') {
@@ -216,11 +220,15 @@ function nextKegUpdate(kegName, kegSize, weightBegin, weightEnd) {
     const inventory = document.getElementById("inventory");
     let row = inventory.insertRow(inventory.rows.length);
     let i = 0;
+    let newRow = []
     for(tap in tapData) {
         let cell = row.insertCell(i);
         cell.innerHTML = tapData[tap];
+        newRow.push(tapData[tap])
         i++;
     }
+    inventoryResults.push(newRow)
+    console.log(inventoryResults)
 
     tapData.kegNumber += 1;
     // document.getElementById("kegForm").reset();
@@ -235,10 +243,21 @@ function nextKegUpdate(kegName, kegSize, weightBegin, weightEnd) {
     console.log(tapData);
 }
 
-function printResults(inventory) {
-    print(inventory);
+function printResults() {
+    document.getElementById("time").innerHTML = `Printed on ${Date()}`
+    print();
 }
 
-function downloadResults(inventory) {
-    alert("Coming soon!")
+function downloadResults() {
+    // https://stackoverflow.com/questions/14964035/how-to-export-javascript-array-info-to-csv-on-client-side
+    let csvContent = "data:text/csv;charset=utf-8,";
+
+    inventoryResults.forEach(function(rowArray) {
+        let row = rowArray.join(",");
+        csvContent += row + "\r\n";
+    });
+
+    var encodedUri = encodeURI(csvContent);
+    window.open(encodedUri);
+    console.log(inventoryResults)
 }
