@@ -38,7 +38,7 @@ const tapData = {
 // Setep result arrays for download or csv export
 const inventoryResults = []
 let headerRow = []
-for(i in tapData) {
+for(let i in tapData) {
     headerRow.push(i);
 }
 inventoryResults.push(headerRow);
@@ -72,6 +72,8 @@ function initializePage() {
     }
     resetKegForm(kegName, weightBegin, weightEnd);
     console.log(`Loaded ${kegDataEnum} keg size options`);
+
+    kegName.focus();
 
     // Allow eventlisteners to be passed objects
     // https://ultimatecourses.com/blog/avoiding-anonymous-javascript-functions
@@ -236,6 +238,7 @@ function nextKegUpdate(kegName, kegSize, weightBegin, weightEnd) {
     kegSize.value = '';
     weightBegin.value = '';
     weightEnd.value = '';
+    kegName.focus();
     calculatePercent(kegSize, weightBegin, weightEnd);
 
     // add a row to the results
@@ -258,6 +261,6 @@ function downloadResults() {
     });
 
     var encodedUri = encodeURI(csvContent);
-    window.open(encodedUri);
+    window.open(encodedUri); 
     console.log(inventoryResults)
 }

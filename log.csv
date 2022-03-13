@@ -555,3 +555,43 @@ baz,bar,bam
 2022-02-28T02:10:26.686552,count_pageview,connection already closed
 2022-02-28T02:10:51.613957,count_pageview,connection already closed
 2022-02-28T02:13:27.593075,count_pageview,connection already closed
+2022-03-04T02:11:10.465931,count_pageview,connection already closed
+2022-03-04T02:12:42.658172,count_pageview,connection already closed
+2022-03-13T01:58:54.315200,count_pageview,"permission denied for table pageviews
+"
+2022-03-13T02:06:54.247284,count_pageview,"current transaction is aborted, commands ignored until end of transaction block
+"
+2022-03-13T02:07:40.074520,count_pageview,"current transaction is aborted, commands ignored until end of transaction block
+"
+2022-03-13T02:09:19.242655,count_pageview,"current transaction is aborted, commands ignored until end of transaction block
+"
+2022-03-13T02:10:15.367618,count_pageview,"current transaction is aborted, commands ignored until end of transaction block
+"
+2022-03-13T02:11:11.625516,count_pageview,"current transaction is aborted, commands ignored until end of transaction block
+"
+2022-03-13T02:11:39.074969,count_pageview,"current transaction is aborted, commands ignored until end of transaction block
+"
+2022-03-13T02:13:37.099256,count_pageview,"current transaction is aborted, commands ignored until end of transaction block
+"
+2022-03-13T02:14:12.591839,count_pageview,"current transaction is aborted, commands ignored until end of transaction block
+"
+2022-03-13T02:15:58.417780,count_pageview,"current transaction is aborted, commands ignored until end of transaction block
+"
+2022-03-13T02:16:40.439203,count_pageview,"current transaction is aborted, commands ignored until end of transaction block
+"
+2022-03-13T02:18:19.357293,count_pageview,"current transaction is aborted, commands ignored until end of transaction block
+"
+2022-03-13T02:18:54.458531,count_pageview,"current transaction is aborted, commands ignored until end of transaction block
+"
+2022-03-13T02:19:04.050512,count_pageview,"current transaction is aborted, commands ignored until end of transaction block
+"
+2022-03-13T02:22:06.895590,count_pageview,"current transaction is aborted, commands ignored until end of transaction block
+"
+2022-03-13T02:22:51.766460,count_pageview,"current transaction is aborted, commands ignored until end of transaction block
+"
+2022-03-13T02:26:26.242856,count_pageview,"current transaction is aborted, commands ignored until end of transaction block
+"
+2022-03-13T02:27:13.967674,count_pageview,"current transaction is aborted, commands ignored until end of transaction block
+"
+2022-03-13T02:27:36.051245,count_pageview,"current transaction is aborted, commands ignored until end of transaction block
+"

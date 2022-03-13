@@ -48,7 +48,7 @@
                 <div class="col-sm-8">
                     <select class="form-control" name="kegSize" id="kegSize">
                         <option selected disabled value="">
-                            Choose One...
+                            Choose keg size...
                         </option>
                         <!-- Options loaded in JS -->
                     </select>
@@ -78,12 +78,12 @@
             <div class="form-group row">
                 <label for="usedPercent" class="col-sm-4 col-form-label">Used</label>
                 <div class="col-sm-4">
-                    <input class="form-control" id="usedPercent" name="usedPercent" disabled type="text">
+                    <input class="form-control" id="usedPercent" name="usedPercent" disabled type="text" tabindex="-1">
                     <small id="usedPercent" class="text-muted">
                     </small>
                 </div>
                 <div class="col-sm-4">
-                    <input class="form-control" id="usedVolume" name="usedVolume" disabled type="text">
+                    <input class="form-control" id="usedVolume" name="usedVolume" disabled type="text" tabindex="-1">
                     <small id="usedVolume" class="text-muted">
                     </small>
                 </div>
@@ -114,10 +114,10 @@
 
             <div class="form-group row">
                 <div class="col-sm-4 col-xs-6">
-                    <button id="reset" name="reset" class="btn btn-secondary btn-block">Reset</button>
+                    <button id="reset" name="reset" class="btn btn-secondary btn-block" tabindex="-1">Reset</button>
                 </div>
                 <div class="col-sm-8 col-xs-6">
-                    <button id="nextKeg" name="nextKeg" class="btn btn-lg btn-secondary btn-block">Next</button>
+                    <button id="nextKeg" name="nextKeg" class="btn btn-secondary btn-block">Next</button>
                     <!-- <input type="submit" value="Next" class="btn btn-secondary btn-block"> -->
                 </div>
             </div>

@@ -361,7 +361,7 @@ a {
     background-color: var(--accent);
 }
 
-.btn-secondary:hover {
+.btn-secondary:hover, .btn-secondary:focus {
     color: var(--dark-warm);
     background-color: var(--accent2);
     /* text-decoration: none; */
