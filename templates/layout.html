@@ -26,7 +26,7 @@
 
         <!-- Custom Javascript -->
         <script src="static/scripts.js"></script>
-
+        <script src="{{ scripts }}"></script>
 
     {% endblock %}
 </head>
@@ -46,21 +46,20 @@
         <ul class="navbar-nav mr-auto mt-2">
             <div class="navbar-nav">
                 <!-- <a class="nav-item nav-link" href="/bio">Bio</a> -->
-                <!-- <a class="nav-item nav-link" href="/cluck">Cluck</a> -->
-                <li class="nav-item dropdown">
+                <a class="nav-item nav-link" href="/portfolio">Portfolio</a>
+                <!-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Portfolio
                     </a>
+                    <a class="dropdown-item" href="/portfolio">Overview</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/portfolio">Overview</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/portfolio#nailivic">Nailivic Studios (ERP)</a>
                         <a class="dropdown-item" href="/portfolio#metar">Aviation Weather (METAR via SMS)</a>
                         <a class="dropdown-item" href="/portfolio#incanon">InCanon (RPG Tool)</a>
                         <a class="dropdown-item" href="/portfolio#data">Data Utilities (CSV)</a>
-                        <!-- <a class="dropdown-item" href="/portfolio#cursedsand">Cursed Sand</a> -->
                     </div>
-                </li>
+                </li> -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Utilities

@@ -50,7 +50,6 @@ logging.basicConfig(level=logging.INFO)
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY')
 
-
 # PostgreSQL database connection
 conn = psycopg2.connect(os.getenv('DATABASE_URL'))
 
@@ -358,25 +357,26 @@ def admin():
 
     return render_template("admin.html", logs=logs, pageviews=pageviews)
 
-@app.route("/admin/<action>", methods=['POST'])
-@login_required
-def admin_edit(action):
+# @app.route("/admin/<action>", methods=['POST'])
+# @login_required
+# def admin_edit(action):
 
-    if action == 'resume':
-        version = request.form.get('version')
+#     if action == 'resume':
+#         version = request.form.get('version')
 
 @app.route("/portfolio")
 def portfolio():
     count_pageview('/portfolio')
 
-    return render_template("projects.html")
+    return render_template("portfolio.html")
 
 
 @app.route("/keg")
 def keg():
     count_pageview('/keg')
 
-    return render_template("keg.html")
+    scripts = "static/keg.js"
+    return render_template("keg.html", scripts=scripts)
 
 
 @app.route("/ping", methods=['POST'])
@@ -485,6 +485,7 @@ def message():
 
     return str(resp)
 
+
 @app.route("/message/status", methods=['GET', 'POST'])
 def message_status():
 
@@ -514,6 +515,7 @@ def message_status():
     cur.close()
 
     return ('', 204)
+
 
 @app.route("/metar", methods=['GET', 'POST'])
 def metar():
@@ -701,9 +703,6 @@ def resume():
     response.headers['Content-Disposition'] = 'inline; filename=%s' % file['filename']
 
     return response
-
-
-
 
 
 @app.route("/<shorturl>")
