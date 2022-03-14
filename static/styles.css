@@ -354,11 +354,13 @@ body {
 
 a {
     color: var(--accent);
+    font-weight: 400;
 }
 
 .btn-secondary {
     color: white;
     background-color: var(--accent);
+    margin:.25em;
 }
 
 .btn-secondary:hover, .btn-secondary:focus {

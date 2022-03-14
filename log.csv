@@ -595,3 +595,49 @@ baz,bar,bam
 "
 2022-03-13T02:27:36.051245,count_pageview,"current transaction is aborted, commands ignored until end of transaction block
 "
+2022-03-14T01:18:09.547073,count_pageview,"SSL SYSCALL error: EOF detected
+"
+2022-03-14T01:18:59.326284,count_pageview,connection already closed
+2022-03-14T01:19:35.790083,count_pageview,connection already closed
+2022-03-14T01:20:07.931981,count_pageview,connection already closed
+2022-03-14T01:20:35.803314,count_pageview,connection already closed
+2022-03-14T01:20:38.174096,count_pageview,connection already closed
+2022-03-14T01:21:02.959030,count_pageview,connection already closed
+2022-03-14T01:21:25.931296,count_pageview,connection already closed
+2022-03-14T01:22:01.767982,count_pageview,connection already closed
+2022-03-14T01:23:51.314648,count_pageview,connection already closed
+2022-03-14T01:25:19.749125,count_pageview,connection already closed
+2022-03-14T01:25:32.291126,count_pageview,connection already closed
+2022-03-14T01:43:38.510804,count_pageview,connection already closed
+2022-03-14T01:45:29.138247,count_pageview,connection already closed
+2022-03-14T01:46:12.065563,count_pageview,connection already closed
+2022-03-14T01:46:31.386108,count_pageview,connection already closed
+2022-03-14T01:49:10.579087,count_pageview,connection already closed
+2022-03-14T01:49:58.195272,count_pageview,connection already closed
+2022-03-14T01:50:02.296210,count_pageview,connection already closed
+2022-03-14T01:50:46.515774,count_pageview,connection already closed
+2022-03-14T01:50:57.607058,count_pageview,connection already closed
+2022-03-14T01:51:43.452084,count_pageview,connection already closed
+2022-03-14T01:51:50.878548,count_pageview,connection already closed
+2022-03-14T01:51:57.707082,count_pageview,connection already closed
+2022-03-14T01:52:05.374033,count_pageview,connection already closed
+2022-03-14T01:52:30.411441,count_pageview,connection already closed
+2022-03-14T01:52:43.390775,count_pageview,connection already closed
+2022-03-14T01:52:56.602762,count_pageview,connection already closed
+2022-03-14T01:54:15.013947,count_pageview,connection already closed
+2022-03-14T01:54:46.339648,count_pageview,connection already closed
+2022-03-14T01:55:17.827590,count_pageview,connection already closed
+2022-03-14T01:55:24.469838,count_pageview,connection already closed
+2022-03-14T01:56:58.680853,count_pageview,connection already closed
+2022-03-14T01:57:45.932857,count_pageview,connection already closed
+2022-03-14T01:58:28.093370,count_pageview,connection already closed
+2022-03-14T02:00:13.073471,count_pageview,connection already closed
+2022-03-14T02:00:27.202710,count_pageview,connection already closed
+2022-03-14T02:01:09.867829,count_pageview,connection already closed
+2022-03-14T02:01:32.141849,count_pageview,connection already closed
+2022-03-14T02:01:42.612590,count_pageview,connection already closed
+2022-03-14T02:05:14.108033,count_pageview,connection already closed
+2022-03-14T02:06:44.785600,count_pageview,connection already closed
+2022-03-14T02:06:51.374164,count_pageview,connection already closed
+2022-03-14T02:07:00.462688,count_pageview,connection already closed
+2022-03-14T02:07:24.355252,count_pageview,connection already closed
