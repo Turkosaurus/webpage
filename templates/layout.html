@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!-- Page icon -->
-        <link href="static/dinosaur.png" rel="icon">
+        <link href="static/icons/velociraptor-simple.svg" rel="icon">
 
         <!-- Stylesheets -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -32,84 +32,95 @@
 </head>
 
 <body>
-<nav class="navbar navbar-default navbar-expand-sm fixed-top">
-    <a class="navbar-brand" href="/">Travis Turk</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <!-- <span class="navbar-toggler-icon"></span> -->
-            <img class="icon-sm" src=static/icons/bars-solid.svg>
-            <!-- <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" class="svg-inline--fa fa-bars fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="current" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path></svg>    </button> -->
-    </button>
+    <nav class="navbar navbar-default navbar-expand-sm fixed-top">
+        <a class="navbar-brand" href="/">
+            <img
+            src="static/icons/velociraptor.svg"
+            alt="dinosaur icon"
+            height="30rem"
+            width="30rem"/>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <!-- <span class="navbar-toggler-icon"></span> -->
+                <img class="icon-sm" src=static/icons/bars-solid.svg>
+                <!-- <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" class="svg-inline--fa fa-bars fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="current" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path></svg>    </button> -->
+        </button>
 
 
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 
-        <ul class="navbar-nav mr-auto mt-2">
-            <div class="navbar-nav">
-                <!-- <a class="nav-item nav-link" href="/bio">Bio</a> -->
-                <a class="nav-item nav-link" href="/portfolio">Portfolio</a>
-                <!-- <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Portfolio
-                    </a>
-                    <a class="dropdown-item" href="/portfolio">Overview</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/portfolio#nailivic">Nailivic Studios (ERP)</a>
-                        <a class="dropdown-item" href="/portfolio#metar">Aviation Weather (METAR via SMS)</a>
-                        <a class="dropdown-item" href="/portfolio#incanon">InCanon (RPG Tool)</a>
-                        <a class="dropdown-item" href="/portfolio#data">Data Utilities (CSV)</a>
-                    </div>
-                </li> -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Utilities
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/metar">METAR by SMS</a>
-                        <a class="dropdown-item" href="/keg">Keg Weight</a>
-                        <a class="dropdown-item" href="/data">Data Tools</a>
-                        <!-- <a class="dropdown-item" disabled href="#"></a> -->
-                    </div>
-                </li>
-                
-                <!-- <a class="nav-item nav-link" href="/login">Login</a> -->
-            </div>
-        </ul>
-
-        {% if session.user_id %}
-            <ul class="navbar-nav ml-auto mt-2">
-                <li class="nav-item"><a href="/admin" class="nav-link">Admin</a></li>
-                <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+            <ul class="navbar-nav mr-auto mt-2">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="/metar">METAR</a>
+                    <a class="nav-item nav-link" href="/keg">Keg Weight</a>
+                    <!-- <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Portfolio
+                        </a>
+                        <a class="dropdown-item" href="/portfolio">Overview</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/portfolio#nailivic">Nailivic Studios (ERP)</a>
+                            <a class="dropdown-item" href="/portfolio#metar">Aviation Weather (METAR via SMS)</a>
+                            <a class="dropdown-item" href="/portfolio#incanon">InCanon (RPG Tool)</a>
+                            <a class="dropdown-item" href="/portfolio#data">Data Utilities (CSV)</a>
+                        </div>
+                    </li> -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Utilities
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <!-- <a class="dropdown-item" href="/metar">METAR by SMS</a>
+                            <a class="dropdown-item" href="/keg">Keg Weight</a> -->
+                            <a class="dropdown-item" href="/data">Data Tools</a>
+                            <!-- <a class="dropdown-item" disabled href="#"></a> -->
+                        </div>
+                    </li>
+                    
+                    <!-- <a class="nav-item nav-link" href="/login">Login</a> -->
+                </div>
             </ul>
-        {% else %}
-            <ul class="navbar-nav ml-auto mt-2">
-                <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
-            </ul>
-        {% endif %}
 
-    </div>
-</nav>
+            {% if session.user_id %}
+                <ul class="navbar-nav ml-auto mt-2">
+                    <li class="nav-item"><a href="/admin" class="nav-link">Admin</a></li>
+                    <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+                </ul>
+            {% else %}
+                <ul class="navbar-nav ml-auto mt-2">
+                    <li class="nav-item"><a href="/login" class="nav-link">🔒 Login</a></li>
+                </ul>
+            {% endif %}
+
+        </div>
+    </nav>
 
     {% if get_flashed_messages() %}
-    <header>
+    <div>
+        <header>
             <div class="alert alert-primary border text-center" role="alert">
                 {{ get_flashed_messages() | join(" ") }}
             </div>
         </header>
+    </div>
     {% endif %}
-
     {% block body %}
     {% endblock %}
     <br>
 
     <footer class="small text-center text-muted">
-        site by Travis Turk with
+        made with
     </footer>
 
     <footer class="small text-center text-muted">
         <a href="https://fontawesome.com/license">Font Awesome </a> |
         <a href="https://getbootstrap.com/"> Bootstrap </a> |
         <a href="https://www.twilio.com/"> Twilio </a>
+    </footer>
+
+    <footer class="small text-center text-muted">
+        <a href="https://www.flaticon.com/free-icons/dinosaur" title="dinosaur icons">Dinosaur icons created by Freepik - Flaticon</a>
     </footer>
 
     <!-- <footer class="small text-center text-muted">
