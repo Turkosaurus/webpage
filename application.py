@@ -292,27 +292,23 @@ def keg():
     return render_template("keg.html", scripts=scripts)
 
 
-# @app.route("/ping", methods=['POST'])
-# def ping():
+@app.route("/ping/<content>", methods=['POST'])
+def ping(content):
 
-#     recipient = number_turk
-#     name = request.form.get("name")
-#     contact = request.form.get("email")
-#     message = request.form.get("message")
-#     print(f"{name} {contact} {message}")
+    recipient = number_turk
 
-#     message = f"turkosaurus message\nfrom: {name}\n{contact}\n---\n{message}"
+    message = f"turkosaurus message\ncontent:\n{content}"
 
-#     message = client.messages \
-#         .create(
-#             body=message,
-#             messaging_service_sid=messaging_service_sid,
-#             to=recipient
-#         )
+    message = client.messages \
+        .create(
+            body=message,
+            messaging_service_sid=messaging_service_sid,
+            to=recipient
+        )
 
-#     flash("Thank you. We'll be in touch soon!")
+    flash("Thank you. We'll be in touch soon!")
 
-#     return redirect('/')
+    return redirect('/')
 
 
 @app.route("/message", methods=['POST'])
