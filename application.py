@@ -292,7 +292,7 @@ def keg():
     return render_template("keg.html", scripts=scripts)
 
 
-@app.route("/ping/<content>", methods=['POST'])
+@app.route("/ping/<content>", methods=['GET'])
 def ping(content):
 
     recipient = number_turk
