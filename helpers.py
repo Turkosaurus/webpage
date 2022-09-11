@@ -1,71 +1,128 @@
 import os
 import psycopg2
+import psycopg2.extras
 import csv
 import datetime
 from flask import request
 from functools import wraps
 
-
 # PostgreSQL database connection
-conn = psycopg2.connect(os.getenv('DATABASE_URL'))
-
-
-# Pageviews
-def count_pageview(page):
-
-    # Record failure of database logging
-    def log_error(time, location, error):
-        with open('log.csv', 'a') as csvfile:
-            writer = csv.writer(csvfile)
-            writer.writerow([time, location, error])
-
-    errors = 0
-    # obtain IP
-    try:
-        # Obtain client IP (even when proxy is used)
-        if request.environ.get('HTTP_X_FORWARDED_FOR') is None:
-            ip = request.environ['REMOTE_ADDR']
-        else:
-            ip = request.environ['HTTP_X_FORWARDED_FOR'] # if behind a proxy
-    except Exception as e:
-        ip = e
-
-    time = datetime.datetime.utcnow().isoformat()
-
-    # Log pageview into db, or log error into log.csv
-    try:
-        cur = conn.cursor()
-        cur.execute("INSERT INTO pageviews (time, ip, page) VALUES (%s, %s, %s)", (time, ip, page))
-        conn.commit()
-        cur.close()
-
-    except Exception as e:
-        errors += 1
-        log_error(time, 'count_pageview', e)
-
-    return errors
-
-def retrieve_pageviews():
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM pageviews ORDER BY time DESC LIMIT 100")
-    pageviews = cur.fetchall()
-    conn.commit()
-    cur.close()
-    return pageviews
-
-
+db = os.getenv('DATABASE_URL')
 
 # File Handling for /data
-ALLOWED_EXTENSIONS = {'csv'}
+ALLOWED_EXTENSIONS = {'pdf'}
 
 def allowed_file(filename):
+    """ Check if an extension is valid. """
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+# Record failure of database logging
+def log_error(time, location, error):
+    """ Writes errors locally when db write fails. """
+    with open('log.csv', 'a', encoding="utf8") as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow([time, location, error])
+
+
+def file_store(filename, description):
+    """ TODO: Stores file into database. """
+    uploaded = datetime.datetime.utcnow().isoformat()
+    return 0
+
+
+def file_retrieve(id):
+    """ Retrieves file from database via id, structure metadata. """
+
+    with psycopg2.connect(db) as conn:
+        with conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor) as cur:
+
+            # Download file by id, structure metadata
+            cur.execute("SELECT * FROM files WHERE id=%s LIMIT 1", [id])
+            data = cur.fetchone()
+            cur.close()
+            # print(f"data:{data}")
+
+    conn.close()
+
+    filedata = data[5]
+    description = data[4]
+    filetype = data[3]
+    uploaded = (data[1])
+    # https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior
+    uploaded_short = data[1].strftime("%B%Y")
+
+    filename = f"{data[2]}.{filetype}"
+    # print(f"Delivering file: {filename}")
+
+    package =  {
+        "filedata": filedata,
+        "description": description,
+        "filetype": filetype,
+        "filename": filename,
+        "uploaded_short": uploaded_short,
+        "uploaded": uploaded
+        }
+
+    return package
+
+# Pageviews
+def count_pageview(page):
+    """
+    Counts pageviews to given routes
+    """
+    # https://www.psycopg.org/docs/usage.html
+    with psycopg2.connect(db) as conn:
+
+        errors = 0
+        # obtain IP
+        try:
+            # Obtain client IP (even when proxy is used)
+            if request.environ.get('HTTP_X_FORWARDED_FOR') is None:
+                ip_address = request.environ['REMOTE_ADDR']
+            else:
+                ip_address = request.environ['HTTP_X_FORWARDED_FOR'] # if behind a proxy
+        except Exception as error:
+            ip_address = error
+
+        time = datetime.datetime.utcnow().isoformat()
+
+        # Log pageview into db, or log error into log.csv
+        try:
+            with conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor) as cur:
+                cur.execute("INSERT INTO pageviews (time, ip, page) VALUES (%s, %s, %s)", (time, ip_address, page))
+                conn.commit()
+
+        except Exception as error:
+            errors += 1
+            log_error(time, 'count_pageview', error)
+        
+    conn.close()
+
+    return errors
+
+
+def retrieve_pageviews():
+    """
+    Allows viewing pageviews
+    """
+    # https://www.psycopg.org/docs/usage.html
+    with psycopg2.connect(db) as conn:
+        with conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor) as cur:
+
+            cur = conn.cursor()
+            cur.execute("SELECT * FROM pageviews ORDER BY time DESC LIMIT 100")
+            pageviews = cur.fetchall()
+            conn.commit()
+            cur.close()
+    return pageviews
 
 
 # Strings and Formatting
 def style_metar():
+    """
+    Emojify METAR nomenclature
+    """
 
 # Emojify a METAR
 
@@ -87,7 +144,7 @@ def style_metar():
     🌡/💦 18C/12C (18/12)\n
     """
 
-    wxkey = {   
+    wxkey = {
             "wind" : {
                 "N" : "⬇",
                 "NE" : "↙",

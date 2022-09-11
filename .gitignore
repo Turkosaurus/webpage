@@ -3,3 +3,4 @@ __pycache__/
 resume_TravisTurk.pdf
 resume_TravisTurk_web.pdf
 /flask_session
+*.csv

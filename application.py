@@ -1,3 +1,9 @@
+import os
+import csv
+import re
+import time
+import datetime
+import logging
 from flask import Flask, render_template, send_file, url_for, redirect, flash, request, send_from_directory, abort, session, current_app, make_response
 from flask_session import Session
 
@@ -11,12 +17,6 @@ from twilio.request_validator import RequestValidator
 from twilio.twiml.messaging_response import MessagingResponse
 import requests
 from twilio.rest import Client
-import os
-import csv
-import re
-import time
-import datetime
-import logging
 
 
 from io import BytesIO
@@ -29,12 +29,14 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 
 import psycopg2
+import psycopg2.extras
 
 
-from helpers import allowed_file, style_metar, count_pageview, retrieve_pageviews
+from helpers import allowed_file, style_metar, count_pageview, retrieve_pageviews, file_store, file_retrieve
 
 # import threading
 # import discord
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -45,13 +47,13 @@ authusers.append(os.getenv('USERA'))
 
 logging.basicConfig(level=logging.INFO)
 
-
 # Flask App
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY')
 
 # PostgreSQL database connection
-conn = psycopg2.connect(os.getenv('DATABASE_URL'))
+db = os.getenv('DATABASE_URL')
+
 
 # Twilio configuration
 messaging_service_sid = os.getenv('TWILIO_MESSAGING_SERVICE_SID')
@@ -73,6 +75,7 @@ app.config['UPLOAD_FOLDER'] = os.getenv('PWD') + "/static/uploads"
 
 Session(app)
 
+### DECORATORS ###
 
 def login_required(f):
     """
@@ -85,7 +88,6 @@ def login_required(f):
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
-
 
 def validate_twilio_request(f):
 # https://www.twilio.com/docs/usage/tutorials/how-to-secure-your-flask-app-by-validating-incoming-twilio-requests#
@@ -110,6 +112,7 @@ def validate_twilio_request(f):
             return abort(403)
     return decorated_function
 
+### SELENIUM ###
 
 def  load_driver():
     # https://elements.heroku.com/buildpacks/pyronlaboratory/heroku-integrated-firefox-geckodriver
@@ -132,53 +135,6 @@ def  load_driver():
 		options=options)
 
 	return firefox_driver
-
-
-def punch():
-
-    # Selenium options
-    # opts = Options()
-    # opts.set_headless()
-    # assert opts.headless  # Operating in headless mode
-    # browser = Firefox(options=opts)
-    browser = load_driver()
-    browser.get('https://workforcenow.adp.com/theme/index.html#/Myself_ttd_MyselfTabTimecardsAttendanceSchCategoryMyTimeEntry/MyselfTabTimecardsAttendanceSchCategoryMyTimeEntry')
-
-    # Login to ADP
-    form_username = browser.find_element_by_id('login-form_username')
-    username = os.getenv('APS_USERNAME')
-    form_username.send_keys(username)
-    form_username.send_keys(Keys.RETURN)
-    print(f"Username {username} entered.")
-
-    time.sleep(5)
-
-    form_password = browser.find_element_by_id('login-form_password')
-    password = os.getenv('APS_PASSWORD')
-    form_password.send_keys(password)
-    print(f"Password entered.")
-
-    form_submit = browser.find_element_by_id('signBtn')
-    form_submit.submit()
-
-    print("Waiting for page to load...")
-    time.sleep(5)
-    form_submit.send_keys(Keys.ESCAPE)
-
-    punches = browser.find_element_by_id('form1')
-    print(punches)
-
-    print(driver.page_source)
-
-
-    # https://realpython.com/modern-web-automation-with-python-and-selenium/
-    # results = browser.find_elements_by_class_name('result')
-    # print(results[0].text)
-    
-    browser.close()
-
-    return punches
-
 
 def scrape():
     # Selenium options
@@ -210,6 +166,9 @@ def scrape():
     # print(results[0].text)
     return 0
 
+
+### HELPERS ###
+
 def fetch_metar(airport):
     print(f"Fetching METAR for {airport}")
 
@@ -223,7 +182,7 @@ def fetch_metar(airport):
     csv_file.write(url_content)
     csv_file.close()
 
-    with open('static/metars.csv', 'r') as csvfile:
+    with open('static/metars.csv', 'r', encoding="utf8") as csvfile:
 
         csv_reader = csv.reader(csvfile)
 
@@ -236,7 +195,7 @@ def fetch_metar(airport):
 
             else:
                 # Capture header if first time encoutering it
-                if header_found == False:
+                if header_found is False:
                     header_found = True
                     # headers = row
 
@@ -245,9 +204,10 @@ def fetch_metar(airport):
                     if row[1] == airport.upper():
                         result = row[0]
 
-    return (result)
+    return result
 
 def send_msg(recipient, message):
+    """ Sends Twilio text message. """
     message = client.messages.create(
         body = message,
         # status_callback='https://www.turkosaur.us/message/status',
@@ -256,8 +216,6 @@ def send_msg(recipient, message):
     )
 
     return 0
-
-
 
 @app.route("/backup/<table>")
 @login_required
@@ -271,7 +229,7 @@ def backup(table):
         data = cur.fetchall()
         cur.close()
 
-        with open(f'{table}.csv', 'a') as file:
+        with open(f'{table}.csv', 'a', encoding="utf8") as file:
             writer = csv.writer(file)
 
             for line in data:
@@ -284,50 +242,12 @@ def backup(table):
         return redirect("/admin")
 
 
-
-
-def file_store(filename, description):
-    uploaded = datetime.datetime.utcnow().isoformat()
-    return 0
-
-
-def file_retrieve(id):
-
-    # Download file by id, structure metadata
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM files WHERE id=%s", [id])
-    data = cur.fetchone()
-    cur.close()
-    # print(f"data:{data}")
-
-    filedata = data[5]
-    description = data[4]
-    filetype = data[3]
-    uploaded = (data[1])
-    # https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior
-    uploaded_short = data[1].strftime("%B%Y")
-
-    filename = f"{data[2]}.{filetype}"
-    # print(f"Delivering file: {filename}")
-
-    package =  {
-        "filedata": filedata,
-        "description": description,
-        "filetype": filetype,
-        "filename": filename,
-        "uploaded_short": uploaded_short,
-        "uploaded": uploaded
-        }
-
-    return package
-
-# ROUTES #
+### ROUTES ###
 
 # @app.route("/test")
 # @login_required
 # def test():
 #     return redirect('/')
-
 
 @app.route("/")
 def home():
@@ -343,17 +263,15 @@ def status():
 def admin():
 
     count_pageview('/admin')
+    with psycopg2.connect(db) as conn:
+        with conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor) as cur:
 
-    # Open a cursor to perform database operations
-    cur = conn.cursor()
-
-    # Execute a query
-    #TODO this is probably wrong, results is none, but records populates
-    cur.execute("SELECT * FROM logs")
-
-    # Retrieve query results
-    logs = cur.fetchall()
-    pageviews = retrieve_pageviews()
+            #TODO this is probably wrong, results is none, but records populates
+            cur.execute("SELECT * FROM logs")
+            logs = cur.fetchall()
+            pageviews = retrieve_pageviews()
+        
+    conn.close()
 
     return render_template("admin.html", logs=logs, pageviews=pageviews)
 
@@ -364,215 +282,233 @@ def admin():
 #     if action == 'resume':
 #         version = request.form.get('version')
 
-@app.route("/portfolio")
-def portfolio():
-    count_pageview('/portfolio')
-
-    return render_template("portfolio.html")
-
-
 @app.route("/keg")
 def keg():
+    """
+    Keg Weight Worksheet
+    """
     count_pageview('/keg')
-
     scripts = "static/keg.js"
     return render_template("keg.html", scripts=scripts)
 
 
-@app.route("/ping", methods=['POST'])
-def ping():
+# @app.route("/ping", methods=['POST'])
+# def ping():
 
-    recipient = number_turk
-    name = request.form.get("name")
-    contact = request.form.get("email")
-    message = request.form.get("message")
-    print(f"{name} {contact} {message}")
+#     recipient = number_turk
+#     name = request.form.get("name")
+#     contact = request.form.get("email")
+#     message = request.form.get("message")
+#     print(f"{name} {contact} {message}")
 
-    message = f"turkosaurus message\nfrom: {name}\n{contact}\n---\n{message}"
+#     message = f"turkosaurus message\nfrom: {name}\n{contact}\n---\n{message}"
 
-    message = client.messages \
-        .create(
-            body=message,
-            messaging_service_sid=messaging_service_sid,
-            to=recipient
-        )
+#     message = client.messages \
+#         .create(
+#             body=message,
+#             messaging_service_sid=messaging_service_sid,
+#             to=recipient
+#         )
 
-    flash("Thank you. We'll be in touch soon!")
+#     flash("Thank you. We'll be in touch soon!")
 
-    return redirect('/')
+#     return redirect('/')
 
 
 @app.route("/message", methods=['POST'])
 @validate_twilio_request
 def message():
+    """
+    Processes incoming Twilio messages
+    """
 
-    # Testing environment:
-    if os.getenv('FLASK_DEBUG') == '1':
-        body = """
-        lorem ipsum
-        foo foo froofy foo
-        """
+    with psycopg2.connect(db) as conn:
+        with conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor) as cur:
+            
+            # Testing environment:
+            if os.getenv('FLASK_DEBUG') == '1':
+                body = """
+                lorem ipsum
+                foo foo froofy foo
+                """
 
-    else:
-        """Send a dynamic reply to an incoming text message"""
-        # Get the message the user sent our Twilio number
-        body = request.values.get('Body', None)
-        num_from = request.values.get('From', None)
-        MessageSid = request.values.get('MessageSid', None)
-        NumMedia = request.values.get('NumMedia', None) # The number of media items associated with your message
+            else:
+                """Send a dynamic reply to an incoming text message"""
+                # Get the message the user sent our Twilio number
+                body = request.values.get('Body', None)
+                num_from = request.values.get('From', None)
+                MessageSid = request.values.get('MessageSid', None)
+                NumMedia = request.values.get('NumMedia', None) # The number of media items associated with your message
 
-        # TODO consolidate into logging function
-        cur = conn.cursor()
-        cur.execute("SELECT * FROM numbers WHERE number=%(num_from)s", {'num_from': num_from})
-        existing = cur.fetchone()
-        if not existing:
-            time = datetime.datetime.utcnow().isoformat()
-            cur.execute("INSERT INTO numbers (number, notify, created_on) VALUES (%s, %s, %s)", (num_from, 'False', time))
+                # TODO consolidate into logging function
+                cur.execute("SELECT * FROM numbers WHERE number=%(num_from)s", {'num_from': num_from})
+                existing = cur.fetchone()
+                if not existing:
+                    time_now = datetime.datetime.utcnow().isoformat()
+                    cur.execute("INSERT INTO numbers (number, notify, created_on) \
+                        VALUES (%s, %s, %s)",
+                        (num_from, 'False', time_now))
 
-        cur.execute("SELECT num_id FROM numbers WHERE number=%(num_from)s", {'num_from': num_from})
-        num_id = cur.fetchone()[0]
-        print(f"Creating activity for num_id:{num_id}")
+                cur.execute("SELECT num_id \
+                    FROM numbers \
+                    WHERE number=%(num_from)s",
+                    {'num_from': num_from})
+                num_id = cur.fetchone()[0]
+                print(f"Creating activity for num_id:{num_id}")
 
-        time = datetime.datetime.utcnow().isoformat()
-        activity = "message"
-        cur.execute("INSERT INTO activity (num_id, timestamp, activity, messagesid) VALUES (%s, %s, %s, %s)", (num_id, time, activity, MessageSid))
+                time_now = datetime.datetime.utcnow().isoformat()
+                activity = "message"
+                cur.execute("INSERT INTO activity (num_id, timestamp, activity, messagesid) \
+                    VALUES (%s, %s, %s, %s)",
+                    (num_id, time_now, activity, MessageSid))
 
-        conn.commit()
-        cur.close()
+                conn.commit()
+                cur.close()
 
 
-    print("Message received:")
-    print(f"from: {num_from}\n")
-    print(f"body: {body}")
+            print("Message received:")
+            print(f"from: {num_from}\n")
+            print(f"body: {body}")
 
-    # Start our TwiML response
-    resp = MessagingResponse()
+            # Start our TwiML response
+            resp = MessagingResponse()
 
-    response_match = False
-    
-    metar_words = ['METAR', 'Metar', 'metar']
-    if any(x in body for x in metar_words):
-        response_match = True
+            response_match = False
+            
+            metar_words = ['METAR', 'Metar', 'metar']
+            if any(x in body for x in metar_words):
+                response_match = True
 
-        # Find all airports in text
-        airports = re.findall("([Kk]...)", body)
-        # airports = airports.strip()
+                # Find all airports in text
+                airports = re.findall("([Kk]...)", body)
+                # airports = airports.strip()
 
-        print(f"Found airports: {airports}")
+                print(f"Found airports: {airports}")
 
-        # TODO iterate to loop through each airport that matches
-        metar = fetch_metar(airports[0])
-        resp.message(f"METAR {airports[0]}\n{metar}")        
+                # TODO iterate to loop through each airport that matches
+                metar = fetch_metar(airports[0])
+                resp.message(f"METAR {airports[0]}\n{metar}")        
 
-    if 'Punch time' in body:
-        response_match = True
-        timedata = punch()
-        resp.message(f"Time Card\n---\n{timedata}")
+            if 'Punch time' in body:
+                response_match = True
+                timedata = punch()
+                resp.message(f"Time Card\n---\n{timedata}")
 
-    if response_match == False:
+            if response_match == False:
 
-        resp.message(f"MENU\n✈ Reply 'METAR K---' for aviation weather\n")
+                resp.message(f"MENU\n✈ Reply 'METAR K---' for aviation weather\n")
 
-        # Check for Main Menu
-        # menu_words = ['INFO', 'Info' 'info', 'MENU', 'Menu', 'menu', 'OPTIONS', 'Options', 'options']
-        # if any(x in body for x in menu_words):
-            # response_match = True
-            # resp.message(f'''
-            # __MENU__
-            # METAR K___
-            # ''')
-            # "Punch time/in/out"\n
-
+                # Check for Main Menu
+                # menu_words = ['INFO', 'Info' 'info', 'MENU', 'Menu', 'menu', 'OPTIONS', 'Options', 'options']
+                # if any(x in body for x in menu_words):
+                    # response_match = True
+                    # resp.message(f'''
+                    # __MENU__
+                    # METAR K___
+                    # ''')
+                    # "Punch time/in/out"\n
+    conn.close()
     return str(resp)
 
 
 @app.route("/message/status", methods=['GET', 'POST'])
 def message_status():
 
+
     # https://www.twilio.com/docs/sms/tutorials/how-to-confirm-delivery-python
     message_sid = request.values.get('MessageSid', None)
     message_status = request.values.get('MessageStatus', None)
     num_from = request.values.get('From', None)
 
-    # Find existing number id, or create new one if not existing
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM numbers WHERE number=%(num_from)s", {'num_from': num_from})
-    existing = cur.fetchone()
-    if not existing:
-        time = datetime.datetime.utcnow().isoformat()
-        cur.execute("INSERT INTO numbers (number, notify, created_on) VALUES (%s, %s, %s)", (num_from, 'False', time))
+    with psycopg2.connect(db) as conn:
+        with conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor) as cur:
 
-    # TODO move this up and consolidate, as it's a redundant query
-    cur.execute("SELECT num_id FROM numbers WHERE number=%(num_from)s", {'num_from': num_from})
-    num_id = cur.fetchone()[0]
-    print(f"Creating activity for num_id:{num_id}")
+            # Find existing number id, or create new one if not existing
+            cur = conn.cursor()
+            cur.execute("SELECT * FROM numbers WHERE number=%(num_from)s", {'num_from': num_from})
+            existing = cur.fetchone()
+            if not existing:
+                time = datetime.datetime.utcnow().isoformat()
+                cur.execute("INSERT INTO numbers (number, notify, created_on) VALUES (%s, %s, %s)", (num_from, 'False', time))
 
-    time = datetime.datetime.utcnow().isoformat()
-    activity = "callback"
-    cur.execute("INSERT INTO activity (num_id, timestamp, activity, messagesid, status) VALUES (%s, %s, %s, %s, %s)", (num_id, time, activity, message_sid, message_status))
+            # TODO move this up and consolidate, as it's a redundant query
+            cur.execute("SELECT num_id FROM numbers WHERE number=%(num_from)s", {'num_from': num_from})
+            num_id = cur.fetchone()[0]
+            print(f"Creating activity for num_id:{num_id}")
 
-    conn.commit()
-    cur.close()
+            time = datetime.datetime.utcnow().isoformat()
+            activity = "callback"
+            cur.execute("INSERT INTO activity (num_id, timestamp, activity, messagesid, status) VALUES (%s, %s, %s, %s, %s)", (num_id, time, activity, message_sid, message_status))
 
+            conn.commit()
+            cur.close()
+    
+    conn.close()
     return ('', 204)
 
 
 @app.route("/metar", methods=['GET', 'POST'])
 def metar():
-    count_pageview('/metar')
-    
-    if request.method == 'GET':
-        return render_template('cluck.html')
+    """
+    Servers
+    """
+    # https://www.psycopg.org/docs/usage.html
+    with psycopg2.connect(db) as conn:
+        with conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor) as cur:
 
-    # Post
-    else:
-        number = request.form.get("number")
-        notify = request.form.get("notify")
-        if notify != 'true':
-            notify = False
+            count_pageview('/metar')
 
-        print(f"number:{number}")
+            if request.method == 'GET':
+                return render_template('cluck.html')
 
-        # Convert to E.164 per 
-        # https://www.twilio.com/docs/lookup/tutorials/validation-and-formatting#validate-a-national-phone-number
-        try:
-            phone_number = client.lookups \
-                        .v1 \
-                        .phone_numbers(number) \
-                        .fetch(country_code='US')
+            # POST
+            else:
+                number = request.form.get("number")
+                notify = request.form.get("notify")
+                if notify != 'true':
+                    notify = False
 
-        except:
-            flash("Invalid Number")
+                print(f"number:{number}")
 
-        else:
-            number = phone_number.phone_number
-            print(f"received text from:{number}")
+                # Convert to E.164 per 
+                # https://www.twilio.com/docs/lookup/tutorials/validation-and-formatting#validate-a-national-phone-number
+                try:
+                    phone_number = client.lookups \
+                                .v1 \
+                                .phone_numbers(number) \
+                                .fetch(country_code='US')
 
-            cur = conn.cursor()
-            # cur.execute("SELECT * FROM numbers")
-            cur.execute("SELECT * FROM numbers WHERE number=%(number)s", {'number': number})
+                except:
+                    flash("Invalid Number")
 
-            existing = cur.fetchall()
+                else:
+                    number = phone_number.phone_number
+                    print(f"received text from:{number}")
 
-            print(f"existing:{existing}")
+                    # cur.execute("SELECT * FROM numbers")
+                    cur.execute("SELECT * FROM numbers WHERE number=%(number)s", {'number': number})
 
-            if not existing:
-                time = datetime.datetime.utcnow().isoformat()
-                cur.execute("INSERT INTO numbers (number, notify, created_on) VALUES (%s, %s, %s)", (number, notify, time))
+                    existing = cur.fetchall()
 
-            elif notify == 'true':
-                cur.execute("UPDATE numbers SET notify = 'true' WHERE number=%(number)s", {'number': number})
+                    print(f"existing:{existing}")
 
-            elif notify == 'false':
-                cur.execute("UPDATE numbers SET notify = 'true' WHERE number=%(number)s", {'number': number})
+                    if not existing:
+                        time = datetime.datetime.utcnow().isoformat()
+                        cur.execute("INSERT INTO numbers (number, notify, created_on) VALUES (%s, %s, %s)", (number, notify, time))
 
-            conn.commit()
-            cur.close()
+                    elif notify == 'true':
+                        cur.execute("UPDATE numbers SET notify = 'true' WHERE number=%(number)s", {'number': number})
 
-            message = "Thanks for signing up for METAR by SMS by Turkosaurus. Reply 'METAR KAUS' or 'METAR KLAX' for weather."
-            send_msg(number, message)
+                    elif notify == 'false':
+                        cur.execute("UPDATE numbers SET notify = 'true' WHERE number=%(number)s", {'number': number})
 
-            flash("Thank you. We'll be in touch soon!")
+                    conn.commit()
+                    cur.close()
+
+                    msg_signup = "Thanks for signing up! Reply 'METAR KAUS' or 'METAR KLAX' for weather."
+                    send_msg(number, msg_signup)
+
+                    flash("Thank you. We'll be in touch soon!")
 
         return redirect("/metar")
 
@@ -582,8 +518,8 @@ def metar_button():
 
     airport = request.form.get("airport")
 
-    metar = fetch_metar(airport)
-    flash(f"{metar}")
+    metar_result = fetch_metar(airport)
+    flash(f"{metar_result}")
     return redirect("/metar")
 
 
@@ -620,7 +556,7 @@ def data():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename_user))
 
             # Read into a SQL table
-            with open(f'static/uploads/{filename_user}', 'r') as csvfile:
+            with open(f'static/uploads/{filename_user}', 'r', encoding="utf8") as csvfile:
 
                 print(f'Reading {filename_user}...')
                 csv_reader = csv.reader(csvfile)
@@ -647,13 +583,12 @@ def data():
 
                     row_counter += 1
 
-
             # TODO save as binary object
             # https://www.postgresqltutorial.com/postgresql-python/blob/
 
 
 
-            with open(f'static/uploads/{filename_user}', 'w') as csvfile:
+            with open(f'static/uploads/{filename_user}', 'w', encoding="utf8") as csvfile:
 
                 scribe = csv.writer(csvfile)
 
@@ -679,13 +614,17 @@ def resume():
     count_pageview(f'/resume')
 
     # TODO add authorizations/click tracking
+    # https://www.psycopg.org/docs/usage.html
+    with psycopg2.connect(db) as conn:
+        with conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor) as cur:
 
-    # Find most recent public resume
-    cur = conn.cursor()
-    cur.execute("SELECT id FROM files WHERE description=%s ORDER by ID DESC LIMIT 1;", ["resume_public"])
-    id = cur.fetchone()[0]
-    print(f"Most recent resume_public: id = {id}")
-    cur.close()
+            # Find most recent public resume
+            cur = conn.cursor()
+            cur.execute("SELECT id FROM files WHERE description=%s ORDER by uploaded DESC LIMIT 1;", ["resume_public"])
+            id = cur.fetchone()[0]
+            print(f"Most recent resume_public: id = {id}")
+            cur.close()
+
 
     file = file_retrieve(id)
 
@@ -740,6 +679,10 @@ def secret(key):
 @app.route("/upload", methods=['POST'])
 @login_required
 def pdf_upload():
+    """
+    TODO complete this docstring
+    """
+
     count_pageview('/upload')
 
     version = request.form.get('version')
@@ -768,13 +711,17 @@ def pdf_upload():
         flash('No selected file')
         return redirect("/admin")
 
+    print(file)
+    print(filename)
+    print(file.filename)
+    # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    print(allowed_file(file.filename))
 
     # TODO reinstitute checks for public files
-    # if file and allowed_file(file.filename):
-    #     # filename = secure_filename(file.filename) # original filenames kept
-    #     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    if file and allowed_file(file.filename):
+        # filename = secure_filename(file.filename) # original filenames kept
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
 
     # else:
     #     flash('Upload Error')
@@ -793,12 +740,17 @@ def pdf_upload():
     file.close()
     filedata = bytes(filedata)
     # print(f"filedata:{filedata}")
-        
+
     # Insert into database
-    cur = conn.cursor()
-    cur.execute("INSERT INTO files (uploaded, name, filetype, description, filedata) VALUES (%s, %s, %s, %s, %s)", (uploaded, filename, filetype, description, filedata))
-    conn.commit()
-    cur.close()
+    # https://www.psycopg.org/docs/usage.html
+    with psycopg2.connect(db) as conn:
+        with conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor) as cur:
+            cur.execute("INSERT INTO files (uploaded, name, filetype, description, filedata) \
+                VALUES (%s, %s, %s, %s, %s)",
+                (uploaded, filename, filetype, description, filedata))
+            conn.commit()
+            cur.close()
+    conn.close()
     flash(f"{filename}.{filetype} ({description})saved to database.")
     return redirect('/admin.html')
 
@@ -807,9 +759,9 @@ def pdf_upload():
 ###### USER ACCOUNTS ####
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    count_pageview('/register')
-
     """Register user"""
+
+    count_pageview('/register')
 
     # Serve registration page
     if request.method == 'GET':
@@ -847,26 +799,27 @@ def register():
             flash("Unauthorized user.")
             return redirect('/')
 
-        # Check if username is already taken
-        cur = conn.cursor()
-        cur.execute("SELECT username FROM users WHERE username LIKE %s;", [username])
-        matches = cur.fetchall()
+        # https://www.psycopg.org/docs/usage.html
+        with psycopg2.connect(db) as conn:
+            with conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor) as cur:
 
-        if not matches:
+                # Check if username is already taken
+                cur.execute("SELECT username FROM users WHERE username LIKE %s;", [username])
+                matches = cur.fetchall()
 
-            # Add the username
-            time = datetime.datetime.utcnow().isoformat()
-            cur.execute("INSERT INTO users (username, password, created_on) VALUES (%s, %s, %s)",
-                        [username, hashedpass, time])
-            conn.commit()
-            cur.close()
-            return redirect("/")
+                if not matches:
 
-        else:
-            cur.close()
-            flash("Username invalid or already taken.")
-            return redirect("/")
+                    # Add the username
+                    time_now = datetime.datetime.utcnow().isoformat()
+                    cur.execute("INSERT INTO users (username, password, created_on) VALUES (%s, %s, %s)",
+                                [username, hashedpass, time_now])
+                    conn.commit()
 
+                else:
+                    flash("Username invalid or already taken.")
+
+        conn.close()
+        return redirect("/")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -892,38 +845,41 @@ def login():
 
         username = request.form.get("username")
 
-        # Query database for username
-        cur = conn.cursor()
-        cur.execute("SELECT * FROM users WHERE username=%s;", [username])
-        rows = cur.fetchall()
-        cur.close()
+        # https://www.psycopg.org/docs/usage.html
+        with psycopg2.connect(db) as conn:
+            with conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor) as cur:
 
-        # Ensure username exists
-        if len(rows) != 1:
-            print("loginerror")
-            flash("Login Error")
-            return render_template("login.html")
+                # Query database for username
+                cur.execute("SELECT * FROM users WHERE username=%s;", [username])
+                rows = cur.fetchall()
 
-         # Ensure username exists and password is correct
-        if not check_password_hash(rows[0][2], request.form.get("password")):
+                # Ensure username exists
+                if len(rows) != 1:
+                    print("loginerror")
+                    flash("Login Error")
+                    # conn.close()
+                    return render_template("login.html")
 
-            # # TODO implement fancier backoff
-            # time.sleep(5)
-            print("passworderror")
+                # Ensure username exists and password is correct
+                if not check_password_hash(rows[0][2], request.form.get("password")):
 
-            flash("Password Error")
-            return render_template("login.html")
+                    # # TODO implement fancier backoff
+                    # time.sleep(5)
+                    print("passworderror")
 
-        # Remember which user has logged in
-        session["user_id"] = rows[0][0]
+                    flash("Password Error")
+                    # conn.close()
+                    return render_template("login.html")
 
+                # Remember which user has logged in
+                session["user_id"] = rows[0][0]
 
-        # Update "last_login"
-        lastlogin = datetime.datetime.utcnow().isoformat()
-        cur = conn.cursor()
-        cur.execute("UPDATE users SET last_login=%s WHERE id=%s", [lastlogin, session["user_id"]])
-        conn.commit()
-        cur.close()
+                # Update "last_login"
+                lastlogin = datetime.datetime.utcnow().isoformat()
+                cur.execute("UPDATE users SET last_login=%s WHERE id=%s", [lastlogin, session["user_id"]])
+                conn.commit()
+
+        # conn.close()
 
         # Redirect user to home page
         flash(f"Welcome, {username}")
@@ -935,8 +891,9 @@ def login():
 
 @app.route("/logout")
 def logout():
-    count_pageview('/logout')
     """Log user out"""
+
+    count_pageview('/logout')
 
    # Forget any user_id
     session.clear()

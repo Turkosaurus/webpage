@@ -51,8 +51,8 @@
 
             <ul class="navbar-nav mr-auto mt-2">
                 <div class="navbar-nav">
-                    <a class="nav-item nav-link" href="/metar">METAR</a>
-                    <a class="nav-item nav-link" href="/keg">Keg Weight</a>
+                    <a class="nav-item nav-link" href="/metar">🛩️ METAR</a>
+                    <a class="nav-item nav-link" href="/keg">🍺 Keg Weight</a>
                     <!-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Portfolio
@@ -68,7 +68,7 @@
                     </li> -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Utilities
+                            🔧 Utilities
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <!-- <a class="dropdown-item" href="/metar">METAR by SMS</a>
@@ -84,8 +84,16 @@
 
             {% if session.user_id %}
                 <ul class="navbar-nav ml-auto mt-2">
-                    <li class="nav-item"><a href="/admin" class="nav-link">Admin</a></li>
-                    <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            ⚙️ Settings
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/admin">Admin</a>
+                            <!-- <a class="dropdown-item" href="/#"></a> -->
+                        </div>
+                    </li>
+                    <li class="nav-item"><a href="/logout" class="nav-link">❌ Logout</a></li>
                 </ul>
             {% else %}
                 <ul class="navbar-nav ml-auto mt-2">
@@ -96,17 +104,19 @@
         </div>
     </nav>
 
+
     {% if get_flashed_messages() %}
-    <div>
-        <header>
-            <div class="alert alert-primary border text-center" role="alert">
-                {{ get_flashed_messages() | join(" ") }}
-            </div>
-        </header>
-    </div>
+    <header>
+        <div class="alert alert-primary border text-center" role="alert">
+            {{ get_flashed_messages() | join(" ") }}
+        </div>
+    </header>
     {% endif %}
+
+    
     {% block body %}
     {% endblock %}
+ 
     <br>
 
     <footer class="small text-center text-muted">
