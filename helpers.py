@@ -12,10 +12,12 @@ db = os.getenv('DATABASE_URL')
 # File Handling for /data
 ALLOWED_EXTENSIONS = {'pdf'}
 
+
 def allowed_file(filename):
     """ Check if an extension is valid. """
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 # Record failure of database logging
 def log_error(time, location, error):
