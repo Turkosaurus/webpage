@@ -1,10 +1,10 @@
 """ Completes cron tasks from Heroku Scheduler. """
 import os
-import time
-import datetime
+# import time
+# import datetime
 import psycopg2
 import psycopg2.extras
-import requests
+# import requests
 
 from dotenv import load_dotenv
 load_dotenv()
