@@ -15,6 +15,7 @@ db = os.getenv('DATABASE_URL')
 print("Running cron_tasks.py...")
 
 def main():
+    """ Checks for scheduled tasks. """
     with psycopg2.connect(db) as conn:
         with conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor) as cur:
 
