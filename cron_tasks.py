@@ -17,7 +17,7 @@ def main():
         send_reminders(get_reminders())
 
     except Exception as error:
-        print(f"Error: {error}")
+        print(f"Error sending reminders!\n{error}")
 
     # content = "foo"
     # r = requests.get('https://www.turkosaur.us/ping/%s' % content)

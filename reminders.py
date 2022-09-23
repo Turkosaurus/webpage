@@ -81,15 +81,15 @@ def send_reminders(reminders):
                     iterations = int(reminder["reminded"])
                 else:
                     iterations = 0
-                    
+
                 # Get iterations
                 message = (
                     f'{text.text}\n'
                     '\n'
                     f'due {reminder["hour"]}:{reminder["minute"]:02}\n'
-                    f'(reminder #{iterations + 1})\n'
+                    f'reminder #{iterations + 1}\n'
                     '\n'
-                    'Reply "yes" to complete'
+                    'Reply "yes" to complete.'
                     # '"Snooze [hour int]" to snooze'
                 )
 
@@ -98,6 +98,6 @@ def send_reminders(reminders):
                 if iterations >= 2:
                     message += "\nReminder being cancelled due to nonresponse."
 
-                    # TODO actually cancel
+                    # TODO actually cancel or snooze
 
                 # send_msg(number.number, message)
