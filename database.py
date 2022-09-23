@@ -1,10 +1,9 @@
+""" Database functions. """
+
 import os
 import psycopg2
 import psycopg2.extras
 import datetime
-from dotenv import load_dotenv
-
-""" Handles application database logic. """
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -67,7 +66,7 @@ def add_reminders(text, schedule):
                 ")
 
 def backup_tables():
-    """ Setup database tables. """
+    """ Backup Nailivic tables. """
     with psycopg2.connect(db) as conn:
         with conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor) as cur:
             tables = [

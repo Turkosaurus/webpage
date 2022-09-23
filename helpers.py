@@ -1,3 +1,5 @@
+""" Helper functions for main application. """
+
 import os
 import psycopg2
 import psycopg2.extras
@@ -164,9 +166,7 @@ def fetch_metar(airport):
 
 # Strings and Formatting
 def style_metar():
-    """
-    Emojify METAR nomenclature
-    """
+    """ Emojify METAR nomenclature. """
 
 # Emojify a METAR
 
@@ -218,4 +218,3 @@ def style_metar():
         }
 
     return wxkey
-

@@ -1,11 +1,10 @@
 """ Completes cron tasks from Heroku Scheduler. """
 import os
 import datetime
+from dotenv import load_dotenv
 from reminders import get_reminders, send_reminders
 
-from dotenv import load_dotenv
 load_dotenv()
-
 # PostgreSQL database connection
 db = os.getenv('DATABASE_URL')
 

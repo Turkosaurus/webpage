@@ -54,7 +54,7 @@ def get_reminders():
             batch_time = time.perf_counter() - batch_start
             print(f"Batch completed in {batch_time}s")
 
-    conn.close
+    conn.close()
     return reminders
 
 def send_reminders(reminders):
