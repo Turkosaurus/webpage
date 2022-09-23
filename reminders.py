@@ -4,6 +4,7 @@ import time
 import datetime
 from datetime import timedelta
 import psycopg2.extras
+from application import send_msg
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -17,7 +18,7 @@ def get_reminders():
 
             now = datetime.datetime.now()
             cur.execute("SELECT * FROM reminders_schedule \
-                WHERE day=%s AND active=True", (now.strftime("%w")))
+                WHERE day=%s AND active=True", (now.strftime("%w"),))
             data = cur.fetchall()
 
             batch_start = time.perf_counter()
@@ -59,5 +60,44 @@ def get_reminders():
 
 def send_reminders(reminders):
     """ Sends reminders batch one at a time. """
-    for reminder in reminders:
-        print(f"Sending reminder {reminder}")
+    with psycopg2.connect(db) as conn:
+        with conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor) as cur:
+            for reminder in reminders:
+
+                # Get phone number
+                cur.execute("SELECT number FROM numbers WHERE num_id=( \
+                    SELECT num_id FROM reminders WHERE reminder_id=%s)", 
+                    (reminder["reminder_id"],))
+                number = cur.fetchone()
+                print(f"number:{number.number}")
+
+                # Get reminder text                
+                cur.execute("SELECT text FROM reminders WHERE reminder_id=%s",
+                    (reminder["reminder_id"],))
+                text = cur.fetchone()
+                print(f"text:{text.text}")
+
+                if reminder["reminded"]:
+                    iterations = int(reminder["reminded"])
+                else:
+                    iterations = 0
+                    
+                # Get iterations
+                message = (
+                    f'{text.text}\n'
+                    '\n'
+                    f'due {reminder["hour"]}:{reminder["minute"]:02}\n'
+                    f'(reminder #{iterations + 1})\n'
+                    '\n'
+                    'Reply "yes" to complete'
+                    # '"Snooze [hour int]" to snooze'
+                )
+
+                print(f"message:\n{message}")
+
+                if iterations >= 2:
+                    message += "\nReminder being cancelled due to nonresponse."
+
+                    # TODO actually cancel
+
+                # send_msg(number.number, message)

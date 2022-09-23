@@ -60,10 +60,10 @@ def add_reminders(text, schedule):
 
             for reminder in schedule:
                 # Twice daily for a week
-                cur.execute(f"INSERT INTO reminders_schedule \
-                    (reminder_id, day, hour, minute, active) \
-                    VALUES (1, {reminder[0]}, {reminder[1]}, {reminder[2]}, True) \
-                ")
+                cur.execute("INSERT INTO reminders_schedule \
+                    (reminder_id, day, hour, minute, reminded, active) \
+                    VALUES (1, %s, %s, %s, 0, True)",
+                    (reminder[0], reminder[1], reminder[2]))
 
 def backup_tables():
     """ Backup Nailivic tables. """
