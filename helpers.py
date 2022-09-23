@@ -1,6 +1,7 @@
 import os
 import psycopg2
 import psycopg2.extras
+import requests
 import csv
 import datetime
 from flask import request
@@ -118,6 +119,47 @@ def retrieve_pageviews():
             conn.commit()
             cur.close()
     return pageviews
+
+
+### METAR ###
+
+def fetch_metar(airport):
+    """ Fetches metar .csv from aviationweather.gov """
+    print(f"Fetching METAR for {airport}")
+
+    # https://www.aviationweather.gov/adds/dataserver_current/current/
+    metars = requests.get('https://www.aviationweather.gov/adds/dataserver_current/current/metars.cache.csv')
+    url_content = metars.content
+
+    result = 'error: unable to find METAR'
+
+    csv_file = open('static/metars.csv', 'wb')
+    csv_file.write(url_content)
+    csv_file.close()
+
+    with open('static/metars.csv', 'r', encoding="utf8") as csvfile:
+
+        csv_reader = csv.reader(csvfile)
+
+        header_found = False
+        for row in csv_reader:
+
+            # Skip all of the metadata before the headers
+            if len(row) == 1:
+                next(csv_reader)
+
+            else:
+                # Capture header if first time encoutering it
+                if header_found is False:
+                    header_found = True
+                    # headers = row
+
+                # Iterate through rows until match is found
+                else:
+                    if row[1] == airport.upper():
+                        result = row[0]
+
+    return result
 
 
 # Strings and Formatting

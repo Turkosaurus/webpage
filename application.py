@@ -1,10 +1,13 @@
+""" Flask main application. """
+
 import os
 import csv
 import re
-import time
 import datetime
 import logging
-from flask import Flask, render_template, send_file, url_for, redirect, flash, request, send_from_directory, abort, session, current_app, make_response
+from flask import Flask, \
+    render_template, send_file, url_for, redirect, flash, request, send_from_directory, \
+    abort, session, current_app, make_response
 from flask_session import Session
 
 from functools import wraps
@@ -13,11 +16,11 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
 
+import requests
+
 from twilio.request_validator import RequestValidator
 from twilio.twiml.messaging_response import MessagingResponse
-import requests
 from twilio.rest import Client
-
 
 from io import BytesIO
 
@@ -32,7 +35,9 @@ import psycopg2
 import psycopg2.extras
 
 
-from helpers import allowed_file, style_metar, count_pageview, retrieve_pageviews, file_store, file_retrieve
+from helpers import \
+    allowed_file, style_metar, count_pageview, retrieve_pageviews, \
+    file_store, file_retrieve, fetch_metar
 
 # import threading
 # import discord
@@ -112,99 +117,72 @@ def validate_twilio_request(f):
             return abort(403)
     return decorated_function
 
-### SELENIUM ###
+def send_text(recipient, message):
+    message = client.messages.create(
+        body=message,
+        messaging_service_sid=messaging_service_sid,
+        to=recipient
+    )
 
-def  load_driver():
-    # https://elements.heroku.com/buildpacks/pyronlaboratory/heroku-integrated-firefox-geckodriver
 
-	options = webdriver.FirefoxOptions()
+# ### SELENIUM ###
+
+# def  load_driver():
+#     """ Loads Selenium driver. """
+#     # https://elements.heroku.com/buildpacks/pyronlaboratory/heroku-integrated-firefox-geckodriver
+
+#     options = webdriver.FirefoxOptions()
 	
-	# enable trace level for debugging 
-	options.log.level = "trace"
+# 	# enable trace level for debugging 
+# 	options.log.level = "trace"
 
-	options.add_argument("-remote-debugging-port=9224")
-	options.add_argument("-headless")
-	options.add_argument("-disable-gpu")
-	options.add_argument("-no-sandbox")
+# 	options.add_argument("-remote-debugging-port=9224")
+# 	options.add_argument("-headless")
+# 	options.add_argument("-disable-gpu")
+# 	options.add_argument("-no-sandbox")
 
-	binary = FirefoxBinary(os.environ.get('FIREFOX_BIN'))
+# 	binary = FirefoxBinary(os.environ.get('FIREFOX_BIN'))
 
-	firefox_driver = webdriver.Firefox(
-		firefox_binary=binary,
-		executable_path=os.environ.get('GECKODRIVER_PATH'),
-		options=options)
+# 	firefox_driver = webdriver.Firefox(
+# 		firefox_binary=binary,
+# 		executable_path=os.environ.get('GECKODRIVER_PATH'),
+# 		options=options)
 
-	return firefox_driver
+# 	return firefox_driver
 
-def scrape():
-    # Selenium options
-    # opts = Options()
-    # opts.set_headless()
-    # assert opts.headless  # Operating in headless mode
-    # browser = Firefox(options=opts)
+# def scrape():
+#     """ Web scraping functions for Selenium. """
+#     # Selenium options
+#     # opts = Options()
+#     # opts.set_headless()
+#     # assert opts.headless  # Operating in headless mode
+#     # browser = Firefox(options=opts)
 
-    browser = load_driver()
-    browser.get('https://www.turkosaur.us')
+#     browser = load_driver()
+#     browser.get('https://www.turkosaur.us')
 
-    # Search and return results
-    element = browser.find_element_by_id('name')
-    element.send_keys('testname')
+#     # Search and return results
+#     element = browser.find_element_by_id('name')
+#     element.send_keys('testname')
 
-    element = browser.find_element_by_id('email')
-    element.send_keys('test@email.com')
+#     element = browser.find_element_by_id('email')
+#     element.send_keys('test@email.com')
 
-    element = browser.find_element_by_id('message')
-    element.send_keys('Looks like we made it. 🐱‍🐉')
+#     element = browser.find_element_by_id('message')
+#     element.send_keys('Looks like we made it. 🐱‍🐉')
 
-    element.submit()
+#     element.submit()
 
-    browser.close()
+#     browser.close()
 
-
-    # results = browser.find_elements_by_class_name('result_body')
-    # print(results[0].text)
-    # print(results[0].text)
-    return 0
+#     # results = browser.find_elements_by_class_name('result_body')
+#     # print(results[0].text)
+#     # print(results[0].text)
+#     return 0
 
 
 ### HELPERS ###
 
-def fetch_metar(airport):
-    print(f"Fetching METAR for {airport}")
-
-    # https://www.aviationweather.gov/adds/dataserver_current/current/
-    metars = requests.get('https://www.aviationweather.gov/adds/dataserver_current/current/metars.cache.csv')
-    url_content = metars.content
-
-    result = 'error: unable to find METAR'
-
-    csv_file = open('static/metars.csv', 'wb')
-    csv_file.write(url_content)
-    csv_file.close()
-
-    with open('static/metars.csv', 'r', encoding="utf8") as csvfile:
-
-        csv_reader = csv.reader(csvfile)
-
-        header_found = False
-        for row in csv_reader:
-
-            # Skip all of the metadata before the headers
-            if len(row) == 1:
-                next(csv_reader)
-
-            else:
-                # Capture header if first time encoutering it
-                if header_found is False:
-                    header_found = True
-                    # headers = row
-
-                # Iterate through rows until match is found
-                else:
-                    if row[1] == airport.upper():
-                        result = row[0]
-
-    return result
 
 def send_msg(recipient, message):
     """ Sends Twilio text message. """
@@ -299,13 +277,8 @@ def ping(content):
 
     message = f"turkosaurus message\ncontent:\n{content}"
 
-    message = client.messages \
-        .create(
-            body=message,
-            messaging_service_sid=messaging_service_sid,
-            to=recipient
-        )
-
+    send_text(recipient, message)
+ 
     flash("Thank you. We'll be in touch soon!")
 
     return redirect('/')
@@ -313,7 +286,7 @@ def ping(content):
 
 @app.route("/message", methods=['POST'])
 @validate_twilio_request
-def message():
+def message_received():
     """
     Processes incoming Twilio messages
     """
@@ -329,7 +302,7 @@ def message():
                 """
 
             else:
-                """Send a dynamic reply to an incoming text message"""
+                # Send a dynamic reply to an incoming text message
                 # Get the message the user sent our Twilio number
                 body = request.values.get('Body', None)
                 num_from = request.values.get('From', None)
@@ -390,7 +363,7 @@ def message():
                 timedata = punch()
                 resp.message(f"Time Card\n---\n{timedata}")
 
-            if response_match == False:
+            if response_match is False:
 
                 resp.message(f"MENU\n✈ Reply 'METAR K---' for aviation weather\n")
 
@@ -409,9 +382,9 @@ def message():
 
 @app.route("/message/status", methods=['GET', 'POST'])
 def message_status():
-
-
+    """ Callback for Twilio message statuses. """
     # https://www.twilio.com/docs/sms/tutorials/how-to-confirm-delivery-python
+
     message_sid = request.values.get('MessageSid', None)
     message_status = request.values.get('MessageStatus', None)
     num_from = request.values.get('From', None)
@@ -511,6 +484,7 @@ def metar():
 
 @app.route("/metar/now", methods=['POST'])
 def metar_button():
+    """ Delivers METAR to browser via Flash message. """
 
     airport = request.form.get("airport")
 
@@ -521,6 +495,7 @@ def metar_button():
 
 @app.route("/data", methods=['GET', 'POST'])
 def data():
+    """ Processes submitted csv and returns changes. """
     count_pageview('/data')
 
     data = []
@@ -603,9 +578,9 @@ def data():
 
         return redirect('/data')
 
-
 @app.route("/resume")
 def resume():
+    """ Delivers resume. """
 
     count_pageview(f'/resume')
 
@@ -642,6 +617,7 @@ def resume():
 
 @app.route("/<shorturl>")
 def short_url(shorturl):
+    """ Catches all other URL requests, can be used for temp URLs. """
     count_pageview(shorturl)
 
     #URL shortener
@@ -650,10 +626,10 @@ def short_url(shorturl):
     return redirect("/")
 
 
-@app.route("/secret/<key>")
-def secret(key):
-    count_pageview(f"secret/{key}")
-    # Lookup links table to enable logic here
+# @app.route("/secret/<key>")
+# def secret(key):
+#     count_pageview(f"secret/{key}")
+#     # Lookup links table to enable logic here
 
 # @app.route("/pdf")
 # def pdf():
@@ -675,9 +651,7 @@ def secret(key):
 @app.route("/upload", methods=['POST'])
 @login_required
 def pdf_upload():
-    """
-    TODO complete this docstring
-    """
+    """ Uploads a file to the database. """
 
     count_pageview('/upload')
 
@@ -690,7 +664,6 @@ def pdf_upload():
     if version == 'private':
         filename = 'resume_TravisTurk'
         description = 'resume_private'
-
 
     # https://flask.palletsprojects.com/en/2.0.x/patterns/fileuploads/
 
@@ -749,7 +722,6 @@ def pdf_upload():
     conn.close()
     flash(f"{filename}.{filetype} ({description})saved to database.")
     return redirect('/admin.html')
-
 
 
 ###### USER ACCOUNTS ####
