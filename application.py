@@ -17,6 +17,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
 
 import requests
+from reminders import complete_reminder
 
 from twilio.request_validator import RequestValidator
 from twilio.twiml.messaging_response import MessagingResponse
@@ -198,7 +199,6 @@ def send_msg(recipient, message):
 @app.route("/backup/<table>")
 @login_required
 def backup(table):
-
     print("BACKUP")
 
     try:
@@ -358,10 +358,14 @@ def message_received():
                 metar = fetch_metar(airports[0])
                 resp.message(f"METAR {airports[0]}\n{metar}")        
 
-            if 'Punch time' in body:
+            if body == "yes" or "Yes" or "YES":
                 response_match = True
-                timedata = punch()
-                resp.message(f"Time Card\n---\n{timedata}")
+                complete_reminder(num_from)
+
+            # if 'Punch time' in body:
+            #     response_match = True
+            #     # timedata = punch()
+            #     resp.message(f"Time Card\n---\n{timedata}")
 
             if response_match is False:
 

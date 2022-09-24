@@ -4,11 +4,11 @@ import time
 import datetime
 from datetime import timedelta
 import psycopg2.extras
-from application import send_msg
 from dotenv import load_dotenv
-load_dotenv()
+from application import send_msg
 
 # PostgreSQL database connection
+load_dotenv()
 db = os.getenv('DATABASE_URL')
 
 def get_reminders():
@@ -57,6 +57,11 @@ def get_reminders():
 
     conn.close()
     return reminders
+
+def complete_reminder(num_from):
+    # get number's most recent reminder
+    # mark that reminder as complete
+    pass # TODO complete
 
 def send_reminders(reminders):
     """ Sends reminders batch one at a time. """
