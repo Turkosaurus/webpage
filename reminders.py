@@ -5,7 +5,7 @@ import datetime
 from datetime import timedelta
 import psycopg2.extras
 from dotenv import load_dotenv
-from application import send_msg
+# from application import send_msg
 
 # PostgreSQL database connection
 load_dotenv()
@@ -110,4 +110,4 @@ def send_reminders(reminders):
 
                     # TODO actually cancel or snooze
 
-                send_msg(number.number, message)
+                # send_msg(number.number, message)

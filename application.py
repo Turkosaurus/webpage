@@ -119,6 +119,7 @@ def validate_twilio_request(f):
     return decorated_function
 
 def send_text(recipient, message):
+    """ Sends Twilio message. """
     message = client.messages.create(
         body=message,
         messaging_service_sid=messaging_service_sid,
