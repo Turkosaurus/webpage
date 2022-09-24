@@ -110,4 +110,4 @@ def send_reminders(reminders):
 
                     # TODO actually cancel or snooze
 
-                # send_msg(number.number, message)
+                send_msg(number.number, message)
