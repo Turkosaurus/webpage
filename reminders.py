@@ -59,9 +59,14 @@ def get_reminders():
     return reminders
 
 def complete_reminder(num_from):
+    """ Marks a reminder as complete. """
     # get number's most recent reminder
     # mark that reminder as complete
-    pass # TODO complete
+    success = False
+    if success:
+        return 1
+    else:
+        return 0
 
 def send_reminders(reminders):
     """ Sends reminders batch one at a time. """

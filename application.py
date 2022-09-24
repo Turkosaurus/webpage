@@ -359,8 +359,9 @@ def message_received():
                 resp.message(f"METAR {airports[0]}\n{metar}")        
 
             if body == "yes" or "Yes" or "YES":
-                response_match = True
-                complete_reminder(num_from)
+                success = complete_reminder(num_from)
+                if success:
+                    response_match = True
 
             # if 'Punch time' in body:
             #     response_match = True
